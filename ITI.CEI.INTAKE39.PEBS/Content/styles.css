@@ -1,0 +1,578 @@
+/* #region General Styles */
+* {
+    padding: 0;
+    margin: 0;
+}
+
+label::selection, h1::selection, h2::selection, h3::selection, p::selection, h4::selection {
+    color: none;
+    background-color: none;
+}
+
+h1, h2, h3, h4, h5, h6, label, p {
+    cursor: default;
+}
+/* #endregion */
+
+
+
+/* #region NavBar Styles */
+
+.Pebs_navbar {
+    background-color: #0e2a70;
+}
+
+
+    .Pebs_navbar h2 {
+        color: white;
+        font-family: verdana;
+        padding: 20px;
+        font-size: 30px;
+        text-align: center;
+    }
+/* #endregion */
+
+
+/* #region SidBar Styles */
+
+.side_bar {
+    width: 8%;
+    float: left;
+    /* position: fixed; */
+    padding: 0px;
+    margin-right: 20px;
+}
+
+.side_bar_element {
+    background-color: #248cee;
+    color: white;
+    width: 100%;
+    height: 93px;
+    box-sizing: border-box;
+    padding: 10%;
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.2s ease-in-out;
+    text-align: center;
+    box-shadow: 3px 3px 5px grey;
+}
+
+.side_bar_element_Active {
+    background-color: #0e2a70;
+    color: white;
+    width: 100%;
+    height: 93px;
+    box-sizing: border-box;
+    padding: 10%;
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.2s ease-in-out;
+    text-align: center;
+    box-shadow: 3px 3px 5px grey;
+}
+
+    .side_bar_element_Active h5 {
+        margin: 7px 0px;
+        font-family: 'Noto Sans', sans-serif;
+        cursor: pointer;
+    }
+
+.side_bar_element_inActive {
+    cursor: not-allowed;
+    background-color: #6a7987;
+    color: white;
+    width: 100%;
+    height: 93px;
+    box-sizing: border-box;
+    padding: 10%;
+    margin: 10px;
+    text-align: center;
+    box-shadow: 3px 3px 5px grey;
+}
+
+    .side_bar_element_inActive h5 {
+        margin: 7px 0px;
+        font-family: 'Noto Sans', sans-serif;
+        cursor: not-allowed;
+    }
+
+.side_bar_element h5 {
+    margin: 7px 0px;
+    font-family: 'Noto Sans', sans-serif;
+    cursor: pointer;
+}
+
+.side_bar_element:hover {
+    background-color: #0e2a70;
+}
+/* #endregion */
+
+
+/* #region Workspace Styles */
+
+.workspace {
+    float: left;
+    margin: 10px 0px 0px 0px;
+    width: 90%;
+    height: 520px;
+    background: rgb(205, 205, 205);
+    box-sizing: border-box;
+}
+
+
+.project_new {
+    float: left;
+    margin-left: 20px;
+    margin-top: 10px;
+    width: 70%;
+    border-right: 2px solid #061c5386;
+}
+
+    .project_new h2 {
+        font-family: 'Noto Sans', sans-serif;
+        color: #061c53;
+        margin-bottom: 15px;
+    }
+
+.project_name {
+    font-family: 'Noto Sans', sans-serif;
+    color: #061c53;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+    .project_name label {
+        display: inline-block;
+        margin-right: 250px;
+    }
+
+.project_name_textbox {
+    position: relative;
+    left: 160px;
+    width: 200px;
+    padding: 5px 10px;
+    font-family: 'Noto Sans', sans-serif;
+    color: #061c53;
+    border-radius: 3px;
+    border: 1px solid #061c53;
+    transition: all 0.3s ease-in-out;
+}
+
+/*.project_name input {
+        padding: 5px 10px;
+        font-family: 'Noto Sans', sans-serif;
+        color: #061c53;
+        border-radius: 3px;
+        border: 1px solid #061c53;
+        transition: all 0.3s ease-in-out;
+    }*/
+
+.partial_project {
+    height: 100%;
+}
+
+.project_name input:hover {
+    box-shadow: 1px 1px 3px rgba(0, 72, 253, 0.85), -1px -1px 3px rgba(0, 72, 253, 0.85);
+}
+
+.project_list {
+    float: left;
+    width: 25%;
+    margin-left: 20px;
+    margin-top: 10px;
+    height: 100%;
+}
+
+.my_projects {
+    height: 420px;
+    overflow: auto;
+}
+
+.project_list h2 {
+    font-family: 'Noto Sans', sans-serif;
+    color: #061c53;
+    margin-bottom: 15px;
+}
+
+.template {
+    margin-bottom: 5px;
+    overflow: hidden;
+}
+
+    .template h3 {
+        font-family: 'Noto Sans', sans-serif;
+        color: #061c53;
+        margin-bottom: 10px;
+    }
+
+    .template input {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+    }
+
+    .template label {
+        position: absolute;
+    }
+
+    .template label, input {
+        font-family: 'Noto Sans', sans-serif;
+        color: #1246ca;
+        top: -2px;
+    }
+
+.template_field {
+    float: left;
+    width: 28%;
+    position: relative;
+    margin-bottom: 5px;
+    margin-left: 20px;
+}
+
+    .template_field label {
+        cursor: pointer;
+        transition: color 0.2s ease-in-out;
+    }
+
+        .template_field label:hover {
+            color: #052985;
+        }
+
+.template_image {
+    height: 220px;
+    background-size: cover;
+    clear: both;
+    width: 80%;
+    position: relative;
+    overflow: hidden;
+}
+
+.template_image_content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(1, 68, 252, 0.23);
+    overflow: hidden;
+    color: white;
+    font-family: Verdana;
+    transition: top 0.6s ease-in-out;
+}
+
+#temp_name {
+    cursor: default;
+    margin: 10px;
+}
+
+#temp_context {
+    cursor: default;
+    margin: 10px;
+    margin-top: 100px;
+}
+
+.project_create {
+    margin-top: 10px;
+}
+
+
+.project_create_button {
+    text-decoration: none;
+    font-family: 'Noto Sans', sans-serif;
+    color: white;
+    font-size: 26px;
+    background-color: #1c53dd;
+    border: none;
+    padding: 10px 60px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    display: inline-block;
+}
+
+    .project_create_button:hover {
+        background-color: #0b3dbb;
+    }
+
+
+
+/* #endregion */
+
+
+
+/* #region project_slider Styles */
+
+.project_slider {
+    float: left;
+    margin: 10px 0px 0px 0px;
+    width: 90%;
+    height: 80px;
+    background: #0e2a70;
+    box-sizing: border-box;
+    position: relative;
+    text-align: center;
+}
+
+.fa-chevron-left {
+    float: left;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    padding: 0px 10px;
+    opacity: 0.6;
+    transition: opacity 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.fa-chevron-right {
+    float: right;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    padding: 0px 10px;
+    opacity: 0.6;
+    transition: opacity 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.fa-chevron-left:hover {
+    opacity: 1;
+}
+
+.fa-chevron-right:hover {
+    opacity: 1;
+}
+
+#project_current {
+    font-family: 'Noto Sans', sans-serif;
+    color: white;
+    font-size: 26px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.container {
+    width: 1170px;
+    margin: 0 auto;
+    padding: 0 !important
+}
+
+.nav {
+    background-color: #0e2a70 !important;
+    padding: 0;
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue","Fira Sans",Ubuntu,Oxygen,"Oxygen Sans",Cantarell,"Droid Sans","Apple Color Emoji","Segoe UI Emoji","Segoe UI Emoji","Segoe UI Symbol","Lucida Grande",Helvetica,Arial,sans-serif;
+    /*position:fixed;*/
+}
+
+.navbar a {
+    color: rgb(206, 206, 206);
+    text-decoration: none;
+}
+
+    .navbar a:hover {
+        color: white;
+    }
+
+
+.navbar {
+    height: 100%;
+    padding: 0px;
+    box-sizing: border-box;
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+.left_nav {
+    float: left;
+    padding: 0;
+    margin: 0;
+}
+
+.right_nav {
+    float: right;
+    padding: 0px;
+    margin: 0px;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+
+.left_nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+    .left_nav ul li {
+        float: left;
+        margin-right: 20px;
+    }
+
+.right_nav ul {
+    box-sizing: border-box;
+    float: right;
+    padding-top: 5px;
+    list-style-type: none;
+    margin: 0;
+    height: 100% !important;
+    border-right: 1px solid rgb(168, 168, 168);
+    padding-right: 10px;
+    overflow: hidden;
+}
+
+
+    .right_nav ul li {
+        text-align: center;
+        float: left;
+        padding: 0px;
+        color: rgb(206, 206, 206);
+        padding: 0 15px;
+        /*cursor: pointer;*/
+        transition: color 0.1s ease-in;
+    }
+
+        .right_nav ul li:hover {
+            box-sizing: border-box;
+            color: white;
+        }
+
+        .right_nav ul li .fas {
+            font-size: 20px;
+            padding: 0;
+        }
+
+.right_nav div {
+    font-size: 14px;
+}
+
+.Login_input {
+    padding: 3px 30px 3px 7px;
+    border-radius: 3px;
+}
+
+
+.btn_signIn {
+    padding: 3px 20px;
+    background: rgba(1, 68, 252, 0.23);
+    border: 1px solid white;
+    color: white;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.1s ease-in-out;
+}
+
+    .btn_signIn:hover {
+        background: White;
+        color: #0b3dbb;
+        border-radius: 2px;
+    }
+
+.reister_section {
+    background-color: #F6F8FA;
+    width: 25%;
+    position: relative;
+    top: 75px;
+    height: 500px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 3px 3px 6px grey;
+}
+
+.form_group_override {
+    margin-bottom: 5px;
+}
+
+
+.project_submit_button {
+    text-decoration: none;
+    font-family: 'Noto Sans', sans-serif;
+    color: white;
+    font-size: 26px;
+    background-color: #1c53dd;
+    border: none;
+    padding: 10px 60px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    display: inline-block;
+    position: relative;
+    top: 398px;
+    left: -730px;
+}
+
+
+/* #endregion */
+
+
+/* #region Final Styles */
+.project_item {
+    padding: 5px;
+    color: #F6F8FA;
+    background-color: rgb(2, 55, 200);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    margin: 5px 0;
+}
+
+    .project_item:hover {
+        padding-left: 8px;
+        color: #F6F8FA;
+        background-color: rgb(4, 33, 114);
+    }
+
+.dimension_label {
+    cursor: pointer;
+    border-right: 4px solid #5683ff;
+    background-color: #eeeeee;
+    padding: 0;
+    width: 0;
+    overflow: hidden;
+    position: relative;
+    top: 0;
+    left: 0;
+    text-align: center;
+    font-family: verdana;
+    color: #5683ff;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    /*transition: width 0.2s ease-in;*/
+}
+
+.dimension_label:hover {
+    padding: 10px;
+    width: 200px;
+}
+
+.Bays_label {
+    cursor: pointer;
+    border-right: 4px solid #5683ff;
+    background-color: #eeeeee;
+    padding: 0;
+    width: 0;
+    overflow: hidden;
+    position: relative;
+    top: 20px;
+    left: 0;
+    text-align: center;
+    font-family: verdana;
+    color: #5683ff;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    /*transition: width 0.2s ease-in;*/
+}
+
+.Bays_label:hover {
+    padding: 10px;
+    width: 200px;
+}
+/* #endregion */
+

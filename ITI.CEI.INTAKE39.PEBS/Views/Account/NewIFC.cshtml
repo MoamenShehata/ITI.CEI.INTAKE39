@@ -1,0 +1,19 @@
+﻿@model ColumnViewModel
+@{
+    ViewBag.Title = "NewIFC";
+    //Layout = null;
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+
+}
+<img src="@Url.Content("~/Images/slider.png")" alt="" style="display:none" id="slider_image" />
+<img src="@Url.Content("~/Images/cladding_Material_2.jpg")" alt="" style="display:none" id="cladding_image" />
+<img src="@Url.Content("~/Images/Plus.jpg")" alt="" style="display:none" id="Plus_image" />
+<img src="@Url.Content("~/Images/Minus.jpg")" alt="" style="display:none" id="Minus_image" />
+
+<div id="WebGL">
+
+</div>
+
+@Scripts.Render("~/bundles/MyScripts")
+
+

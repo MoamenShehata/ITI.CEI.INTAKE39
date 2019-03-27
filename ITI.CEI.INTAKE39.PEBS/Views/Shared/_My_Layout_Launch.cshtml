@@ -1,0 +1,78 @@
+﻿@using Microsoft.AspNet.Identity
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/MyContent/css")
+    @*@Styles.Render("~/Bootsrtap/css")*@
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        .right_nav ul li {
+            text-align: center;
+            float: left;
+            padding: 0px;
+            color: rgb(15, 15, 15);
+            padding: 0 15px;
+            cursor: pointer;
+            transition: color 0.1s ease-in;
+        }
+
+            .right_nav ul li:hover {
+                color: rgb(15, 15, 15);
+            }
+    </style>
+
+</head>
+<body>
+
+    <nav class="nav">
+
+        <div class="container">
+            <div class="navbar" style="min-height:50px!important;padding:10px 0">
+                <div class="left_nav">
+                    <ul>
+                        <li><a href="~/Account/LaunchPage"><img src="~/Images/LinkedInLogo.png" alt="PEBS LOGO" /></a></li>
+                    </ul>
+                </div>
+                <div class="right_nav">
+                    <ul style="border:none;margin:0;padding:0">
+                        @Html.Partial("_PartialUserLogin")
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </nav>
+
+    @*@using Microsoft.AspNet.Identity
+    @if (Request.IsAuthenticated)
+    {
+        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+            @Html.AntiForgeryToken()
+
+        }
+    }
+    else
+    {
+
+    }*@
+
+    <div>
+        @RenderBody()
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

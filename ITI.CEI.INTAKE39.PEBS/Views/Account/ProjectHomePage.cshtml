@@ -1,0 +1,85 @@
+﻿@model ClientViewModel
+@{
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+    ViewBag.Title = "PEB Specifier";
+    @Scripts.Render("~/bundles/THREE_JS")
+}
+
+<nav class="Pebs_navbar">
+    @*<h2>Welcome To PEPS</h2>*@
+</nav>
+
+<div class="side_bar">
+    <div class="side_bar_element_Active" id="sideBar_new_project">
+        <i class="fas fa-warehouse fa-3x"></i>
+        <h5>New Project</h5>
+    </div>
+    <div class="side_bar_element_inActive" id="sideBar_edit_dimensions">
+        <i class="fas fa-pencil-ruler fa-3x"></i>
+        <h5>Dimensions</h5>
+    </div>
+    <div class="side_bar_element_inActive" id="sideBar_edit_configs">
+        <i class="fas fa-cog fa-3x"></i>
+        <h5>Configurations</h5>
+    </div>
+    <div class="side_bar_element_inActive" id="sideBar_edit_location">
+        <i class="fas fa-map-marker-alt fa-3x"></i>
+        <h5>Localization</h5>
+    </div>
+    <div class="side_bar_element_inActive" id="sideBar_edit_erection">
+        <i class="fas fa-wrench fa-3x"></i>
+        <h5>Erection</h5>
+    </div>
+    <div class="side_bar_element_inActive" id="sideBar_edit_pricing">
+        <i class="fas fa-dollar-sign fa-3x"></i>
+        <h5>Pricing</h5>
+    </div>
+
+</div>
+
+<!-- Here Add Any Partial View  -->
+@*<input type="submit" value="Submit" />*@
+
+<div class="workspace">
+    @Html.Partial("_PartialNewProject", Model)
+    @Html.Partial("_PartialProjectDimensionProduction")
+    @Html.Partial("_PartialProjectBaysProduction")
+    <p class="dimension_label" id="dimension_label">Factory Dimensions</p>
+    <p class="Bays_label" id="Bays_label">Factory Bays</p>
+</div>
+
+<div class="project_slider">
+    <i class="fas fa-chevron-left fa-4x" id="previous_stage"></i>
+    <label id="project_current">Current Project</label>
+    <i class="fas fa-chevron-right fa-4x" id="next_stage"></i>
+</div>
+
+
+
+<script>
+    let btn_next_stage = document.getElementById("next_stage");
+    let btn_previous_stage = document.getElementById("previous_stage");
+
+    document.getElementById("dimension_label").onclick = function () {
+        document.getElementById("TemplateProductionDimensions").style.display = "block";
+        document.getElementById("TemplateProductionBays").style.display = "none";
+    }
+
+    document.getElementById("Bays_label").onclick = function () {
+        document.getElementById("TemplateProductionDimensions").style.display = "none";
+        document.getElementById("TemplateProductionBays").style.display = "block";
+    }
+
+    btn_next_stage.onclick = function () {
+        if (document.getElementById("project_name").value !== "" && document.getElementById("project_name").value !== null) {
+            project_started = true;
+            NextStage();
+        }
+        else {
+            document.getElementById("project_name").focus();
+        }
+
+    };
+    btn_previous_stage.onclick = PreviousStage;
+
+</script>

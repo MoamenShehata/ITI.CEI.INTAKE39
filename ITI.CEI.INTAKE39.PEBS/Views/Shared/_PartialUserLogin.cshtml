@@ -1,0 +1,26 @@
+﻿@model LoginViewModel
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = "/account/ProjectHomePage" }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+
+    <li>
+        @Html.TextBoxFor(m => m.LoginEmail, new { @class = "Login_input" })
+        @Html.ValidationMessageFor(m => m.LoginEmail, "", new { @class = "text-danger" })
+    </li>
+
+    <li>
+        @Html.PasswordFor(m => m.LoginPassword, new { @class = "Login_input" })
+        @Html.ValidationMessageFor(m => m.LoginPassword, "", new { @class = "text-danger" })
+    </li>
+
+    <li>
+        <a href="">Forgot Password</a>
+    </li>
+
+    <li>
+        <input type="submit" value="Sign in" class="btn_signIn" />
+    </li>
+
+}
+

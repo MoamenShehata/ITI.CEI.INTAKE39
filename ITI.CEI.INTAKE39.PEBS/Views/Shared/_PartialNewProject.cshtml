@@ -1,0 +1,454 @@
+﻿@model ClientViewModel
+
+<div class="partial_project" id="partial_project">
+
+    <div class="project_new" id="project_new">
+        <h2>Create A New Project</h2>
+
+        <div class="project_name">
+            <label>Project Name*</label>
+            @*@Html.TextBoxFor(p => p.Name, new { @class = "project_name_textbox", placeholder = "Write Project Name" })*@
+            <input type="text" id="project_name" placeholder="Write Project Name" class="project_name_textbox">
+        </div>
+        <div class="template">
+            <h3>Select Template</h3>
+
+            <div class="template_field">
+                <input type="checkbox" name="tmpt_production" id="production" onclick="ProductionChecked()">
+                <label for="production" id="production_lbl">Production</label>
+            </div>
+
+            <div class="template_field">
+                <input type="checkbox" name="tmpt_double_span" id="double_span" onclick="DoubleSpanChecked()">
+                <label for="double_span" id="double_span_lbl">Double Span</label>
+            </div>
+
+            <div class="template_field">
+                <input type="checkbox" name="tmpt_shed" id="shed" onclick="ShedChecked()">
+                <label for="shed" id="shed_lbl">Shed</label>
+            </div>
+
+            <div class="template_field">
+                <input type="checkbox" name="tmpt_double_shed" id="double_shed" onclick="DoubleShedChecked()">
+                <label for="double_shed" id="double_shed_lbl">Double Shed</label>
+            </div>
+
+
+
+
+        </div>
+        <div class="template_image" id="temp_image">
+            <div class="template_image_content" id="template_image_content">
+                <h2 id="temp_name"></h2>
+                <p id="temp_context"></p>
+            </div>
+        </div>
+
+        <div class="project_create">
+            @*@Html.ActionLink("Create", "NewIFC", null, new { @class = "project_create_button" })*@
+            <button class="project_create_button" onclick="CreateNewProject()"> Create</button>
+        </div>
+    </div>
+
+    <div class="project_list" id="project_list">
+        <h2>My Projects</h2>
+        <div class="my_projects" id="my_projects">
+            @{
+                if (Model.Projects != null && Model.Projects.Count > 0)
+                {
+                    foreach (var project in Model.Projects)
+                    {
+                        <div class="project_item" onclick="SetCurrentProject('@project.Name')">@project.Name</div>
+                    }
+                }
+                else
+                {
+                    <label>You Have No Projects...</label>
+                }
+            }
+        </div>
+
+    </div>
+</div>
+
+<script>
+    let currentStage = 1; // At  user is in stage of creating new Project
+    let project_started = false;
+    let PriceIsAvailable = false;
+    let ErectionIsAvailable = false;
+
+    let project_template;
+    let projectCounter=0;
+    let myProjects = [];
+
+    let project_listHTML = document.getElementById("my_projects");
+    let project_current;
+
+    function CreateNewProject() {
+        if (document.getElementById("project_name").value !== "" && document.getElementById("project_name").value !== null) {
+            let project_name = document.getElementById("project_name").value;
+
+            $.ajax({
+                type: "POST",
+                url: "/Account/NewProject",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ 'pName': project_name, 'projectType': project_template }),
+                //data: { 'pName': "ITI", 'pLocation': "ITI-3"},
+                dataType: "json",
+                success: function (result) {
+                    //confirm(result.Template);
+
+                    myProjects[projectCounter] = document.createElement('div');
+                    myProjects[projectCounter].classList.add("project_item");
+                    myProjects[projectCounter].innerText = result.Name;
+                    myProjects[projectCounter].addEventListener("click", SetCurrentProject);
+                    project_listHTML.append(myProjects[projectCounter]);
+
+                    project_current = document.getElementById("project_current");
+                    project_current.innerText = result.Name;
+                    projectCounter++;
+
+                    document.getElementById("partial_project").style.display = "none";
+                    document.getElementById("TemplateProductionDimensions").style.display = "block";
+
+                    NextStage();
+                    project_started = true;
+                    //$('#project_new').replaceWith();
+                },
+                error: function (result) {
+                    confirm(result);
+                }
+            });
+        }
+        else {
+            document.getElementById("project_name").focus();
+        }
+
+    }
+
+    function NextStage() {
+        if (currentStage<6) {
+            switch (currentStage) {
+                case 0:
+                    //New Project
+                    document.getElementById("sideBar_new_project").classList.remove("side_bar_element");
+                    document.getElementById("sideBar_new_project").classList.add("side_bar_element_Active");
+
+                    //Edit Dimensions
+                    document.getElementById("sideBar_edit_dimensions").classList.remove("side_bar_element_inActive");
+                    document.getElementById("sideBar_edit_dimensions").classList.add("side_bar_element");
+
+                    //Edit Configurations
+                    document.getElementById("sideBar_edit_configs").classList.remove("side_bar_element_inActive");
+                    document.getElementById("sideBar_edit_configs").classList.add("side_bar_element");
+
+                    //Edit Location
+                    document.getElementById("sideBar_edit_location").classList.remove("side_bar_element_inActive");
+                    document.getElementById("sideBar_edit_location").classList.add("side_bar_element");
+
+                    //Edit Erection
+                    document.getElementById("sideBar_edit_erection").classList.remove("side_bar_element_inActive");
+                    document.getElementById("sideBar_edit_erection").classList.add("side_bar_element");
+
+                    //Edit Pricing
+                    document.getElementById("sideBar_edit_pricing").classList.remove("side_bar_element_Active");
+                    document.getElementById("sideBar_edit_pricing").classList.add("side_bar_element");
+                    currentStage++;
+                    break;
+                case 1:
+                    ErectionIsAvailable = true;
+                    //New Project
+                    document.getElementById("sideBar_new_project").classList.remove("side_bar_element_Active");
+                    document.getElementById("sideBar_new_project").classList.add("side_bar_element");
+
+                    //Edit Dimensions
+                    document.getElementById("sideBar_edit_dimensions").classList.remove("side_bar_element_inActive");
+                    document.getElementById("sideBar_edit_dimensions").classList.add("side_bar_element_Active");
+
+                    //Edit Configurations
+                    document.getElementById("sideBar_edit_configs").classList.remove("side_bar_element_inActive");
+                    document.getElementById("sideBar_edit_configs").classList.add("side_bar_element");
+
+                    //Edit Location
+                    document.getElementById("sideBar_edit_location").classList.remove("side_bar_element_inActive");
+                    document.getElementById("sideBar_edit_location").classList.add("side_bar_element");
+
+                    //Edit Erection
+                    document.getElementById("sideBar_edit_erection").classList.remove("side_bar_element_inActive");
+                    document.getElementById("sideBar_edit_erection").classList.add("side_bar_element");
+
+                    if (PriceIsAvailable) {
+                        //Edit Pricing
+                        document.getElementById("sideBar_edit_pricing").classList.remove("side_bar_element_Active");
+                        document.getElementById("sideBar_edit_pricing").classList.add("side_bar_element");
+                    }
+
+
+                    currentStage++;
+                    break;
+
+                case 2:
+                    //Edit Dimensions
+                    document.getElementById("sideBar_edit_dimensions").classList.remove("side_bar_element_Active");
+                    document.getElementById("sideBar_edit_dimensions").classList.add("side_bar_element");
+
+                    //Edit Configurations
+                    document.getElementById("sideBar_edit_configs").classList.remove("side_bar_element");
+                    document.getElementById("sideBar_edit_configs").classList.add("side_bar_element_Active");
+
+                    currentStage++;
+                    break;
+
+                case 3:
+                    //Edit Configurations
+                    document.getElementById("sideBar_edit_configs").classList.remove("side_bar_element_Active");
+                    document.getElementById("sideBar_edit_configs").classList.add("side_bar_element");
+
+                    //Edit Location
+                    document.getElementById("sideBar_edit_location").classList.remove("side_bar_element");
+                    document.getElementById("sideBar_edit_location").classList.add("side_bar_element_Active");
+
+                    //Edit Pricing
+                    document.getElementById("sideBar_edit_pricing").classList.remove("side_bar_element_inActive");
+                    document.getElementById("sideBar_edit_pricing").classList.add("side_bar_element");
+
+                    currentStage++;
+                    break;
+
+                case 4:
+                    PriceIsAvailable = true;
+                    //Edit Location
+                    document.getElementById("sideBar_edit_location").classList.remove("side_bar_element_Active");
+                    document.getElementById("sideBar_edit_location").classList.add("side_bar_element");
+
+                    //Edit Erection
+                    document.getElementById("sideBar_edit_erection").classList.remove("side_bar_element");
+                    document.getElementById("sideBar_edit_erection").classList.add("side_bar_element_Active");
+
+
+                    currentStage++;
+                    break;
+
+                case 5:
+                    PriceIsAvailable = true;
+                    //Edit Erection
+                    document.getElementById("sideBar_edit_erection").classList.remove("side_bar_element_Active");
+                    document.getElementById("sideBar_edit_erection").classList.add("side_bar_element");
+
+                    //Edit Pricing
+                    document.getElementById("sideBar_edit_pricing").classList.remove("side_bar_element");
+                    document.getElementById("sideBar_edit_pricing").classList.remove("side_bar_element_inActive");
+                    document.getElementById("sideBar_edit_pricing").classList.add("side_bar_element_Active");
+                    currentStage++;
+                    break;
+            }
+        }
+        else {
+            currentStage = 0;
+            NextStage();
+        }
+
+    }
+
+    function PreviousStage() {
+        if (project_started) {
+            if (currentStage > 1) {
+                switch (currentStage) {
+                    case 6:
+
+                        //New Project
+                        document.getElementById("sideBar_new_project").classList.remove("side_bar_element_Active");
+                        document.getElementById("sideBar_new_project").classList.add("side_bar_element");
+
+                        //Edit Pricing
+                        document.getElementById("sideBar_edit_pricing").classList.remove("side_bar_element_Active");
+                        document.getElementById("sideBar_edit_pricing").classList.add("side_bar_element");
+
+                        //Edit Erection
+                        document.getElementById("sideBar_edit_erection").classList.remove("side_bar_element");
+                        document.getElementById("sideBar_edit_erection").classList.add("side_bar_element_Active");
+
+                        currentStage--;
+                        break;
+
+                    case 5:
+
+                        //Edit Erection
+                        document.getElementById("sideBar_edit_erection").classList.remove("side_bar_element_Active");
+                        document.getElementById("sideBar_edit_erection").classList.add("side_bar_element");
+
+                        //Edit Location
+                        document.getElementById("sideBar_edit_location").classList.remove("side_bar_element");
+                        document.getElementById("sideBar_edit_location").classList.add("side_bar_element_Active");
+                        currentStage--;
+                        break;
+
+                    case 4:
+                        //Edit Location
+                        document.getElementById("sideBar_edit_location").classList.remove("side_bar_element_Active");
+                        document.getElementById("sideBar_edit_location").classList.add("side_bar_element");
+
+                        //Edit Configuration
+                        document.getElementById("sideBar_edit_configs").classList.remove("side_bar_element");
+                        document.getElementById("sideBar_edit_configs").classList.add("side_bar_element_Active");
+
+                        currentStage--;
+                        break;
+
+                    case 3:
+                        //Edit Configuration
+                        document.getElementById("sideBar_edit_configs").classList.remove("side_bar_element_Active");
+                        document.getElementById("sideBar_edit_configs").classList.add("side_bar_element");
+
+                        //Edit Dimensions
+                        document.getElementById("sideBar_edit_dimensions").classList.remove("side_bar_element");
+                        document.getElementById("sideBar_edit_dimensions").classList.add("side_bar_element_Active");
+
+                        currentStage--;
+                        break;
+
+                    case 2:
+
+                        //Edit Dimensions
+                        document.getElementById("sideBar_edit_dimensions").classList.remove("side_bar_element_Active");
+                        document.getElementById("sideBar_edit_dimensions").classList.add("side_bar_element");
+
+                        //New Project
+                        document.getElementById("sideBar_new_project").classList.remove("side_bar_element");
+                        document.getElementById("sideBar_new_project").classList.add("side_bar_element_Active");
+
+                        currentStage--;
+                        break;
+
+                    case 7:
+                        //New Project
+                        document.getElementById("sideBar_new_project").classList.remove("side_bar_element_Active");
+                        document.getElementById("sideBar_new_project").classList.add("side_bar_element");
+
+                        //Edit Pricing
+                        document.getElementById("sideBar_edit_pricing").classList.remove("side_bar_element");
+                        document.getElementById("sideBar_edit_pricing").classList.add("side_bar_element_Active");
+
+                        currentStage--;
+                        break;
+                }
+            }
+            else {
+                if (PriceIsAvailable) {
+                    currentStage = 7;
+                    PreviousStage();
+                }
+                else if (ErectionIsAvailable){
+                    currentStage = 6;
+                    PreviousStage();
+                }
+
+            }
+        }
+
+
+    }
+
+    function SetCurrentProject(projectName) {
+        project_current = document.getElementById("project_current");
+        project_current.innerText = projectName;
+    }
+
+    function InitializeProject() {
+        //document.getElementById("project_section_NameAndType").style.display="none";
+        //confirm("adssa");
+    }
+    let _checkboxProduction = document.getElementById("production");
+    let _checkboxShed = document.getElementById("shed");
+    let _checkboxDoubleShed = document.getElementById("double_shed");
+    let _checkboxDoubleSpan= document.getElementById("double_span");
+
+    let production_lbl = document.getElementById("production_lbl");
+    let shed_lbl = document.getElementById("shed_lbl");
+    let double_shed_lbl = document.getElementById("double_shed_lbl");
+    let double_span_lbl = document.getElementById("double_span_lbl");
+
+    let _template_label = document.querySelectorAll("label[id*='lbl']")
+    let _temp_name = document.getElementById("temp_name");
+    let _temp_context = document.getElementById("temp_context");
+
+    let _tempImage = document.getElementById("temp_image");
+    let template_image_content = document.getElementById("template_image_content");
+
+    onload = function () {
+        _checkboxProduction.checked = true;
+        _checkboxShed.checked = false;
+        _checkboxDoubleShed.checked = false;
+        _checkboxDoubleSpan.checked = false;
+        ProductionChecked();
+    }
+
+
+    _tempImage.onmouseenter = function () {
+        template_image_content.style.top = "0%";
+    }
+
+    _tempImage.onmouseleave = function () {
+        template_image_content.style.top = "100%";
+    }
+
+    production_lbl.onclick = function () { ProductionChecked(); }
+    shed_lbl.onclick = function () { ShedChecked();}
+    double_shed_lbl.onclick = function () { DoubleShedChecked();}
+    double_span_lbl.onclick = function () { DoubleSpanChecked();}
+
+    //
+    function ProductionChecked() {
+        project_template = 1;
+        _checkboxProduction.checked=true;
+        _checkboxShed.checked = false;
+        _checkboxDoubleShed.checked = false;
+        _checkboxDoubleSpan.checked = false;
+
+        _tempImage.style.backgroundImage = ("url(@Url.Content("~/Images/production.jpg"))");
+
+        _temp_name.innerText = "Production";
+        _temp_context.innerText = "Dimensions: 24m x 80m at 6.0m \n Roof: Sandwich Panel \n Wall: Sandwich Panel";
+
+    }
+
+    function DoubleSpanChecked() {
+        project_template = 2;
+        _tempImage.style.backgroundImage = ("url(@Url.Content("~/Images/storage.jpg"))");
+        _checkboxDoubleSpan.checked = true;
+        _checkboxDoubleShed.checked = false;
+        _checkboxShed.checked = false;
+        _checkboxProduction.checked = false;
+
+        _temp_name.innerText = "Double Span";
+        _temp_context.innerText = "Dimensions: 10m x 30m at 4.0m \n Roof: Sandwich Panel \n Wall: Sandwich Panel";
+    }
+
+    function ShedChecked() {
+        project_template = 3;
+        _tempImage.style.backgroundImage = ("url(@Url.Content("~/Images/shed.jpg"))");
+        _checkboxShed.checked = true;
+        _checkboxProduction.checked = false;
+        _checkboxDoubleShed.checked = false;
+        _checkboxDoubleSpan.checked = false;
+
+        _temp_name.innerText = "Shed";
+        _temp_context.innerText = "Dimensions: 10m x 30m at 4.0m \n Roof: Sandwich Panel \n Wall: Sandwich Panel";
+    }
+
+    function DoubleShedChecked() {
+        project_template = 4;
+        _tempImage.style.backgroundImage = ("url(@Url.Content("~/Images/agri.jpeg"))");
+        _checkboxDoubleShed.checked = true;
+        _checkboxShed.checked = false;
+        _checkboxProduction.checked = false;
+        _checkboxDoubleSpan.checked = false;
+
+        _temp_name.innerText = "Double Shed";
+        _temp_context.innerText = "Dimensions: 10m x 30m at 4.0m \n Roof: Sandwich Panel \n Wall: Sandwich Panel";
+    }
+
+
+
+</script>
+

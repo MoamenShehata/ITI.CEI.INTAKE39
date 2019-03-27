@@ -1,0 +1,64 @@
+﻿@model RegisterViewModel
+
+@{
+    ViewBag.Title = "LinkedIn Log In Or Sign up";
+    Layout = "~/Views/Shared/_My_Layout_Launch.cshtml";
+}
+
+<div class="background" style="background-image:url('/Images/steel_construction_technology.jpg');background-size:cover;height:600px">
+
+</div>
+
+<div class="reister_section">
+    <div class="header">
+        <h3>Design Your Own Building</h3>
+        <p>Get started - it's free.</p>
+    </div>
+    <div class="user_logins">
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+            ///
+            <div class="form-group" style="margin-bottom:5px">
+                <div class="col-md-10">
+                    @Html.LabelFor(m => m.ClientName)
+                    @Html.TextBoxFor(m => m.ClientName, new { @class = "form-control Login_field" })
+                    @Html.ValidationMessageFor(m => m.ClientName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom:5px">
+                <div class="col-md-10">
+                    @Html.LabelFor(m => m.Email)
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control Login_field form_group_override" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group" style="margin-bottom:5px">
+                <div class="col-md-10">
+                    @Html.LabelFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control Login_field form_group_override" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group" style="margin-bottom:5px">
+                <div class="col-md-10">
+                    @Html.LabelFor(m => m.ConfirmPassword)
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control Login_field form_group_override" })
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group" style="margin-bottom:5px">
+                <div class="col-md-offset-2 col-md-10" style="text-align:center">
+                    <input type="submit" class="btn btn-primary " value="Join Now" style="width:120%;margin:auto;left:50%;transform:translateX(-18%)" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    
+    @Scripts.Render("~/bundles/jqueryval")
+}
