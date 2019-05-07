@@ -1,4 +1,4 @@
-﻿<div id="TemplateProductionDimensions" style="display:none;width:1367px;height:520px;position:absolute">
+﻿<div id="TemplateProductionDimensions" style="width:1367px;height:520px;position:absolute">
     <img src="@Url.Content("~/Images/slider.png")" alt="" style="display:none" id="slider_image" />
     <img src="@Url.Content("~/Images/cladding_Material_2.jpg")" alt="" style="display:none" id="cladding_image" />
     <img src="@Url.Content("~/Images/Plus.jpg")" alt="" style="display:none" id="Plus_image" />
@@ -7,6 +7,9 @@
 </div>
 
 <script>
+
+
+
     //#region   Minimum Need
     let DimfieldOfView = 45;
     let DimAspectRatio = 1367 / 470;
@@ -72,9 +75,26 @@
 
     //#endregion
 
+    var objects = [];
     SetCameraPosition(Dimcamera, 20, 20, 20);
     Dimcamera.lookAt(new THREE.Vector3(0, 0, -project_length / 2));
 
+    //var dragControls = new THREE.DragControls(objects, Dimcamera, Dimrenderer.domElement);
+    //dragControls.addEventListener('dragstart', function (controls) {
+    //    //confirm("Drag Started");
+    //    controls.enabled = false;
+
+    //});
+    //dragControls.addEventListener('dragend', function (controls) {
+    //    //confirm("Drag Ended");
+
+    //    controls.enabled = true;
+    //});
+    //dragControls.addEventListener('mousedown', mouseDown, false);
+
+    function mouseDown() {
+        confirm("mouse downed");
+    }
     //#region Project_Components
 
     var sideCladding = new CladdingDoubleSide(project_span, project_height, project_length);
@@ -83,6 +103,10 @@
     var roof = new RoofDouble(project_span, project_length, project_slope, project_height);
     roof.DrawGeometry(Dimscene);
 
+    objects.push(sideCladding.RightCladding);
+    objects.push(sideCladding.LeftCladding);
+    objects.push(roof.RightRoof);
+    objects.push(roof.LeftRoof);
     //#endregion
 
     //#region ThreeJsViewer Controls
@@ -112,7 +136,7 @@
     let DimspanDim = new PebsDimension(project_span / 2, 1, project_span, "x");
     DimspanDim.DrawGeometry(Dimscene);
     //#endregion
-    
+
 
 
     function EditProjectSlope(newSlope) {

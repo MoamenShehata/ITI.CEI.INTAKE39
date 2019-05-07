@@ -290,11 +290,19 @@
     <Content Include="Images\slider.png" />
     <Content Include="Images\steel_construction_technology.jpg" />
     <Content Include="Images\storage.jpg" />
+    <Content Include="Images\ViewCube_Front.png" />
+    <Content Include="Images\ViewCube_Front_Hover.png" />
+    <Content Include="Images\ViewCube_Right.png" />
+    <Content Include="Images\ViewCube_Right_Hover.png" />
+    <Content Include="Images\ViewCube_Top.png" />
+    <Content Include="Images\ViewCube_Top_Hover.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\BaysProductionEditor.js" />
+    <Content Include="Scripts\ConfigProductionEditor.js" />
     <Content Include="Scripts\DimensionProductionEditor.js" />
+    <Content Include="Scripts\DragControls.js" />
     <Content Include="Scripts\Entities.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -357,6 +365,10 @@
     <Content Include="Views\Account\ReplaceTest.cshtml" />
     <Content Include="Views\Shared\_PartialProjectDimensionProduction.cshtml" />
     <Content Include="Views\Shared\_PartialProjectBaysProduction.cshtml" />
+    <Content Include="Views\Shared\_PartialProjectViewCube.cshtml" />
+    <Content Include="Views\Shared\_PartialConfigProductionEditor.cshtml" />
+    <Content Include="Views\Account\NewProject.cshtml" />
+    <Content Include="Views\Shared\_PartialProjectDims.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

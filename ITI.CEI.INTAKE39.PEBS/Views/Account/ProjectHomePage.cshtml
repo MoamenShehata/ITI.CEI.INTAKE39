@@ -40,10 +40,16 @@
 <!-- Here Add Any Partial View  -->
 @*<input type="submit" value="Submit" />*@
 
-<div class="workspace">
-    @Html.Partial("_PartialNewProject", Model)
-    @Html.Partial("_PartialProjectDimensionProduction")
-    @Html.Partial("_PartialProjectBaysProduction")
+<div class="workspace" id="WorkSpace">
+    <div id="WorkSpace_Content">
+        @Html.Partial("_PartialNewProject", Model)
+        @*@Html.Partial("_PartialProjectDimensionProduction")*@
+        @*@Html.Partial("_PartialProjectBaysProduction")*@
+        @*@Html.Partial("_PartialConfigProductionEditor")*@
+        @*@Html.Partial("_PartialProjectViewCube")*@
+    </div>
+
+
     <p class="dimension_label" id="dimension_label">Factory Dimensions</p>
     <p class="Bays_label" id="Bays_label">Factory Bays</p>
 </div>
@@ -61,13 +67,52 @@
     let btn_previous_stage = document.getElementById("previous_stage");
 
     document.getElementById("dimension_label").onclick = function () {
+
+        //$.ajax({
+        //    type: "POST",
+        //    url: "/Account/RenderDimsView",
+        //    //dataType: "json",
+        //    //contentType: "application/json; charset=utf-8",
+        //    //data: JSON.stringify({ 'pName': project_name, 'projectType': project_template }),
+
+        //    success: function (result) {
+        //        $("#TemplateProductionBays").replaceWith(result);
+        //        //console.log(result);
+        //    },
+        //    error: function (result) {
+        //        console.log(result);
+        //        console.log("Error");
+        //    }
+        //});
+
         document.getElementById("TemplateProductionDimensions").style.display = "block";
         document.getElementById("TemplateProductionBays").style.display = "none";
+        document.getElementById("TemplateProductionConfigurations").style.display = "none";
     }
 
     document.getElementById("Bays_label").onclick = function () {
+
+        //$.ajax({
+        //    type: "POST",
+        //    url: "/Account/RenderBaysView",
+        //    //dataType: "json",
+        //    //contentType: "application/json; charset=utf-8",
+        //    //data: JSON.stringify({ 'pName': project_name, 'projectType': project_template }),
+
+        //    success: function (result) {
+        //        $("#TemplateProductionDimensions").replaceWith(result);
+
+        //        //console.log(result);
+        //    },
+        //    error: function (result) {
+        //        console.log(result);
+        //        console.log("Error");
+        //    }
+        //});
+
         document.getElementById("TemplateProductionDimensions").style.display = "none";
         document.getElementById("TemplateProductionBays").style.display = "block";
+        document.getElementById("TemplateProductionConfigurations").style.display = "none";
     }
 
     btn_next_stage.onclick = function () {
@@ -82,4 +127,9 @@
     };
     btn_previous_stage.onclick = PreviousStage;
 
+    document.getElementById("sideBar_edit_configs").onclick = function () {
+        document.getElementById("TemplateProductionConfigurations").style.display = "block";
+        document.getElementById("TemplateProductionDimensions").style.display = "none";
+        document.getElementById("TemplateProductionBays").style.display = "none";
+    }
 </script>

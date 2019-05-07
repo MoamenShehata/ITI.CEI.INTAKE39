@@ -57,6 +57,8 @@ var project_slope_max = .1;
 
 //#endregion
 
+var myobjects = [];
+
 SetCameraPosition(camera, 20, 20, 20);
 camera.lookAt(new THREE.Vector3(0, 0, -project_length / 2));
 

@@ -298,7 +298,9 @@ h1, h2, h3, h4, h5, h6, label, p {
 
 /* #endregion */
 
-
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
 
 /* #region project_slider Styles */
 
@@ -477,21 +479,49 @@ h1, h2, h3, h4, h5, h6, label, p {
         border-radius: 2px;
     }
 
-.reister_section {
+.register_section {
     background-color: #F6F8FA;
     width: 25%;
-    position: relative;
-    top: 75px;
-    height: 500px;
+    position: absolute;
+    top: 140px;
+    height: 450px;
     left: 50%;
     transform: translateX(-50%);
     box-shadow: 3px 3px 6px grey;
+    /*padding: 15px;*/
+}
+
+.header {
+    text-align: center;
+}
+
+
+.user_logins {
+    padding: 10px 20px;
+    background-color: #e4e7e9;
+}
+
+.Login_input {
+    padding: 3px 30px 3px 7px;
+    border-radius: 3px;
+}
+
+.Login_field {
+    display: inline-block;
+    width: 120% !important;
+    margin: auto;
 }
 
 .form_group_override {
     margin-bottom: 5px;
 }
 
+.info h2, h3 {
+    color: rgb(32, 32, 32);
+    /*margin-bottom: 10px;*/
+    font-size: 24px;
+    font-family: sans-serif;
+}
 
 .project_submit_button {
     text-decoration: none;
@@ -547,10 +577,10 @@ h1, h2, h3, h4, h5, h6, label, p {
     /*transition: width 0.2s ease-in;*/
 }
 
-.dimension_label:hover {
-    padding: 10px;
-    width: 200px;
-}
+    .dimension_label:hover {
+        padding: 10px;
+        width: 200px;
+    }
 
 .Bays_label {
     cursor: pointer;
@@ -570,9 +600,9 @@ h1, h2, h3, h4, h5, h6, label, p {
     /*transition: width 0.2s ease-in;*/
 }
 
-.Bays_label:hover {
-    padding: 10px;
-    width: 200px;
-}
+    .Bays_label:hover {
+        padding: 10px;
+        width: 200px;
+    }
 /* #endregion */
 

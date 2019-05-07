@@ -1,5 +1,15 @@
 ﻿@model ClientViewModel
 
+@{
+    AjaxOptions ajaxOptions = new AjaxOptions()
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "WorkSpace",
+        InsertionMode = InsertionMode.Replace,
+
+    };
+}
+
 <div class="partial_project" id="partial_project">
 
     <div class="project_new" id="project_new">
@@ -34,8 +44,6 @@
             </div>
 
 
-
-
         </div>
         <div class="template_image" id="temp_image">
             <div class="template_image_content" id="template_image_content">
@@ -45,8 +53,11 @@
         </div>
 
         <div class="project_create">
+
+            <input type="submit" value="Create" class="btn btn-primary" onclick="CreateNewProject()" />
+
             @*@Html.ActionLink("Create", "NewIFC", null, new { @class = "project_create_button" })*@
-            <button class="project_create_button" onclick="CreateNewProject()"> Create</button>
+            @*<button class="project_create_button" onclick="CreateNewProject()"> Create</button>*@
         </div>
     </div>
 
@@ -84,39 +95,74 @@
     let project_listHTML = document.getElementById("my_projects");
     let project_current;
 
+    //function CreateNewProject() {
+    //    if (document.getElementById("project_name").value !== "" && document.getElementById("project_name").value !== null) {
+    //        let project_name = document.getElementById("project_name").value;
+
+    //        $.ajax({
+    //            type: "POST",
+    //            url: "/Account/NewProject",
+    //            contentType: "application/json; charset=utf-8",
+    //            data: JSON.stringify({ 'pName': project_name, 'projectType': project_template }),
+    //            //data: { 'pName': "ITI", 'pLocation': "ITI-3"},
+    //            dataType: "json",
+    //            success: function (result) {
+    //                //confirm(result.Template);
+
+    //                myProjects[projectCounter] = document.createElement('div');
+    //                myProjects[projectCounter].classList.add("project_item");
+    //                myProjects[projectCounter].innerText = result.Name;
+    //                myProjects[projectCounter].addEventListener("click", SetCurrentProject);
+    //                project_listHTML.append(myProjects[projectCounter]);
+
+    //                project_current = document.getElementById("project_current");
+    //                project_current.innerText = result.Name;
+    //                projectCounter++;
+
+    //                document.getElementById("partial_project").style.display = "none";
+    //                document.getElementById("TemplateProductionDimensions").style.display = "block";
+
+    //                NextStage();
+    //                project_started = true;
+    //                //$('#project_new').replaceWith();
+    //            },
+    //            error: function (result) {
+    //                confirm(result);
+    //            }
+    //        });
+    //    }
+    //    else {
+    //        document.getElementById("project_name").focus();
+    //    }
+
+    //}
+
     function CreateNewProject() {
+        //debugger;
         if (document.getElementById("project_name").value !== "" && document.getElementById("project_name").value !== null) {
             let project_name = document.getElementById("project_name").value;
 
             $.ajax({
                 type: "POST",
-                url: "/Account/NewProject",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify({ 'pName': project_name, 'projectType': project_template }),
-                //data: { 'pName': "ITI", 'pLocation': "ITI-3"},
-                dataType: "json",
-                success: function (result) {
-                    //confirm(result.Template);
+                url: "/Account/RenderDimsView",
+                //dataType: "json",
+                //contentType: "application/json; charset=utf-8",
+                //data: JSON.stringify({ 'pName': project_name, 'projectType': project_template }),
 
-                    myProjects[projectCounter] = document.createElement('div');
-                    myProjects[projectCounter].classList.add("project_item");
-                    myProjects[projectCounter].innerText = result.Name;
-                    myProjects[projectCounter].addEventListener("click", SetCurrentProject);
-                    project_listHTML.append(myProjects[projectCounter]);
+                success: function (result) {
+                    $("#WorkSpace_Content").replaceWith(result);
+                    console.log(result);
 
                     project_current = document.getElementById("project_current");
-                    project_current.innerText = result.Name;
+                    project_current.innerText = project_name;
                     projectCounter++;
-
-                    document.getElementById("partial_project").style.display = "none";
-                    document.getElementById("TemplateProductionDimensions").style.display = "block";
 
                     NextStage();
                     project_started = true;
-                    //$('#project_new').replaceWith();
                 },
                 error: function (result) {
-                    confirm(result);
+                    console.log(result);
+                    console.log("Error");
                 }
             });
         }
@@ -141,6 +187,9 @@
                     //Edit Configurations
                     document.getElementById("sideBar_edit_configs").classList.remove("side_bar_element_inActive");
                     document.getElementById("sideBar_edit_configs").classList.add("side_bar_element");
+
+
+
 
                     //Edit Location
                     document.getElementById("sideBar_edit_location").classList.remove("side_bar_element_inActive");
@@ -195,6 +244,11 @@
                     //Edit Configurations
                     document.getElementById("sideBar_edit_configs").classList.remove("side_bar_element");
                     document.getElementById("sideBar_edit_configs").classList.add("side_bar_element_Active");
+
+                    document.getElementById("TemplateProductionConfigurations").style.display = "block";
+                    //document.getElementById("TemplateProductionViewCube").style.display = "block";
+                    document.getElementById("TemplateProductionDimensions").style.display = "none";
+                    document.getElementById("TemplateProductionBays").style.display = "none";
 
                     currentStage++;
                     break;
@@ -358,6 +412,7 @@
         //document.getElementById("project_section_NameAndType").style.display="none";
         //confirm("adssa");
     }
+
     let _checkboxProduction = document.getElementById("production");
     let _checkboxShed = document.getElementById("shed");
     let _checkboxDoubleShed = document.getElementById("double_shed");

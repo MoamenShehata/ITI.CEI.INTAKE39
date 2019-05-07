@@ -1,0 +1,182 @@
+﻿<div id="TemplateProductionViewCube" style="display:none; width:100px;height:100px;position:absolute;right:12px;">
+    @* Original Material *@
+    <img src="@Url.Content("~/Images/ViewCube_Right.png")" alt="" style="display:none" id="Right_View" />
+    <img src="@Url.Content("~/Images/ViewCube_Front.png")" alt="" style="display:none" id="Front_View" />
+    <img src="@Url.Content("~/Images/ViewCube_Top.png")" alt="" style="display:none" id="Top_View" />
+
+    @* On Hover Material *@
+    <img src="@Url.Content("~/Images/ViewCube_Right_Hover.png")" alt="" style="display:none" id="Right_Hover" />
+    <img src="@Url.Content("~/Images/ViewCube_Front_Hover.png")" alt="" style="display:none" id="Front_Hover" />
+    <img src="@Url.Content("~/Images/ViewCube_Top_Hover.png")" alt="" style="display:none" id="Top_Hover" />
+</div>
+
+<script>
+    //#region   Minimum Need
+    let cubeFieldOfView = 45;
+    let cubeAspectRatio = 100 / 100;
+    let cubeNearClip = 10;
+    let cubeFarClip = 1000;
+
+    let cubeSize = 7;
+
+    let Cubeviewer = document.getElementById("TemplateProductionViewCube");
+
+    let cubeScene = CreateScene();
+    let cubeCamera = CreateCamera(cubeFieldOfView, cubeAspectRatio, cubeNearClip, cubeFarClip);
+    let cubeRenderer = CreateRenderer("TemplateProductionViewCube");
+    cubeRenderer.setSize(100, 100);
+
+    //let BaysorbitControl = new THREE.OrbitControls(cubeCamera, cubeRenderer.domElement);
+
+    let cubeRaycaster = new THREE.Raycaster();
+    let cubeMouse = new THREE.Vector2();
+    //#endregion
+
+    //#region   Material Definition
+    var RightView_Image_path = document.getElementById("Right_View").getAttribute("src");
+    var RightView_Texture = new THREE.TextureLoader().load(RightView_Image_path);
+    var materialRightView = new THREE.MeshBasicMaterial({ map: RightView_Texture });
+
+    var FrontView_Image_path = document.getElementById("Front_View").getAttribute("src");
+    var FrontView_texture = new THREE.TextureLoader().load(FrontView_Image_path);
+    var materialFrontView = new THREE.MeshBasicMaterial({ map: FrontView_texture });
+
+    var TopView_Image_path = document.getElementById("Top_View").getAttribute("src");
+    var TopView_texture = new THREE.TextureLoader().load(TopView_Image_path);
+    var materialTopView = new THREE.MeshBasicMaterial({ map: TopView_texture });
+
+    ////////////////////////////////////////////
+
+    var RightHover_Image_path = document.getElementById("Right_Hover").getAttribute("src");
+    var RightHover_Texture = new THREE.TextureLoader().load(RightHover_Image_path);
+    var materialRightHover = new THREE.MeshBasicMaterial({ map: RightHover_Texture });
+
+    var FrontHover_Image_path = document.getElementById("Front_Hover").getAttribute("src");
+    var FrontHover_texture = new THREE.TextureLoader().load(FrontHover_Image_path);
+    var materialFrontHover = new THREE.MeshBasicMaterial({ map: FrontHover_texture });
+
+    var TopHover_Image_path = document.getElementById("Top_Hover").getAttribute("src");
+    var TopHover_texture = new THREE.TextureLoader().load(TopHover_Image_path);
+    var materialTopHover = new THREE.MeshBasicMaterial({ map: TopHover_texture });
+
+    //#endregion
+
+    //#region Project_Components
+
+    let FrontView = CreateCube(0, cubeSize, cubeSize, materialFrontView, "ViewCube", "ViewCube_FrontView");
+    FrontView.position.x = -cubeSize / 2;
+
+    let RightView = CreateCube(cubeSize, cubeSize, 0, materialRightView, "ViewCube", "ViewCube_RightView");
+    RightView.position.z = cubeSize / 2;
+
+    let TopView = CreateCube(cubeSize, 0, cubeSize, materialTopView, "ViewCube", "ViewCube_TopView");
+    TopView.position.y = cubeSize;
+    TopView.position.z = 0;
+
+
+    cubeScene.add(FrontView);
+    cubeScene.add(RightView);
+    cubeScene.add(TopView);
+
+    SetCameraPosition(cubeCamera, -9, 14, 9);
+    cubeCamera.lookAt(new THREE.Vector3(0, 3.5, 0));
+
+    //#endregion
+
+    //#region ThreeJsViewer Controls
+    //var BaysBayWidthSlider;
+
+    //#endregion
+
+    //#region Dimensions
+    //var BaysLengthDim = new PebsDimension((project_span / -2) - 3, 0, project_length, "z");
+    //BaysLengthDim.DrawGeometry(Baysscene);
+
+    //#endregion
+
+    Update(cubeRenderer, cubeCamera, cubeScene);
+
+    var Cubeintersects = [];
+    var selected;
+
+    document.getElementById("TemplateProductionViewCube").addEventListener('mousedown', onDocumentMouseDown, false);
+    document.getElementById("TemplateProductionViewCube").addEventListener('mousemove', onDocumentMouseMove, false);
+
+    var selectedBay = null;
+    let oldColor = new THREE.Color('rgb(115, 115, 115)');
+    let newColor = new THREE.Color('rgb(79, 104, 149)');
+
+    function onDocumentMouseDown(event) {
+        let bounds = Cubeviewer.getBoundingClientRect();
+        cubeMouse.x = ((event.clientX - bounds.left) / Cubeviewer.clientWidth) * 2 - 1;
+        cubeMouse.y = - ((event.clientY - bounds.top) / Cubeviewer.clientHeight) * 2 + 1;
+        cubeRaycaster.setFromCamera(cubeMouse, cubeCamera);
+        Cubeintersects = cubeRaycaster.intersectObjects(cubeScene.children, true);
+
+        if (Cubeintersects.length > 0) {
+
+            //Front View Selecting
+            if (Cubeintersects[0].object.ObjectType != null && Cubeintersects[0].object.Name == "ViewCube_FrontView") {
+                //confirm("You Clicked Front View");
+                SetCameraPosition(ConfigCamera, -(project_span / 2) - 10, 1, -project_length / 2);
+                ConfigCamera.lookAt(new THREE.Vector3(-project_span / 2, 1, -project_length / 2));
+            }
+            else if (Cubeintersects[0].object.ObjectType != null && Cubeintersects[0].object.Name == "ViewCube_RightView") {
+                //confirm("You Clicked Right View");
+                SetCameraPosition(ConfigCamera, (project_span / 2) + 10, 1, -project_length / 2);
+                ConfigCamera.lookAt(new THREE.Vector3(project_span / 2, 1, -project_length / 2));
+            }
+
+            else if (Cubeintersects[0].object.ObjectType != null && Cubeintersects[0].object.Name == "ViewCube_TopView") {
+                //confirm("You Clicked Top View");
+                SetCameraPosition(ConfigCamera, 0, 20, -(project_length / 2));
+                ConfigCamera.lookAt(new THREE.Vector3(0, 0, -project_length / 2));
+            }
+
+        }
+        else {
+
+        }
+
+    }
+
+    function onDocumentMouseMove(event) {
+        let bounds = Cubeviewer.getBoundingClientRect();
+        cubeMouse.x = ((event.clientX - bounds.left) / Cubeviewer.clientWidth) * 2 - 1;
+        cubeMouse.y = - ((event.clientY - bounds.top) / Cubeviewer.clientHeight) * 2 + 1;
+        cubeRaycaster.setFromCamera(cubeMouse, cubeCamera);
+        Cubeintersects = cubeRaycaster.intersectObjects(cubeScene.children, true);
+
+        if (Cubeintersects.length > 0) {
+            //debugger;
+
+            //Front View Selecting
+            if (Cubeintersects[0].object.ObjectType != null && Cubeintersects[0].object.Name == "ViewCube_FrontView") {
+                Cubeintersects[0].object.material = materialFrontHover;
+                RightView.material = materialRightView;
+                TopView.material = materialTopView;
+
+                console.log(Cubeintersects[0].object.Name);
+            }
+            else if (Cubeintersects[0].object.ObjectType != null && Cubeintersects[0].object.Name == "ViewCube_RightView") {
+                Cubeintersects[0].object.material = materialRightHover;
+                FrontView.material = materialFrontView;
+                TopView.material = materialTopView;
+            }
+
+            else if (Cubeintersects[0].object.ObjectType != null && Cubeintersects[0].object.Name == "ViewCube_TopView") {
+                Cubeintersects[0].object.material = materialTopHover;
+                RightView.material = materialRightView;
+                FrontView.material = materialFrontView;
+            }
+
+        }
+        else {
+            RightView.material = materialRightView;
+            FrontView.material = materialFrontView;
+            TopView.material = materialTopView;
+        }
+
+    }
+
+</script>

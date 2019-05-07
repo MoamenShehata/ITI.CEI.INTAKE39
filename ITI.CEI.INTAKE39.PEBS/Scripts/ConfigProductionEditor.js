@@ -1,0 +1,353 @@
+﻿<div id="TemplateProductionDimensions" style="display:none;width:1367px;height:520px;position:absolute">
+    <img src="@Url.Content("~/Images/slider.png")" alt="" style="display:none" id="slider_image" />
+    <img src="@Url.Content("~/Images/cladding_Material_2.jpg")" alt="" style="display:none" id="cladding_image" />
+    <img src="@Url.Content("~/Images/Plus.jpg")" alt="" style="display:none" id="Plus_image" />
+    <img src="@Url.Content("~/Images/Minus.jpg")" alt="" style="display:none" id="Minus_image" />
+
+</div>
+
+    <script>
+
+
+
+        //#region   Minimum Need
+        let DimfieldOfView = 45;
+        let DimAspectRatio = 1367 / 470;
+        //let AspectRatio = window.innerWidth / window.innerHeight;
+        let DimnearClip = 1;
+        let DimfarClip = 1000;
+
+        let Dimviewer = document.getElementById("TemplateProductionDimensions");
+
+        let Dimscene = CreateScene();
+        let Dimcamera = CreateCamera(DimfieldOfView, DimAspectRatio, DimnearClip, DimfarClip);
+        let Dimrenderer = CreateRenderer("TemplateProductionDimensions");
+        let DimorbitControl = new THREE.OrbitControls(Dimcamera, Dimrenderer.domElement);
+
+        let Dimraycaster = new THREE.Raycaster();
+        let Dimmouse = new THREE.Vector2();
+        //#endregion
+
+        //#region   Material Definition
+        var blueMaterial = NewMaterialByColor(0x0000ff);
+        var greenMaterial = NewMaterialByColor(0x00FF00);
+        var redMaterial = NewMaterialByColor(0xFF0000);
+        var yellowMaterial = NewMaterialByColor('rgb(238, 255, 0)');
+        var whiteMaterial = NewMaterialByColor('rgb(255, 255, 255)');
+
+        var Slider_Image_path = document.getElementById("slider_image").getAttribute("src");
+        var sliderTexture = new THREE.TextureLoader().load(Slider_Image_path);
+    var materialSlider = new THREE.MeshBasicMaterial({map: sliderTexture });
+
+        var slider_plus_image = document.getElementById("Plus_image").getAttribute("src");
+        var slider_plus_texture = new THREE.TextureLoader().load(slider_plus_image);
+    var SliderMaterialPlus = new THREE.MeshBasicMaterial({map: slider_plus_texture });
+
+        var slider_minus_image = document.getElementById("Minus_image").getAttribute("src");
+        var slider_minus_texture = new THREE.TextureLoader().load(slider_minus_image);
+    var SliderMaterialMinus = new THREE.MeshBasicMaterial({map: slider_minus_texture });
+
+        //#endregion
+
+        //#region Template Parameters
+        var project_span = 24;
+        var project_endgable_span = 6;
+        var project_endgable_count = project_span / project_endgable_span;
+        var project_height = 6;
+        var project_length = 80;
+        var project_spacing = 5;
+        var project_slope = 0.1;
+
+        var project_span_min = 24;
+        var project_span_max = 36;
+
+        var project_height_min = 6;
+        var project_height_max = 10;
+
+        var project_length_min = 80;
+        var project_length_max = 100;
+
+        var project_spacing_min = 5;
+        var project_spacing_max = 7;
+
+        var project_slope_min = .01;
+        var project_slope_max = .1;
+
+        //#endregion
+
+        var objects = [];
+        SetCameraPosition(Dimcamera, 20, 20, 20);
+        Dimcamera.lookAt(new THREE.Vector3(0, 0, -project_length / 2));
+
+        var dragControls = new THREE.DragControls(objects, Dimcamera, Dimrenderer.domElement);
+    dragControls.addEventListener('dragstart', function (controls) {
+            //confirm("Drag Started");
+            controls.enabled = false;
+
+        });
+    dragControls.addEventListener('dragend', function (controls) {
+            //confirm("Drag Ended");
+
+            controls.enabled = true;
+        });
+        dragControls.addEventListener('mousedown', mouseDown, false);
+
+    function mouseDown() {
+            confirm("mouse downed");
+        }
+        //#region Project_Components
+
+        var sideCladding = new CladdingDoubleSide(project_span, project_height, project_length);
+        sideCladding.DrawGeometry(Dimscene);
+
+        var roof = new RoofDouble(project_span, project_length, project_slope, project_height);
+        roof.DrawGeometry(Dimscene);
+
+        objects.push(sideCladding.RightCladding);
+        objects.push(sideCladding.LeftCladding);
+        objects.push(roof.RightRoof);
+        objects.push(roof.LeftRoof);
+        //#endregion
+
+        //#region ThreeJsViewer Controls
+        let DimHeightSlider = new PebsVerticalSlider(0.7, .2, "Height", -(project_span / 2) - 1);
+        DimHeightSlider.Draw(Dimscene);
+
+        let DimLengthSlider = new PebsHorizontalSlider(0.7, .2, "Length", 0);
+        DimLengthSlider.Draw(Dimscene);
+        DimLengthSlider.Slider.position.x = (project_span / 2) + 1;
+        //LengthSlider.Slider.position.y = 0.5;
+
+        let DimSpanSlider = new PebsHorizontalSlider(0.7, .2, "Span", 0);
+        DimSpanSlider.Draw(Dimscene);
+        DimSpanSlider.Slider.rotation.y = Math.PI / 2;
+        //SpanSlider.Slider.position.y = .5;
+
+        let DimSlopeSlider = new PebsVerticalSlider(0.7, .2, "Slope", 0);
+        DimSlopeSlider.Draw(Dimscene);
+        DimSlopeSlider.Slider.position.y = project_height;
+        DimSlopeSlider.Slider.position.z = .2;
+        //#endregion
+
+        //#region Dimensions
+        let DimlengthDim = new PebsDimension(15, 0, project_length, "z");
+        DimlengthDim.DrawGeometry(Dimscene);
+
+        let DimspanDim = new PebsDimension(project_span / 2, 1, project_span, "x");
+        DimspanDim.DrawGeometry(Dimscene);
+        //#endregion
+
+
+
+    function EditProjectSlope(newSlope) {
+            let result = false;
+        if (newSlope >= project_slope_min && newSlope <= project_slope_max) {
+            roof.SetSlope(newSlope);
+        project_slope = newSlope;
+        result = true;
+    }
+        else if (newSlope < project_slope_min) {
+            confirm("Span Must Be At Least " + project_slope_min + " m");
+        result = false;
+    }
+        else if (newSlope > project_slope_max) {
+            confirm("Span Can not Exceed Value Of" + project_slope_max);
+        result = false;
+    }
+    return result;
+}
+
+    function EditProjectSpan(newSpan) {
+            let result = false;
+        if (newSpan >= project_span_min && newSpan <= project_span_max) {
+            sideCladding.SetSpan(newSpan);
+        roof.SetSpan(newSpan);
+        DimHeightSlider.Slider.position.x = -(newSpan / 2) - 1;
+        DimLengthSlider.Slider.position.x = (newSpan / 2) + 1;
+        DimspanDim.SetLength(newSpan);
+        project_span = newSpan;
+        result = true;
+        //console.log(project_span);
+    }
+        else if (newSpan < project_span_min) {
+            confirm("Span Must Be At Least " + project_span_min + " m");
+        result = false;
+    }
+        else if (newSpan > project_span_max) {
+            confirm("Span Can not Exceed Value Of" + project_span_max + " m");
+        result = false;
+    }
+    return result;
+}
+
+    function EditProjectLength(newLength) {
+            let result = false;
+        if (newLength >= project_length_min && newLength <= project_length_max) {
+            sideCladding.SetLength(newLength);
+        roof.SetLength(newLength);
+        DimlengthDim.SetLength(newLength);
+        project_length = newLength;
+        result = true;
+    }
+        else if (newLength < project_length_min) {
+            confirm("Length Must Be At Least " + project_length_min + " m");
+        result = false;
+    }
+        else if (newLength > project_length_max) {
+            confirm("Length Can not Exceed Value Of" + project_length_max + " m");
+        result = false;
+    }
+    return result;
+}
+
+    function EditProjectHeight(newHeight) {
+            let result = false;
+        if (newHeight >= project_height_min && newHeight <= project_height_max) {
+            sideCladding.SetHeight(newHeight);
+        roof.SetHeight(newHeight);
+        DimSlopeSlider.Slider.position.y = newHeight;
+        project_height = newHeight;
+        result = true;
+    }
+        else if (newHeight < project_height_min) {
+            confirm("Height Must Be At Least " + project_height_min + " m");
+        result = false;
+    }
+        else if (newHeight > project_height_max) {
+            confirm("Height Can not Exceed Value Of" + project_height_max + " m");
+        result = false;
+    }
+
+}
+
+Update(Dimrenderer, Dimcamera, Dimscene);
+
+OnClick(onDocumentMouseDown);
+//OnHover(onDocumentMouseMove);
+
+    function onDocumentMouseDown(event) {
+            //debugger
+
+            let bounds = Dimviewer.getBoundingClientRect();
+        Dimmouse.x = ((event.clientX - bounds.left) / Dimviewer.clientWidth) * 2 - 1;
+        Dimmouse.y = - ((event.clientY - bounds.top) / Dimviewer.clientHeight) * 2 + 1;
+        Dimraycaster.setFromCamera(Dimmouse, Dimcamera);
+        let Dimintersects = Dimraycaster.intersectObjects(Dimscene.children, true);
+        if (Dimintersects.length > 0) {
+
+            if (Dimintersects[0].object.ObjectType != null && Dimintersects[0].object.ObjectType.includes("PEBS_OBJ")) {
+            //Dimintersects[0].object.material.color.setHex(Math.random() * 0xffffff);
+            //Dimintersects[0].object.material.color = new THREE.Color( 'rgb(238, 255, 0)' );
+            console.log(Dimintersects[0].object);
+        }
+
+        //Height SLider Functionality On Click
+            if (Dimintersects[0].object.ObjectType != null && Dimintersects[0].object.Name == "Height_Slider_Plus") {
+            //debugger;
+            let NewHeight = project_height + .25;
+                if (EditProjectHeight(NewHeight)) {
+        }
+        }
+            if (Dimintersects[0].object.ObjectType != null && Dimintersects[0].object.Name == "Height_Slider_Minus") {
+            let NewHeight = project_height - .25;
+                if (EditProjectHeight(NewHeight)) {
+        }
+        }
+
+        //Length SLider Functionality On Click
+            if (Dimintersects[0].object.ObjectType != null && Dimintersects[0].object.Name == "Length_Slider_Plus") {
+            let NewLength = project_length + .5;
+                if (EditProjectLength(NewLength)) {
+            PlotProjectBays(project_span, project_spacing, NewLength);
+        }
+
+    }
+            if (Dimintersects[0].object.ObjectType != null && Dimintersects[0].object.Name == "Length_Slider_Minus") {
+            let NewLength = project_length - .5;
+                if (EditProjectLength(NewLength)) {
+        }
+        }
+
+        //Span SLider Functionality On Click
+            if (Dimintersects[0].object.ObjectType != null && Dimintersects[0].object.Name == "Span_Slider_Plus") {
+            let NewSpan = project_span + .5;
+                if (EditProjectSpan(NewSpan)) {
+            DimlengthDim.DimensionLine.position.x += .5;
+        DimlengthDim.StartExtent.position.x += .5;
+        DimlengthDim.EndExtent.position.x += .5;
+    }
+}
+
+            if (Dimintersects[0].object.ObjectType != null && Dimintersects[0].object.Name == "Span_Slider_Minus") {
+            let NewSpan = project_span - .5;
+                if (EditProjectSpan(NewSpan)) {
+            DimlengthDim.DimensionLine.position.x -= .5;
+        DimlengthDim.StartExtent.position.x -= .5;
+        DimlengthDim.EndExtent.position.x -= .5;
+    }
+}
+//Slope SLider Functionality On Click
+            if (Dimintersects[0].object.ObjectType != null && Dimintersects[0].object.Name == "Slope_Slider_Plus") {
+            let NewSlope = project_slope + .01;
+                if (EditProjectSlope(NewSlope)) {
+        }
+        }
+            if (Dimintersects[0].object.ObjectType != null && Dimintersects[0].object.Name == "Slope_Slider_Minus") {
+            let NewSlope = project_slope - .01;
+                if (EditProjectSlope(NewSlope)) {
+        }
+        }
+    }
+}
+
+let intersected;
+let oldcolor;
+    function onDocumentMouseMove(event) {
+
+            let bounds = viewer.getBoundingClientRect()
+        mouse.x = ((event.clientX - bounds.left) / viewer.clientWidth) * 2 - 1;
+        mouse.y = - ((event.clientY - bounds.top) / viewer.clientHeight) * 2 + 1;
+        raycaster.setFromCamera(mouse, camera);
+        let intersects = raycaster.intersectObjects(Dimscene.children, true);
+
+
+        if (intersects.length > 0) {
+
+            if (intersects[0].object.hasOwnProperty("ObjectType") == true && intersects[0].object.ObjectType.includes("PEBS_OBJ")) {
+
+            intersected = intersects[0].object;
+        oldcolor = intersected.material.color.getStyle().toString();
+        console.log("intersected Before Assign : " + intersected.material.color.getStyle().toString());
+
+        let newColor = new THREE.Color('rgb(0, 0, 200)');
+        intersects[0].object.material.color = newColor;
+        //console.log("moamen");
+    }
+            else if (intersected != null) {
+            console.log("AnyThing");
+        intersected.material.color = new THREE.Color(oldcolor);
+        //intersected.material.color = new THREE.Color('rgb(0, 0, 255)');
+    }
+}
+
+
+//intersected != null && intersected.ObjectType.includes("PEBS_OBJ");
+        //else if(){
+            //	console.log(oldcolor);
+            //	intersected.material.color = oldcolor;
+            //	//intersected.material.color = new THREE.Color('rgb(0, 0, 255)');
+            //}
+        }
+
+    //let lbl_dimensions = document.getElementById("dimension_label");
+    //lbl_dimensions.onclick = function () {
+    //    document.getElementById("TemplateProductionDimensions").style.display = "block";
+    //    document.getElementById("TemplateProductionBays").style.display = "none";
+    //}
+
+    //let lbl_Bays = document.getElementById("Bays_label");
+    //lbl_Bays.onclick = function () {
+    //    document.getElementById("TemplateProductionDimensions").style.display = "none";
+    //    document.getElementById("TemplateProductionBays").style.display = "block";
+    //}
+</script>

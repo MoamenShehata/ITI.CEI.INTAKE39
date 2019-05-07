@@ -1,4 +1,4 @@
-﻿<div id="TemplateProductionBays" style="display:none;width:1367px;height:520px;position:absolute">
+﻿<div id="TemplateProductionBays" style="display:none; width:1367px;height:520px;position:absolute">
     <img src="@Url.Content("~/Images/slider.png")" alt="" style="display:none" id="slider_image" />
     <img src="@Url.Content("~/Images/cladding_Material_2.jpg")" alt="" style="display:none" id="cladding_image" />
     <img src="@Url.Content("~/Images/Plus.jpg")" alt="" style="display:none" id="Plus_image" />
@@ -10,13 +10,13 @@
     //#region   Minimum Need
     let BaysfieldOfView = 45;
     let BaysAspectRatio = 1367 / 470;
-    let BaysnearClip = 10;
-    let BaysfarClip = 1000;
+    let BaysNearClip = 10;
+    let BaysFarClip = 1000;
 
     let Baysviewer = document.getElementById("TemplateProductionBays");
 
     let Baysscene = CreateScene();
-    let Bayscamera = CreateCamera(BaysfieldOfView, BaysAspectRatio, BaysnearClip, BaysfarClip);
+    let BaysCamera = CreateCamera(BaysfieldOfView, BaysAspectRatio, BaysNearClip, BaysFarClip);
     let Baysrenderer = CreateRenderer("TemplateProductionBays");
     //let BaysorbitControl = new THREE.OrbitControls(Bayscamera, Baysrenderer.domElement);
 
@@ -24,9 +24,9 @@
     let Baysmouse = new THREE.Vector2();
     //#endregion
 
-    SetCameraPosition(Bayscamera, 0, 40, -(project_length / 2));
-    Bayscamera.lookAt(new THREE.Vector3(0, 0, -project_length / 2));
-    Bayscamera.rotation.z = Math.PI / 2;
+    SetCameraPosition(BaysCamera, 0, 40, -(project_length / 2));
+    BaysCamera.lookAt(new THREE.Vector3(0, 0, -project_length / 2));
+    BaysCamera.rotation.z = Math.PI / 2;
 
     //#region Project_Components
     PlotProjectBays(project_span, 5, project_length)
@@ -60,7 +60,7 @@
         BaysBayWidthSlider.Slider.position.x = (project_span / 2) + 1;
         bays = [];
 
-        let leftOrigin = 14 0;
+        let leftOrigin = 140;
         let topOrigin = 32;
         //step 74px in left;
         for (var i = 0; i < totalLength; i += bayWidth) {
@@ -82,7 +82,7 @@
         }
     }
 
-    Update(Baysrenderer, Bayscamera, Baysscene);
+    Update(Baysrenderer, BaysCamera, Baysscene);
 
     OnClick(onDocumentMouseDown);
 
@@ -91,7 +91,7 @@
         let bounds = Baysviewer.getBoundingClientRect();
         Baysmouse.x = ((event.clientX - bounds.left) / Baysviewer.clientWidth) * 2 - 1;
         Baysmouse.y = - ((event.clientY - bounds.top) / Baysviewer.clientHeight) * 2 + 1;
-        Baysraycaster.setFromCamera(Baysmouse, Bayscamera);
+        Baysraycaster.setFromCamera(Baysmouse, BaysCamera);
         let Baysintersects = Baysraycaster.intersectObjects(Baysscene.children, true);
         if (Baysintersects.length > 0) {
 

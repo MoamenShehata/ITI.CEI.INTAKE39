@@ -18,6 +18,7 @@ namespace ITI.CEI.INTAKE39.PEBS
                        "~/Scripts/three.js",
                        "~/Scripts/OrbitControls.js",
                        "~/Scripts/ThreeJsViewer.js",
+                       "~/Scripts/DragControls.js",
                        "~/Scripts/Entities.js"
                        ));
 

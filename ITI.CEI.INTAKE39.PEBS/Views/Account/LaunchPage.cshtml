@@ -1,18 +1,18 @@
 ﻿@model RegisterViewModel
 
 @{
-    ViewBag.Title = "LinkedIn Log In Or Sign up";
+    ViewBag.Title = "Log In Or Sign up - PEBS 2019";
     Layout = "~/Views/Shared/_My_Layout_Launch.cshtml";
 }
 
-<div class="background" style="background-image:url('/Images/steel_construction_technology.jpg');background-size:cover;height:600px">
+<div class="background" style="background-image:url('/Images/steel_construction_technology.jpg');background-size:cover;height:629px">
 
 </div>
 
-<div class="reister_section">
+<div class="register_section">
     <div class="header">
         <h3>Design Your Own Building</h3>
-        <p>Get started - it's free.</p>
+        @*<p>Get started - it's free.</p>*@
     </div>
     <div class="user_logins">
         @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -51,14 +51,21 @@
             </div>
             <div class="form-group" style="margin-bottom:5px">
                 <div class="col-md-offset-2 col-md-10" style="text-align:center">
-                    <input type="submit" class="btn btn-primary " value="Join Now" style="width:120%;margin:auto;left:50%;transform:translateX(-18%)" />
+                    <input type="submit" class="btn btn-primary " value="Register As A Client" style="width:120%;margin:auto;left:50%;transform:translate(-18%,5px)" />
                 </div>
+            </div>
+            <div class="form-group admin_register" style="margin-top:10px">
+                <div class="col-md-offset-2 col-md-10" style="text-align:center">
+                    <label style="width:120%;margin:auto;left:50%;transform:translateX(-10%)"> OR </label>
+                    <input type="submit" class="btn btn-primary " value="Register As Provider" style="margin-top:10px;width:120%;margin:auto;left:50%;transform:translate(-18%,5px)" />
+                </div>
+
             </div>
         }
     </div>
 </div>
 
 @section Scripts {
-    
+
     @Scripts.Render("~/bundles/jqueryval")
 }
