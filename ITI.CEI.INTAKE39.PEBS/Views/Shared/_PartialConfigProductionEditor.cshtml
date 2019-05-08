@@ -1,5 +1,6 @@
-﻿<div id="TemplateProductionConfigurations" style="display:none;width:1367px;height:520px;position:absolute">
+﻿<div id="TemplateProductionConfigurations" style="width:1367px;height:520px;position:absolute">
     <img src="@Url.Content("~/Images/cladding_Material_2.jpg")" alt="" style="display:none" id="cladding_image" />
+    <img src="@Url.Content("~/Images/grass.jpg")" alt="" style="display:none" id="grass_image" />
 
 </div>
 
@@ -33,13 +34,13 @@
     //var sliderTexture = new THREE.TextureLoader().load(Slider_Image_path);
     //var materialSlider = new THREE.MeshBasicMaterial({ map: sliderTexture });
 
-    var slider_plus_image = document.getElementById("Plus_image").getAttribute("src");
-    var slider_plus_texture = new THREE.TextureLoader().load(slider_plus_image);
-    var SliderMaterialPlus = new THREE.MeshBasicMaterial({ map: slider_plus_texture });
+    //var slider_plus_image = document.getElementById("Plus_image").getAttribute("src");
+    //var slider_plus_texture = new THREE.TextureLoader().load(slider_plus_image);
+    //var SliderMaterialPlus = new THREE.MeshBasicMaterial({ map: slider_plus_texture });
 
-    var slider_minus_image = document.getElementById("Minus_image").getAttribute("src");
-    var slider_minus_texture = new THREE.TextureLoader().load(slider_minus_image);
-    var SliderMaterialMinus = new THREE.MeshBasicMaterial({ map: slider_minus_texture });
+    //var slider_minus_image = document.getElementById("Minus_image").getAttribute("src");
+    //var slider_minus_texture = new THREE.TextureLoader().load(slider_minus_image);
+    //var SliderMaterialMinus = new THREE.MeshBasicMaterial({ map: slider_minus_texture });
 
     //#endregion
 
@@ -67,6 +68,15 @@
     }
 
     //#region Project_Components
+    var myWindows = [];
+
+    var Grass_Image_path = document.getElementById("grass_image").getAttribute("src");
+    var Grass_plus_texture = new THREE.TextureLoader().load(Grass_Image_path);
+    var GrassMaterial = new THREE.MeshBasicMaterial({ map: Grass_plus_texture });
+
+    var ground = CreateCube(project_span + 5, .5, project_length + 5, GrassMaterial, "Ground", "Ground-1");
+    ground.position.z -= project_length / 2;
+    ConfigScene.add(ground);
 
     var sideCladding1 = new CladdingDoubleSide(project_span, project_height, project_length);
     sideCladding1.DrawGeometry(ConfigScene);
@@ -79,6 +89,19 @@
 
     var backWall = new FrontWall(project_span, project_height, project_slope, -project_length);
     backWall.DrawGeometry(ConfigScene);
+
+    var doublew1 = new RowWindow(2, 1, "rgb(180, 118, 4)", "front", -3, 6.5, 0, 3);
+    doublew1.DrawGeometry(ConfigScene);
+
+    for (let i = 5; i < project_length; i += 15) {
+        let windowright = new SingleWindow(2, 1.5, "rgb(180, 118, 4)", "side", project_span / 2, project_height - 0.5, -i);
+        let windowleft = new SingleWindow(2, 1.5, "rgb(180, 118, 4)", "side", -project_span / 2, project_height - 0.5, -i);
+        myWindows.push(windowright);
+        myWindows.push(windowleft);
+        windowright.DrawGeometry(ConfigScene);
+        windowleft.DrawGeometry(ConfigScene);
+    }
+
 
     objects.push(sideCladding1.RightCladding);
     objects.push(sideCladding1.LeftCladding);

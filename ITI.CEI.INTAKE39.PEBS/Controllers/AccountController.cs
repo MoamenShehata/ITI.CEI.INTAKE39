@@ -75,6 +75,16 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
         }
 
         [HttpPost]
+        public ActionResult RenderConfigView()
+        {
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_PartialConfigProductionEditor");
+            }
+            return null;
+        }
+
+        [HttpPost]
         public ActionResult RenderBaysView()
         {
             if (Request.IsAjaxRequest())

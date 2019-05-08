@@ -151,7 +151,7 @@
 
                 success: function (result) {
                     $("#WorkSpace_Content").replaceWith(result);
-                    console.log(result);
+                    //console.log(result);
 
                     project_current = document.getElementById("project_current");
                     project_current.innerText = project_name;
@@ -237,6 +237,7 @@
                     break;
 
                 case 2:
+                    //debugger;
                     //Edit Dimensions
                     document.getElementById("sideBar_edit_dimensions").classList.remove("side_bar_element_Active");
                     document.getElementById("sideBar_edit_dimensions").classList.add("side_bar_element");
@@ -245,10 +246,7 @@
                     document.getElementById("sideBar_edit_configs").classList.remove("side_bar_element");
                     document.getElementById("sideBar_edit_configs").classList.add("side_bar_element_Active");
 
-                    document.getElementById("TemplateProductionConfigurations").style.display = "block";
-                    //document.getElementById("TemplateProductionViewCube").style.display = "block";
-                    document.getElementById("TemplateProductionDimensions").style.display = "none";
-                    document.getElementById("TemplateProductionBays").style.display = "none";
+                    RenderConfigView();
 
                     currentStage++;
                     break;

@@ -252,6 +252,220 @@ class RoofDouble extends THREE.Mesh {
     }
 }
 
+class SingleWindow extends THREE.Mesh {
+    constructor(width, height, frameColor, workPlane, x, y, z) {
+        super();
+        this.Width = width;
+        this.Height = height;
+        this.FrameColor = frameColor;
+        this.WorkPlane = workPlane;
+        this.X = x;
+        this.Y = y;
+        this.Z = z;
+        this.Frame = null;
+        this.Glass = null;
+        this.Window = null;
+    }
+
+    DrawGeometry(scene) {
+        var frameMaterial = NewMaterialByColor(this.FrameColor);
+        var glassMaterial = NewMaterialByColor('rgb(94, 92, 89)');
+
+        let Frame;
+        let Glass;
+        let thick = .1;
+
+        switch (this.WorkPlane) {
+            case "front":
+                Frame = CreateCube(this.Width, this.Height, thick, frameMaterial, "Window_Frame", "Window_Frame_1");
+                Frame.position.x = this.X;
+                Frame.position.y = this.Y - this.Height / 2;
+                Frame.rotation.z = this.Z;
+                Glass = CreateCube(this.Width - .2, this.Height - .2, thick, glassMaterial, "Window_Glass", "Window_Glass_1");
+                Glass.position.y = 0;
+                if (this.Z > 0) {
+                    Glass.position.z += 0.005;
+                }
+                else {
+                    Glass.position.z -= 0.005;
+                }
+                break;
+
+            case "side":
+                Frame = CreateCube(thick, this.Height, this.Width, frameMaterial, "Window_Frame", "Window_Frame_1");
+                Frame.position.x = this.X;
+                Frame.position.y = this.Y - this.Height / 2;
+                Frame.position.z = this.Z - this.Width / 2;
+
+                Glass = CreateCube(thick, this.Height - .2, this.Width - .2, glassMaterial, "Window_Glass", "Window_Glass_1");
+                Glass.position.y = 0;
+                if (this.X > 0) {
+                    Glass.position.x += 0.005;
+                }
+                else {
+                    Glass.position.x -= 0.005;
+                }
+                break;
+        }
+
+        Frame.add(Glass);
+        scene.add(Frame);
+
+        this.Window = Frame;
+        return Frame;
+    }
+
+    SetWidth(newWidth) {
+        let oldwidth = this.Width;
+        switch (this.WorkPlane) {
+            case "front":
+                this.Window.scale.x *= (newWidth / oldwidth);
+                this.Width = newWidth;
+                break;
+
+            case "side":
+                this.Window.scale.z *= (newWidth / oldwidth);
+                this.Width = newWidth;
+                break;
+        }
+    }
+
+    SetHeight(newHeight) {
+        let oldHeight = this.Height;
+        this.Window.scale.y *= (newHeight / oldHeight);
+        this.Window.position.y = this.Y - newHeight / 2;
+        this.Height = newHeight;
+    }
+
+    SetFrameColor(newColor) {
+        this.Window.material.color = new THREE.Color(newColor);
+    }
+}
+
+class RowWindow extends THREE.Mesh {
+    constructor(pWidth, height, frameColor, workPlane, x, y, z, n) {
+        super();
+        this.PWidth = pWidth;
+        this.TotalWidth = 0;
+        this.Height = height;
+        this.FrameColor = frameColor;
+        this.WorkPlane = workPlane;
+        this.Number = n;
+        this.X = x;
+        this.Y = y;
+        this.Z = z;
+        this.Frame = null;
+        this.Window = null;
+        this.Panels = [];
+    }
+
+
+    DrawGeometry(scene) {
+        var frameMaterial = NewMaterialByColor(this.FrameColor);
+        var glassMaterial = NewMaterialByColor('rgb(94, 92, 89)');
+
+        let Frame;
+        let thick = .1;
+
+        switch (this.WorkPlane) {
+            case "front":
+                Frame = CreateCube(.0000001, .0000001, .0000001, frameMaterial, "Window_pivot", "Window_pivot_1");
+                Frame.position.x = this.X + this.PWidth / 2;
+                Frame.position.y = this.Y - this.Height / 2;
+                Frame.position.z = this.Z;
+
+                for (var i = 0; i < this.Number; i++) {
+                    let frame = CreateCube(this.PWidth, this.Height, thick, frameMaterial, "Window_Frame", "Window_Frame_1");
+                    let glass = CreateCube(this.PWidth - .2, this.Height - .2, thick, glassMaterial, "Window_Glass", "Window_Glass_1");
+                    this.Panels.push(glass);
+                    glass.position.y = 0;
+                    if (this.Z > 0) {
+                        glass.position.z -= 0.005;
+                    }
+                    else {
+                        glass.position.z += 0.005;
+                    }
+                    frame.add(glass);
+                    Frame.add(frame);
+                    frame.position.x += i * this.PWidth;
+                    frame.position.y -= this.Height / 2;
+                }
+                this.TotalWidth = this.PWidth * this.Number;
+                Frame.position.z = this.Z;
+                break;
+
+            case "side":
+                Frame = CreateCube(.0000001, .0000001, .0000001, frameMaterial, "Window_pivot", "Window_pivot_1");
+                Frame.position.x = this.X;
+                Frame.position.y = this.Y - this.Height / 2;
+                Frame.position.z = this.Z;
+
+                for (var i = 0; i < this.Number; i++) {
+                    let frame = CreateCube(thick, this.Height, this.PWidth, frameMaterial, "Window_Frame", "Window_Frame_1");
+                    let glass = CreateCube(thick, this.Height - .2, this.PWidth - .2, glassMaterial, "Window_Glass", "Window_Glass_1");
+                    this.Panels.push(glass);
+                    glass.position.y = 0;
+                    if (this.X > 0) {
+                        glass.position.x += 0.005;
+                    }
+                    else {
+                        glass.position.x -= 0.005;
+                    }
+                    frame.add(glass);
+                    Frame.add(frame);
+                    frame.position.z -= i * this.PWidth;
+                    frame.position.y -= this.Height / 2;
+                }
+                this.TotalWidth = this.PWidth * this.Number;
+                Frame.position.x = this.X;
+                Frame.position.z = this.Z - this.PWidth / 2;
+                break;
+        }
+        scene.add(Frame);
+
+        this.Window = Frame;
+        return Frame;
+    }
+
+    SetTotalWidth(newWidth) {
+        let oldwidth = this.TotalWidth;
+        switch (this.WorkPlane) {
+            case "front":
+                this.Window.scale.x *= (newWidth / oldwidth);
+                this.PWidth = newWidth / this.Number;
+                this.Window.position.x = this.X + this.PWidth / 2;
+                this.TotalWidth = newWidth;
+                break;
+
+            case "side":
+                this.Window.scale.z *= (newWidth / oldwidth);
+                this.TotalWidth = newWidth;
+                this.PWidth = newWidth / this.Number;
+                this.Window.position.z = this.Z - this.PWidth / 2;
+                break;
+        }
+    }
+
+    SetHeight(newHeight) {
+        let oldHeight = this.Height;
+
+        this.Window.scale.y *= (newHeight / oldHeight);
+        this.Window.position.y = this.Y - newHeight / 2;
+
+        //for (var i = 0; i < this.Panels.Length; i++) {
+        //    this.Panels[i].scale.y *= (newHeight - .4 / oldHeight - .4);
+        //    //this.Panels[i].position.y = this.Window.position.y - .2;
+        //}
+
+
+        this.Height = newHeight;
+    }
+
+    SetFrameColor(newColor) {
+        this.Window.material.color = new THREE.Color(newColor);
+    }
+}
+
 class IBeamColumn {
     constructor(height, flangeWidth, flangeThickness, webHeight, webThickness, x, z) {
         this.Height = height;
@@ -410,6 +624,58 @@ class Bay extends THREE.Mesh {
 
 }
 
+
+class MyWindow {
+    constructor(hieght, width, materialUrl, x, y) {
+        this.hieght = hieght;
+        this.width = width;
+        this.materialUrl = materialUrl;
+        this.x = x;
+        this.y = y;
+        this.Window = null;
+    }
+    DrawWindow(scene, material) {
+        var Windowgeometry = new THREE.BoxGeometry(this.hieght, this.width, .1);
+        //THREE.ImageUtils.crossOrigin = '';
+        //var Windowtexture = THREE.ImageUtils.loadTexture(this.materialUrl);
+        //Windowtexture.anisotropy = renderer.getMaxAnisotropy();
+        var WindowMaterial = [
+            new THREE.MeshBasicMaterial({
+                color: 'White' //left
+            }),
+            new THREE.MeshBasicMaterial({
+                color: 'White' // top
+            }),
+            new THREE.MeshBasicMaterial({
+                color: 'White' // bottom
+            }),
+            new THREE.MeshBasicMaterial({
+                color: 'White' //
+            }),
+            new THREE.MeshBasicMaterial({
+                map: material //front
+            }),
+            new THREE.MeshBasicMaterial({
+                map: material //front
+            }),
+        ];
+        this.Window = new THREE.Mesh(Windowgeometry, WindowMaterial);
+        this.Window.position.x = this.x;
+        this.Window.position.y = this.y;
+        scene.add(this.Window);
+        //camera.position.z = 3;
+    }
+    MoveWindow(X, Y) {
+        this.x = X;
+        this.y = Y;
+        // this.DrawWindow(scene);
+        this.Window.position.x = this.x;
+        this.Window.position.y = this.y;
+    }
+
+
+
+}
 
 
 // #region For Test*/

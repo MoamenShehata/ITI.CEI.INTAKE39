@@ -283,6 +283,7 @@
     <Content Include="Images\agri.jpeg" />
     <Content Include="Images\cladding_Material_1.jpg" />
     <Content Include="Images\cladding_Material_2.jpg" />
+    <Content Include="Images\grass.jpg" />
     <Content Include="Images\Minus.jpg" />
     <Content Include="Images\Plus.jpg" />
     <Content Include="Images\production.jpg" />
@@ -296,6 +297,7 @@
     <Content Include="Images\ViewCube_Right_Hover.png" />
     <Content Include="Images\ViewCube_Top.png" />
     <Content Include="Images\ViewCube_Top_Hover.png" />
+    <Content Include="Images\Window.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
