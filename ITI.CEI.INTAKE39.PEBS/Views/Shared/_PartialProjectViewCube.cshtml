@@ -26,6 +26,8 @@
     let cubeRenderer = CreateRenderer("TemplateProductionViewCube");
     cubeRenderer.setSize(100, 100);
 
+    //cubeRenderer.setClearColor('rgb(255, 255, 255,.001)');
+
     //let BaysorbitControl = new THREE.OrbitControls(cubeCamera, cubeRenderer.domElement);
 
     let cubeRaycaster = new THREE.Raycaster();
@@ -83,16 +85,6 @@
 
     //#endregion
 
-    //#region ThreeJsViewer Controls
-    //var BaysBayWidthSlider;
-
-    //#endregion
-
-    //#region Dimensions
-    //var BaysLengthDim = new PebsDimension((project_span / -2) - 3, 0, project_length, "z");
-    //BaysLengthDim.DrawGeometry(Baysscene);
-
-    //#endregion
 
     Update(cubeRenderer, cubeCamera, cubeScene);
 
@@ -118,21 +110,24 @@
             //Front View Selecting
             if (Cubeintersects[0].object.ObjectType != null && Cubeintersects[0].object.Name == "ViewCube_FrontView") {
                 //confirm("You Clicked Front View");
-                SetCameraPosition(ConfigCamera, -(project_span / 2) - 10, 1, -project_length / 2);
-                ConfigCamera.lookAt(new THREE.Vector3(-project_span / 2, 1, -project_length / 2));
+                //SetCameraPosition(ConfigCamera, -(project_span / 2) - 10, 1, -project_length / 2);
+                SetCameraPosition(ConfigCamera, 0, 3, 20);
+                ConfigCamera.lookAt(new THREE.Vector3(0, 3, 0));
             }
+            //Right View Selecting
             else if (Cubeintersects[0].object.ObjectType != null && Cubeintersects[0].object.Name == "ViewCube_RightView") {
                 //confirm("You Clicked Right View");
-                SetCameraPosition(ConfigCamera, (project_span / 2) + 10, 1, -project_length / 2);
-                ConfigCamera.lookAt(new THREE.Vector3(project_span / 2, 1, -project_length / 2));
+                SetCameraPosition(ConfigCamera, (project_span / 2) + 30, 5, -project_length / 2);
+                ConfigCamera.lookAt(new THREE.Vector3(project_span / 2, 5, -project_length / 2));
             }
 
+            //Top View Selecting
             else if (Cubeintersects[0].object.ObjectType != null && Cubeintersects[0].object.Name == "ViewCube_TopView") {
                 //confirm("You Clicked Top View");
-                SetCameraPosition(ConfigCamera, 0, 20, -(project_length / 2));
-                ConfigCamera.lookAt(new THREE.Vector3(0, 0, -project_length / 2));
+                SetCameraPosition(ConfigCamera, 0, 50, -(project_length / 2));
+                ConfigCamera.lookAt(new THREE.Vector3(0, 30, -project_length / 2));
+                ConfigCamera.rotation.z = Math.PI / 2;
             }
-
         }
         else {
 
@@ -176,7 +171,6 @@
             FrontView.material = materialFrontView;
             TopView.material = materialTopView;
         }
-
     }
 
 </script>
