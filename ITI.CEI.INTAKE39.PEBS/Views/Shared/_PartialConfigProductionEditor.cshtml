@@ -1,13 +1,986 @@
-﻿<div id="TemplateProductionConfigurations" style="width:1367px;height:520px;position:absolute">
+﻿<div id="TemplateProductionConfigurations" style="overflow:hidden;width:1367px;height:320px;position:absolute">
     <img src="@Url.Content("~/Images/cladding_Material_2.jpg")" alt="" style="display:none" id="cladding_image" />
     <img src="@Url.Content("~/Images/grass.jpg")" alt="" style="display:none" id="grass_image" />
+    <img src="@Url.Content("~/Images/Sectional_Door_1.jpg")" alt="" style="display:none" id="door_Sectional_image" />
+    <img src="@Url.Content("~/Images/handle_1.jpg")" alt="" style="display:none" id="door_Single_image" />
+    <img src="@Url.Content("~/Images/handle_2.jpg")" alt="" style="display:none" id="door_Single_image_2" />
+
 
 </div>
 
+<div id="Config_Panel" class="Config_Panel">
+
+    @*<div class="panel_docker">
+            <i id="panel_collapse" style="display:none" class="fas fa-angle-double-down"></i>
+            <i id="panel_expand" class="fas fa-angle-double-up"></i>
+        </div>*@
+    <ul>
+        <li id="panel1">Building Properties</li>
+        <li id="panel2">Add Accessory</li>
+        <li id="panel3">Move/Resize</li>
+        <li id="panel4">Colors</li>
+        <li id="panel5">Properties</li>
+        <li id="panel6">Delete</li>
+    </ul>
+
+    <div style="clear:both"></div>
+
+    <div class="config_workspace">
+
+        <div id="sec_building_properties" class="sec_building_properties">
+            <div class="roof">
+                <div class="column">
+                    Roof
+                </div>
+
+                <div class="column">
+                    <div class="chbx_field">
+                        <div style="float: left; width: 10%">
+                            <input type="radio" name="roof_type" value="" checked id="chbx_roof_single" />
+                        </div>
+                        <div style="float: left; width: 90%">
+                            <label for="chbx_roof_single">Single Skin</label>
+                        </div>
+
+                    </div>
+
+                    <div class="chbx_field">
+                        <div style="float: left; width: 10%">
+                            <input type="radio" name="roof_type" value="" id="chbx_roof_sandwich" />
+                        </div>
+                        <div style="float: left; width: 90%">
+                            <label for="chbx_roof_sandwich">Sandwich</label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="column">
+                    <div class="chbx_field">
+                        <div style="float: left; width: 10%">
+                            <input type="radio" name="roof_single_thick" value="" id="chbx_roof_40" />
+                        </div>
+                        <div style="float: left; width: 90%">
+                            <label for="chbx_roof_40">40mm</label>
+                        </div>
+
+                    </div>
+
+                    <div class="chbx_field">
+                        <div style="float: left; width: 10%">
+                            <input type="radio" name="roof_sandwich_thick" value="" id="chbx_roof_95" />
+                        </div>
+                        <div style="float: left; width: 90%">
+                            <label for="chbx_roof_95">95mm</label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="chbx_field">
+                        <div style="float: left; width: 10%">
+                            <input type="radio" value="" name="roof_single_thick" id="chbx_roof_60" />
+                        </div>
+                        <div style="float: left; width: 90%">
+                            <label for="chbx_roof_60">60mm</label>
+                        </div>
+
+                    </div>
+
+                    <div class="chbx_field">
+                        <div style="float: left; width: 10%">
+                            <input type="radio" name="roof_sandwich_thick" value="" roof_sandwich_thick id="chbx_roof_100" />
+                        </div>
+                        <div style="float: left; width: 90%">
+                            <label for="chbx_roof_100">100mm</label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="column">
+                    <div class="chbx_field">
+                        <div style="float: left; width: 10%">
+                            <input type="radio" value="" name="roof_single_thick" id="chbx_roof_80" />
+                        </div>
+                        <div style="float: left; width: 90%">
+                            <label for="chbx_roof_80">80mm</label>
+                        </div>
+
+                    </div>
+
+                    <div class="chbx_field">
+                        <div style="float: left; width: 10%">
+                            <input type="radio" name="roof_sandwich_thick" value="" id="chbx_roof_120" />
+                        </div>
+                        <div style="float: left; width: 90%">
+                            <label for="chbx_roof_120">120mm</label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="column">
+                    <p id="color_roof_red" style="background-color:#571111"></p>
+                    <p id="color_roof_grey" style="background-color:#7c7c7c"></p>
+                    <p id="color_roof_blue" style="background-color:#0d2664"></p>
+                </div>
+            </div>
+
+            <div class="roof">
+                <div class="column">
+                    Wall
+                </div>
+
+                <div class="column">
+                    <div class="chbx_field">
+                        <div style="float: left; width: 10%">
+                            <input type="radio" name="wall_type" value="" id="chbx_wall_single" />
+                        </div>
+                        <div style="float: left; width: 90%">
+                            <label for="chbx_wall_single">Single SKin</label>
+                        </div>
+
+                    </div>
+
+                    <div class="chbx_field">
+                        <div style="float: left; width: 10%">
+                            <input type="radio" name="wall_type" value="" id="chbx_wall_sandwich" />
+                        </div>
+                        <div style="float: left; width: 90%">
+                            <label for="chbx_wall_sandwich">Sandwich</label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="column">
+                    <div class="chbx_field">
+                        <div style="float: left; width: 10%">
+                            <input type="radio" name="wall_single_thick" value="" id="chbx_wall_40" />
+                        </div>
+                        <div style="float: left; width: 90%">
+                            <label for="chbx_wall_40">40mm</label>
+                        </div>
+
+                    </div>
+
+                    <div class="chbx_field">
+                        <div style="float: left; width: 10%">
+                            <input type="radio" name="wall_sandwich_thick" value="" id="chbx_wall_100" />
+                        </div>
+                        <div style="float: left; width: 90%">
+                            <label for="chbx_wall_100">100mm</label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="column">
+
+                    <div class="chbx_field">
+                        <div style="float: left; width: 10%">
+                            <input type="radio" name="wall_single_thick" value="" id="chbx_wall_60" />
+                        </div>
+                        <div style="float: left; width: 90%">
+                            <label for="chbx_wall_60">60mm</label>
+                        </div>
+
+                    </div>
+
+                    <div class="chbx_field">
+                        <div style="float: left; width: 10%">
+                            <input type="radio" name="wall_sandwich_thick" value="" id="chbx_wall_120" />
+                        </div>
+                        <div style="float: left; width: 90%">
+                            <label for="chbx_wall_120">120mm</label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="column">
+                    <div class="chbx_field">
+                        <div style="float: left; width: 10%">
+                            <input type="radio" name="wall_single_thick" value="" id="chbx_wall_80" />
+                        </div>
+                        <div style="float: left; width: 90%">
+                            <label for="chbx_wall_80">80mm</label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="column">
+                    <p id="color_wall_grey" style="background-color:#7c7c7c"></p>
+                    <p id="color_wall_yellow" style="background-color:#ffa900"></p>
+                    <p id="color_wall_green" style="background-color:#048919"></p>
+                    <p id="color_wall_red" style="background-color:#6c1616"></p>
+                    <p id="color_wall_blue" style="background-color:#0d2664"></p>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="sec_add_accessory" class="sec_add_accessory disabled">
+            <div class="accessory add_door">
+                <p style="font-size: 16px">Doors</p>
+                <img src="@Url.Content("~/Images/Sectional_Door_1.jpg")" style="width: 80px" />
+                <img src="@Url.Content("~/Images/Sectional_Door_1.jpg")" style="width: 80px" />
+            </div>
+
+            <div class="accessory add_window">
+                <p style="font-size:16px">Windows</p>
+                <img src="@Url.Content("~/Images/Sectional_Door_1.jpg")" style="width:80px" />
+                <img src="@Url.Content("~/Images/Sectional_Door_1.jpg")" style="width:80px" />
+            </div>
+        </div>
+
+        <div id="sec_moveResize" class="sec_moveResize disabled">
+            <div class="dim_cust">
+                Position(m)
+                <div class="move_x">
+                    <input id="btn_position_x_minus" type="button" name="name" value="-" class="dim_control" />
+                    <input id="txt_position_x" type="text" name="name" value="" class="dim_input" />
+                    <input id="btn_position_x_plus" type="button" name="name" value="+" class="dim_control" />
+                    <div style="display: inline-block;margin-left:15px">
+                        <div>X</div>
+                        <input type="range" min="0" max="100" value="" />
+                    </div>
+                </div>
+
+                <div class="move_y">
+                    <input id="btn_position_y_minus" type="button" name="name" value="-" class="dim_control" />
+                    <input id="txt_position_y" type="text" name="name" value="" class="dim_input" />
+                    <input id="btn_position_y_plus" type="button" name="name" value="+" class="dim_control" />
+                    <div style="display: inline-block;margin-left:15px">
+                        <div>Y</div>
+                        <input type="range" min="0" max="100" value="" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="dim_cust">
+                Size(m)
+                <div class="resize_x">
+                    <input id="btn_size_width_minus" type="button" name="name" value="-" class="dim_control" />
+                    <input id="txt_size_width" type="text" name="name" value="" class="dim_input" />
+                    <input id="btn_size_width_plus" type="button" name="name" value="+" class="dim_control" />
+                    <div style="display:inline-block;margin-left:15px">
+                        <div>Width</div>
+                        <input type="range" min="0" max="100" value="" />
+                    </div>
+                </div>
+
+                <div class="resize_y">
+                    <input id="btn_size_height_minus" type="button" name="name" value="-" class="dim_control" />
+                    <input id="txt_size_height" type="text" name="name" value="" class="dim_input" />
+                    <input id="btn_size_height_plus" type="button" name="name" value="+" class="dim_control" />
+                    <div style="display:inline-block;margin-left:15px">
+                        <div>Height</div>
+                        <input type="range" min="0" max="100" value="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="sec_colors" class="sec_colors disabled">
+            <div style="margin-right:15px;float:left">Color</div>
+            <p id="color_accessory_red" style="background-color:#571111"></p>
+            <p id="color_accessory_grey" style="background-color:#7c7c7c"></p>
+            <p id="color_accessory_blue" style="background-color:#0d2664"></p>
+            <p id="color_accessory_green" style="background-color:#049e20"></p>
+            <p id="color_accessory_orange" style="background-color:#ff6a00"></p>
+            <p id="color_accessory_cyan" style="background-color:#0094ff"></p>
+            <p id="color_accessory_purble" style="background-color:#4800ff"></p>
+        </div>
+
+        <div id="sec_properties" class="sec_properties disabled">
+            <p>Number Of Rows</p>
+            <div style="margin-left:30px;margin-top:10px">
+                <input type="button" name="name" value="-" />
+                <input type="text" name="name" value="" />
+                <input type="button" name="name" value="+" />
+            </div>
+        </div>
+
+        <div id="sec_delete" class="sec_delete disabled">
+            <button id="btn_delete" class="btn_delete">Delete</button>
+        </div>
+    </div>
+
+</div>
+@Html.Partial("_PartialProjectViewCube");
+
+
 <script>
+
+    //#region Dom Interaction
+    //var panel_collapse = document.getElementById("panel_collapse");
+    //var panel_expand = document.getElementById("panel_expand");
+    var myPanel = document.getElementById("Config_Panel");
+
+    var panel1 = document.getElementById("sec_building_properties");
+    var panel2 = document.getElementById("sec_add_accessory");
+    var panel3 = document.getElementById("sec_moveResize");
+    var panel4 = document.getElementById("sec_colors");
+    var panel5 = document.getElementById("sec_properties");
+    var panel6 = document.getElementById("sec_delete");
+
+    var panelHandle1 = document.getElementById("panel1");
+    var panelHandle2 = document.getElementById("panel2");
+    var panelHandle3 = document.getElementById("panel3");
+    var panelHandle4 = document.getElementById("panel4");
+    var panelHandle5 = document.getElementById("panel5");
+    var panelHandle6 = document.getElementById("panel6");
+
+    var colorRoofRed = document.getElementById("color_roof_red");
+    var colorRoofGrey = document.getElementById("color_roof_grey");
+    var colorRoofBlue = document.getElementById("color_roof_blue");
+
+    var colorWallGrey = document.getElementById("color_wall_grey");
+    var colorWallYellow = document.getElementById("color_wall_yellow");
+    var colorWallGreen = document.getElementById("color_wall_green");
+    var colorWallRed = document.getElementById("color_wall_red");
+    var colorWallBlue = document.getElementById("color_wall_blue");
+
+    var colorAccessoryRed = document.getElementById("color_accessory_red");
+    var colorAccessoryGrey = document.getElementById("color_accessory_grey");
+    var colorAccessoryBlue = document.getElementById("color_accessory_blue");
+    var colorAccessoryGreen = document.getElementById("color_accessory_green");
+    var colorAccessoryOrange = document.getElementById("color_accessory_orange");
+    var colorAccessoryCyan = document.getElementById("color_accessory_cyan");
+    var colorAccessoryPurble = document.getElementById("color_accessory_purble");
+
+    colorAccessoryRed.onclick = function () {
+        if (configIntersected != null) {
+            configIntersected.material.color = new THREE.Color('#571111');
+            configOldColor = new THREE.Color('#571111');
+
+        }
+    }
+
+    colorAccessoryGrey.onclick = function () {
+        if (configIntersected != null) {
+            configIntersected.material.color = new THREE.Color('#7c7c7c');
+            configOldColor = new THREE.Color('#7c7c7c');
+        }
+    }
+
+    colorAccessoryBlue.onclick = function () {
+        if (configIntersected != null) {
+            configIntersected.material.color = new THREE.Color('#0d2664');
+            configOldColor = new THREE.Color('#0d2664');
+        }
+    }
+
+    colorAccessoryGreen.onclick = function () {
+        if (configIntersected != null) {
+            configIntersected.material.color = new THREE.Color('#049e20');
+            configOldColor = new THREE.Color('#7c7c7c');
+        }
+    }
+
+    colorAccessoryOrange.onclick = function () {
+        if (configIntersected != null) {
+            configIntersected.material.color = new THREE.Color('#ff6a00');
+            configOldColor = new THREE.Color('#ff6a00');
+        }
+    }
+
+    colorAccessoryCyan.onclick = function () {
+        if (configIntersected != null) {
+            configIntersected.material.color = new THREE.Color('#0094ff');
+            configOldColor = new THREE.Color('#0094ff');
+        }
+    }
+
+    colorAccessoryPurble.onclick = function () {
+        if (configIntersected != null) {
+            configIntersected.material.color = new THREE.Color('#4800ff');
+            configOldColor = new THREE.Color('#4800ff');
+        }
+    }
+
+    var btn_pebs_Delete = document.getElementById("btn_delete");
+
+
+    var txtbx_Position_X = document.getElementById("txt_position_x");
+    var txtbx_Position_Y = document.getElementById("txt_position_y");
+    var txtbx_Size_Width = document.getElementById("txt_size_width");
+    var txtbx_Size_Height = document.getElementById("txt_size_height");
+
+    var btn_Position_X_Plus = document.getElementById("btn_position_x_plus");
+    var btn_Position_X_Minus = document.getElementById("btn_position_x_minus");
+
+    var btn_Position_Y_Plus = document.getElementById("btn_position_y_plus");
+    var btn_Position_Y_Minus = document.getElementById("btn_position_y_minus");
+
+    var btn_Size_Width_Plus = document.getElementById("btn_size_width_plus");
+    var btn_Size_Width_Minus = document.getElementById("btn_size_width_minus");
+
+    var btn_Size_Height_Plus = document.getElementById("btn_size_height_plus");
+    var btn_Size_Height_Minus = document.getElementById("btn_size_height_minus");
+
+    btn_Position_X_Plus.onclick = function () {
+
+        if (configIntersected.ObjectType != null && configIntersected.ObjectType.includes("PEBS_OBJ")) {
+
+            //Selecting Row Windows
+            if (configIntersected.ObjectType.includes("RowWd_Frame")) {
+                var currentX = parseFloat(txtbx_Position_X.value);
+                if (configIntersected.Instance.WorkPlane === "front") {
+                    currentX += 0.25;
+                    txtbx_Position_X.value = currentX;
+                    configIntersected.parent.position.x += 0.25;
+                }
+                else {
+                    currentX -= 0.25;
+                    txtbx_Position_X.value = currentX;
+                    configIntersected.parent.position.z -= 0.25;
+                }
+
+
+            }
+            else if (configIntersected.ObjectType.includes("RowWd_RowGlass")) {
+                var currentX = parseFloat(txtbx_Position_X.value);
+                if (configIntersected.Instance.WorkPlane === "front") {
+                    currentX += 0.25;
+                    txtbx_Position_X.value = currentX;
+                    configIntersected.parent.parent.position.x += 0.25;
+                }
+                else {
+                    currentX -= 0.25;
+                    txtbx_Position_X.value = currentX;
+                    configIntersected.parent.parent.position.z -= 0.25;
+                }
+            }
+
+            //Selecting Doors
+            if (configIntersected.ObjectType.includes("Door")) {
+                //debugger;
+                var currentX = parseFloat(txtbx_Position_X.value);
+
+                if (configIntersected.Instance.WorkPlane === "front") {
+                    currentX += 0.25;
+                    txtbx_Position_X.value = currentX;
+                    configIntersected.position.x += 0.25;
+                }
+                else {
+                    currentX -= 0.25;
+                    txtbx_Position_X.value = currentX;
+                    configIntersected.position.z -= 0.25;
+                }
+            }
+
+            //Selecting Single Windows
+            if (configIntersected.ObjectType.includes("Window_Frame")) {
+                var currentX = parseFloat(txtbx_Position_X.value);
+                if (configIntersected.Instance.WorkPlane === "front") {
+                    currentX += 0.25;
+                    txtbx_Position_X.value = currentX;
+                    configIntersected.position.x += 0.25;
+                }
+                else {
+                    currentX -= 0.25;
+                    txtbx_Position_X.value = currentX;
+                    configIntersected.position.z -= 0.25;
+                }
+            }
+            else if (configIntersected.ObjectType.includes("Window_Glass")) {
+                var currentX = parseFloat(txtbx_Position_X.value);
+                if (configIntersected.Instance.WorkPlane === "front") {
+                    currentX += 0.25;
+                    txtbx_Position_X.value = currentX;
+                    configIntersected.parent.position.x += 0.25;
+                }
+                else {
+                    currentX -= 0.25;
+                    txtbx_Position_X.value = currentX;
+                    configIntersected.parent.position.z -= 0.25;
+                }
+            }
+        }
+    }
+
+    btn_Position_X_Minus.onclick = function () {
+        if (configIntersected.ObjectType != null && configIntersected.ObjectType.includes("PEBS_OBJ")) {
+
+            //Selecting Row Windows
+            if (configIntersected.ObjectType.includes("RowWd_Frame")) {
+                var currentX = parseFloat(txtbx_Position_X.value);
+                if (configIntersected.Instance.WorkPlane === "front") {
+                    currentX -= 0.25;
+                    txtbx_Position_X.value = currentX;
+                    configIntersected.parent.position.x -= 0.25;
+                }
+                else {
+                    currentX += 0.25;
+                    txtbx_Position_X.value = currentX;
+                    configIntersected.parent.position.z += 0.25;
+                }
+
+            }
+            else if (configIntersected.ObjectType.includes("RowWd_RowGlass")) {
+                var currentX = parseFloat(txtbx_Position_X.value);
+                if (configIntersected.Instance.WorkPlane === "front") {
+                    currentX -= 0.25;
+                    txtbx_Position_X.value = currentX;
+                    configIntersected.parent.parent.position.x -= 0.25;
+                }
+                else {
+                    currentX += 0.25;
+                    txtbx_Position_X.value = currentX;
+                    configIntersected.parent.parent.position.z += 0.25;
+                }
+            }
+
+            //Selecting Doors
+            if (configIntersected.ObjectType.includes("Door")) {
+                var currentX = parseFloat(txtbx_Position_X.value);
+
+                if (configIntersected.Instance.WorkPlane === "front") {
+                    currentX -= 0.25;
+                    txtbx_Position_X.value = currentX;
+                    configIntersected.position.x -= 0.25;
+                }
+                else {
+                    currentX += 0.25;
+                    txtbx_Position_X.value = currentX;
+                    configIntersected.position.z += 0.25;
+                }
+            }
+
+            //Selecting Single Windows
+            if (configIntersected.ObjectType.includes("Window_Frame")) {
+                var currentX = parseFloat(txtbx_Position_X.value);
+                if (configIntersected.Instance.WorkPlane === "front") {
+                    currentX -= 0.25;
+                    txtbx_Position_X.value = currentX;
+                    configIntersected.position.x -= 0.25;
+                }
+                else {
+                    currentX += 0.25;
+                    txtbx_Position_X.value = currentX;
+                    configIntersected.position.z += 0.25;
+                }
+            }
+            else if (configIntersected.ObjectType.includes("Window_Glass")) {
+                var currentX = parseFloat(txtbx_Position_X.value);
+                if (configIntersected.Instance.WorkPlane === "front") {
+                    currentX -= 0.25;
+                    txtbx_Position_X.value = currentX;
+                    configIntersected.parent.position.x -= currentX;
+                }
+                else {
+                    currentX += 0.25;
+                    txtbx_Position_X.value = currentX;
+                    configIntersected.parent.position.z += 0.25;
+                }
+            }
+        }
+    }
+
+    btn_Position_Y_Plus.onclick = function () {
+
+        if (configIntersected.ObjectType != null && configIntersected.ObjectType.includes("PEBS_OBJ")) {
+
+            //Selecting Row Windows
+            if (configIntersected.ObjectType.includes("RowWd_Frame")) {
+                var currentY = parseFloat(txtbx_Position_Y.value);
+                if (currentY < project_height) {
+                    currentY += 0.25;
+                    txtbx_Position_Y.value = currentY;
+                    configIntersected.parent.position.y += 0.25;
+                }
+            }
+            else if (configIntersected.ObjectType.includes("RowWd_RowGlass")) {
+                var currentY = parseFloat(txtbx_Position_Y.value);
+                if (currentY < project_height) {
+                    currentY += 0.25;
+                    txtbx_Position_Y.value = currentY;
+                    configIntersected.parent.parent.position.y += 0.25;
+                }
+            }
+
+            //Selecting Doors
+            if (configIntersected.ObjectType.includes("Door")) {
+                //debugger;
+                var currentY = parseFloat(txtbx_Position_Y.value);
+                //let halfHeight = configIntersected.Instance.Height / 2;
+                //let actualY = currentY + halfHeight;
+                if (currentY <= 0.25) {
+                    currentY += 0.25;
+                    txtbx_Position_Y.value = currentY;
+                    configIntersected.position.y += 0.25;
+                }
+
+            }
+
+            //Selecting Single Windows
+            if (configIntersected.ObjectType.includes("Window_Frame")) {
+                var currentY = parseFloat(txtbx_Position_Y.value);
+                if (currentY < project_height) {
+                    currentY += 0.25;
+                    txtbx_Position_Y.value = currentY;
+                    configIntersected.position.y += 0.25;
+                }
+            }
+            else if (configIntersected.ObjectType.includes("Window_Glass")) {
+                var currentY = parseFloat(txtbx_Position_Y.value);
+                if (currentY < project_height) {
+                    currentY += 0.25;
+                    txtbx_Position_Y.value = currentY;
+                    configIntersected.parent.position.y += 0.25;
+                }
+            }
+        }
+    }
+
+    function WireFrameIt() {
+        var wireframe = new THREE.WireframeGeometry(configIntersected);
+        var line = new THREE.LineSegments(wireframe);
+        line.material.depthTest = false;
+        line.material.opacity = 1;
+        line.material.transparent = true;
+
+        ConfigScene.add(line);
+    }
+
+    btn_Position_Y_Minus.onclick = function () {
+        if (configIntersected.ObjectType != null && configIntersected.ObjectType.includes("PEBS_OBJ")) {
+            var minSeat = project_height - 2;
+            //Selecting Row Windows
+            if (configIntersected.ObjectType.includes("RowWd_Frame")) {
+                var currentY = parseFloat(txtbx_Position_Y.value);
+                let windowSeat = currentY - configIntersected.Instance.Height;
+                if (windowSeat > minSeat) {
+                    currentY -= 0.25;
+                    txtbx_Position_Y.value = currentY;
+                    configIntersected.parent.position.y -= 0.25;
+                }
+            }
+            else if (configIntersected.ObjectType.includes("RowWd_RowGlass")) {
+                var currentY = parseFloat(txtbx_Position_Y.value);
+                let windowSeat = currentY - configIntersected.Instance.Height;
+                if (windowSeat > minSeat) {
+                    currentY -= 0.25;
+                    txtbx_Position_Y.value = currentY;
+                    configIntersected.parent.parent.position.y -= 0.25;
+                }
+            }
+
+            //Selecting Doors
+            if (configIntersected.ObjectType.includes("Door")) {
+                //debugger;
+                var currentY = parseFloat(txtbx_Position_Y.value);
+                if (currentY > 0) {
+                    currentY -= 0.25;
+                    txtbx_Position_Y.value = currentY;
+                    configIntersected.position.y -= 0.25;
+                }
+            }
+
+            //Selecting Single Windows
+            if (configIntersected.ObjectType.includes("Window_Frame")) {
+                var currentY = parseFloat(txtbx_Position_Y.value);
+                let windowSeat = currentY - configIntersected.Instance.Height;
+                if (windowSeat > minSeat) {
+                    currentY -= 0.25;
+                    txtbx_Position_Y.value = currentY;
+                    configIntersected.position.y -= 0.25;
+                }
+            }
+
+            else if (configIntersected.ObjectType.includes("Window_Glass")) {
+                var currentY = parseFloat(txtbx_Position_Y.value);
+                let windowSeat = currentY - configIntersected.Instance.Height;
+                if (windowSeat > minSeat) {
+                    currentY -= 0.25;
+                    txtbx_Position_Y.value = currentY;
+                    configIntersected.parent.position.y -= 0.25;
+                }
+            }
+        }
+    }
+
+    btn_Size_Width_Plus.onclick = function () {
+
+        if (configIntersected.ObjectType != null && configIntersected.ObjectType.includes("PEBS_OBJ")) {
+
+            //Selecting Row Windows
+            if (configIntersected.ObjectType.includes("RowWd")) {
+                var currentWidth = parseFloat(txtbx_Size_Width.value);
+                currentWidth += 0.25;
+                txtbx_Size_Width.value = currentWidth;
+                configIntersected.Instance.SetTotalWidth(currentWidth);
+            }
+
+            //Selecting Doors Or Single Windows
+            if (configIntersected.ObjectType.includes("Door") || configIntersected.ObjectType.includes("Window")) {
+                var currentWidth = parseFloat(txtbx_Size_Width.value);
+                currentWidth += 0.25;
+                txtbx_Size_Width.value = currentWidth;
+                configIntersected.Instance.SetWidth(currentWidth);
+            }
+        }
+    }
+
+    btn_Size_Width_Minus.onclick = function () {
+
+        if (configIntersected.ObjectType != null && configIntersected.ObjectType.includes("PEBS_OBJ")) {
+
+            //Selecting Row Windows
+            if (configIntersected.ObjectType.includes("RowWd")) {
+                var currentWidth = parseFloat(txtbx_Size_Width.value);
+                currentWidth -= 0.25;
+                txtbx_Size_Width.value = currentWidth;
+                configIntersected.Instance.SetTotalWidth(currentWidth);
+            }
+
+            //Selecting Doors Or Windows
+            if (configIntersected.ObjectType.includes("Door") || configIntersected.ObjectType.includes("Window")) {
+                var currentWidth = parseFloat(txtbx_Size_Width.value);
+                currentWidth -= 0.25;
+                txtbx_Size_Width.value = currentWidth;
+                configIntersected.Instance.SetWidth(currentWidth);
+            }
+        }
+    }
+
+    btn_Size_Height_Plus.onclick = function () {
+
+        if (configIntersected.ObjectType != null && configIntersected.ObjectType.includes("PEBS_OBJ")) {
+
+            //Selecting Row Windows
+            if (configIntersected.ObjectType.includes("RowWd")) {
+                var currentHeight = parseFloat(txtbx_Size_Height.value);
+                currentHeight += 0.25;
+                txtbx_Size_Height.value = currentHeight;
+                configIntersected.Instance.SetHeight(currentHeight);
+            }
+
+            //Selecting Doors Or Windows
+            if (configIntersected.ObjectType.includes("Door") || configIntersected.ObjectType.includes("Window")) {
+                var currentHeight = parseFloat(txtbx_Size_Height.value);
+                currentHeight += 0.25;
+                txtbx_Size_Height.value = currentHeight;
+                configIntersected.Instance.SetHeight(currentHeight);
+            }
+        }
+    }
+
+    btn_Size_Height_Minus.onclick = function () {
+
+        if (configIntersected.ObjectType != null && configIntersected.ObjectType.includes("PEBS_OBJ")) {
+
+            //Selecting Row Windows
+            if (configIntersected.ObjectType.includes("RowWd")) {
+                var currentHeight = parseFloat(txtbx_Size_Height.value);
+                currentHeight -= 0.25;
+                txtbx_Size_Height.value = currentHeight;
+                configIntersected.Instance.SetHeight(currentHeight);
+            }
+
+            //Selecting Doors Or Windows
+            if (configIntersected.ObjectType.includes("Door") || configIntersected.ObjectType.includes("Window")) {
+                var currentHeight = parseFloat(txtbx_Size_Height.value);
+                currentHeight -= 0.25;
+                txtbx_Size_Height.value = currentHeight;
+                configIntersected.Instance.SetHeight(currentHeight);
+            }
+        }
+    }
+
+
+    btn_pebs_Delete.onclick = function () {
+        if (configIntersected != null) {
+            //debugger;
+            if (configIntersected.ObjectType.includes("Glass")) {
+                ConfigScene.remove(configIntersected.parent);
+            }
+            if (configIntersected.ObjectType.includes("RowGlass")) {
+                ConfigScene.remove(configIntersected.parent.parent);
+            }
+            else if (configIntersected.ObjectType.includes("Frame")) {
+                ConfigScene.remove(configIntersected.parent);
+            }
+
+            else if (configIntersected.ObjectType.includes("Cladding") === true || configIntersected.ObjectType.includes("Wall") === true || configIntersected.ObjectType.includes("Roof") || configIntersected.ObjectType.includes("Roof") === true) {
+                confirm("This Item Can not Be Deleted!");
+            }
+        }
+    }
+
+
+    colorRoofRed.onclick = function () {
+        roof1.SetColor('#571111');
+    }
+
+    colorRoofGrey.onclick = function () {
+        roof1.SetColor('#7c7c7c');
+    }
+
+    colorRoofBlue.onclick = function () {
+        roof1.SetColor('#0d2664');
+    }
+
+    colorWallGrey.onclick = function () {
+        sideCladding1.SetColor('#7c7c7c');
+        frontWall.SetColor('#7c7c7c');
+        backWall.SetColor('#7c7c7c');
+    }
+
+    colorWallYellow.onclick = function () {
+        sideCladding1.SetColor('#ffa900');
+        frontWall.SetColor('#ffa900');
+        backWall.SetColor('#ffa900');
+    }
+
+    colorWallGreen.onclick = function () {
+        sideCladding1.SetColor('#048919');
+        frontWall.SetColor('#048919');
+        backWall.SetColor('#048919');
+    }
+
+    colorWallRed.onclick = function () {
+        sideCladding1.SetColor('#6c1616');
+        frontWall.SetColor('#6c1616');
+        backWall.SetColor('#6c1616');
+    }
+
+    colorWallBlue.onclick = function () {
+        sideCladding1.SetColor('#0d2664');
+        frontWall.SetColor('#0d2664');
+        backWall.SetColor('#0d2664');
+    }
+
+    //panel_collapse.onclick = function () {
+    //    myPanel.style.bottom = "-158px";
+    //    panel_collapse.style.display = "none";
+    //    panel_expand.style.display = "block";
+    //}
+
+    //panel_expand.onclick = function () {
+    //    myPanel.style.bottom = "0px";
+    //    panel_expand.style.display = "none";
+    //    panel_collapse.style.display = "block";
+    //}
+
+    panelHandle1.onclick = function () {
+        panelHandle1.classList.toggle("activePanel");
+        panel1.style.display = "block";
+
+        panelHandle2.classList.remove("activePanel");
+        panelHandle3.classList.remove("activePanel");
+        panelHandle4.classList.remove("activePanel");
+        panelHandle5.classList.remove("activePanel");
+        panelHandle6.classList.remove("activePanel");
+
+        panel2.style.display = "none";
+        panel3.style.display = "none";
+        panel4.style.display = "none";
+        panel5.style.display = "none";
+        panel6.style.display = "none";
+
+
+    }
+    panelHandle2.onclick = function () {
+        panelHandle2.classList.toggle("activePanel");
+        panel2.style.display = "block";
+
+        panelHandle1.classList.remove("activePanel");
+        panelHandle3.classList.remove("activePanel");
+        panelHandle4.classList.remove("activePanel");
+        panelHandle5.classList.remove("activePanel");
+        panelHandle6.classList.remove("activePanel");
+
+        panel1.style.display = "none";
+        panel3.style.display = "none";
+        panel4.style.display = "none";
+        panel5.style.display = "none";
+        panel6.style.display = "none";
+
+
+    }
+    panelHandle3.onclick = function () {
+        panelHandle3.classList.toggle("activePanel");
+        panel3.style.display = "block";
+
+        panelHandle1.classList.remove("activePanel");
+        panelHandle2.classList.remove("activePanel");
+        panelHandle4.classList.remove("activePanel");
+        panelHandle5.classList.remove("activePanel");
+        panelHandle6.classList.remove("activePanel");
+
+        panel1.style.display = "none";
+        panel2.style.display = "none";
+        panel4.style.display = "none";
+        panel5.style.display = "none";
+        panel6.style.display = "none";
+    }
+    panelHandle4.onclick = function () {
+        panelHandle4.classList.toggle("activePanel");
+        panel4.style.display = "block";
+
+        panelHandle1.classList.remove("activePanel");
+        panelHandle3.classList.remove("activePanel");
+        panelHandle2.classList.remove("activePanel");
+        panelHandle5.classList.remove("activePanel");
+        panelHandle6.classList.remove("activePanel");
+
+        panel1.style.display = "none";
+        panel3.style.display = "none";
+        panel2.style.display = "none";
+        panel5.style.display = "none";
+        panel6.style.display = "none";
+    }
+    panelHandle5.onclick = function () {
+        panelHandle5.classList.toggle("activePanel");
+        panel5.style.display = "block";
+
+        panelHandle1.classList.remove("activePanel");
+        panelHandle3.classList.remove("activePanel");
+        panelHandle4.classList.remove("activePanel");
+        panelHandle2.classList.remove("activePanel");
+        panelHandle6.classList.remove("activePanel");
+
+        panel1.style.display = "none";
+        panel3.style.display = "none";
+        panel4.style.display = "none";
+        panel2.style.display = "none";
+        panel6.style.display = "none";
+    }
+    panelHandle6.onclick = function () {
+        panelHandle6.classList.toggle("activePanel");
+        panel6.style.display = "block";
+
+        panelHandle1.classList.remove("activePanel");
+        panelHandle3.classList.remove("activePanel");
+        panelHandle4.classList.remove("activePanel");
+        panelHandle5.classList.remove("activePanel");
+        panelHandle2.classList.remove("activePanel");
+
+        panel1.style.display = "none";
+        panel3.style.display = "none";
+        panel4.style.display = "none";
+        panel5.style.display = "none";
+        panel2.style.display = "none";
+    }
+    //#endregion
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
     //#region   Minimum Need
     let ConfigfieldOfView = 45;
-    let ConfigAspectRatio = 1367 / 470;
+    let ConfigAspectRatio = 1367 / 320;
     //let AspectRatio = window.innerWidth / window.innerHeight;
     let ConfigNearClip = 1;
     let ConfigFarClip = 1000;
@@ -17,6 +990,8 @@
     let ConfigScene = CreateScene();
     let ConfigCamera = CreateCamera(ConfigfieldOfView, ConfigAspectRatio, ConfigNearClip, ConfigFarClip);
     let ConfigRenderer = CreateRenderer("TemplateProductionConfigurations");
+    ConfigRenderer.setSize(1367, 320);
+
     let ConfigOrbitControl = new THREE.OrbitControls(ConfigCamera, ConfigRenderer.domElement);
 
     let ConfigRaycaster = new THREE.Raycaster();
@@ -63,41 +1038,88 @@
     //dragControls.addEventListener('mousedown', mouseDown, false);
 
 
-    function mouseDown() {
-        confirm("mouse downed");
-    }
-
     //#region Project_Components
     var myWindows = [];
+    var myDoors = [];
+    var myStaticObjects = [];
 
     var Grass_Image_path = document.getElementById("grass_image").getAttribute("src");
     var Grass_plus_texture = new THREE.TextureLoader().load(Grass_Image_path);
-    var GrassMaterial = new THREE.MeshBasicMaterial({ map: Grass_plus_texture });
+    var GrassMaterial = new THREE.MeshBasicMaterial({ map: Grass_plus_texture, side: THREE.FrontSide });
 
-    var ground = CreateCube(project_span + 5, .5, project_length + 5, GrassMaterial, "Ground", "Ground-1");
+    var ground = CreateCube(project_span + 5, .005, project_length + 5, GrassMaterial, "Ground", "Ground-1");
     ground.position.z -= project_length / 2;
     ConfigScene.add(ground);
 
+    var backGroundMaterial = NewMaterialByColor('rgb(205, 205, 205)');
+
+    var backGround = CreateCube(500, .005, 500, backGroundMaterial, "BackGround", "MyBacGround");
+    backGround.position.y = -.008;
+    ConfigScene.add(backGround);
+
     var sideCladding1 = new CladdingDoubleSide(project_span, project_height, project_length);
     sideCladding1.DrawGeometry(ConfigScene);
+    myStaticObjects.push(sideCladding1);
 
     var roof1 = new RoofDouble(project_span, project_length, project_slope, project_height);
     roof1.DrawGeometry(ConfigScene);
+    myStaticObjects.push(roof1);
 
     var frontWall = new FrontWall(project_span, project_height, project_slope, 0);
     frontWall.DrawGeometry(ConfigScene);
+    myStaticObjects.push(frontWall);
 
     var backWall = new FrontWall(project_span, project_height, project_slope, -project_length);
     backWall.DrawGeometry(ConfigScene);
+    myStaticObjects.push(backWall);
 
-    var doublew1 = new RowWindow(2, 1, "rgb(180, 118, 4)", "front", -3, 6.5, 0, 3);
-    doublew1.DrawGeometry(ConfigScene);
+    var dblWindwoFront = new RowWindow(2, 1, "rgb(180, 118, 4)", "front", -3, 6.5, 0, 3);
+    dblWindwoFront.DrawGeometry(ConfigScene);
+    myStaticObjects.push(dblWindwoFront);
+
+    var dblWindwoBack = new RowWindow(2, 1, "rgb(180, 118, 4)", "front", -3, 6.5, -project_length, 3);
+    dblWindwoBack.DrawGeometry(ConfigScene);
+    myStaticObjects.push(dblWindwoBack);
+
+    var door_Image_sectional = document.getElementById("door_Sectional_image").getAttribute("src");
+    var door_plus_texture = new THREE.TextureLoader().load(door_Image_sectional);
+    var doorMaterial = new THREE.MeshBasicMaterial({ map: door_plus_texture });
+
+    var frontDoor = new SectionalDoor(3, 3, "front", 0, 0);
+    frontDoor.DrawGeometry(ConfigScene, doorMaterial);
+    myStaticObjects.push(frontDoor);
+
+    var backDoor = new SectionalDoor(3, 3, "front", 0, -project_length);
+    backDoor.DrawGeometry(ConfigScene, doorMaterial);
+    myStaticObjects.push(backDoor);
+
+
+    var door_Image_single = document.getElementById("door_Single_image_2").getAttribute("src");
+
+    var singleDoor1 = new SingleDoor(2, 3, 'rgb(120,150,180)', "side", project_span / 2, -12);
+    singleDoor1.DrawGeometry(ConfigScene, door_Image_single);
+    myStaticObjects.push(singleDoor1);
+
+    var singleDoor2 = new SingleDoor(2, 3, 'rgb(120,150,180)', "side", project_span / 2, -project_length + 24);
+    singleDoor2.DrawGeometry(ConfigScene, door_Image_single);
+    myStaticObjects.push(singleDoor2);
+
+    var singleDoor3 = new SingleDoor(2, 3, 'rgb(120,150,180)', "side", -project_span / 2, -12);
+    singleDoor3.DrawGeometry(ConfigScene, door_Image_single);
+    myStaticObjects.push(singleDoor3);
+
+    var singleDoor4 = new SingleDoor(2, 3, 'rgb(120,150,180)', "side", -project_span / 2, -project_length + 24);
+    singleDoor4.DrawGeometry(ConfigScene, door_Image_single);
+    myStaticObjects.push(singleDoor4);
 
     for (let i = 5; i < project_length; i += 15) {
         let windowright = new SingleWindow(2, 1.5, "rgb(180, 118, 4)", "side", project_span / 2, project_height - 0.5, -i);
         let windowleft = new SingleWindow(2, 1.5, "rgb(180, 118, 4)", "side", -project_span / 2, project_height - 0.5, -i);
         myWindows.push(windowright);
         myWindows.push(windowleft);
+        myStaticObjects.push(windowright);
+        myStaticObjects.push(windowleft);
+
         windowright.DrawGeometry(ConfigScene);
         windowleft.DrawGeometry(ConfigScene);
     }
@@ -129,91 +1151,121 @@
     //DimSlopeSlider.Slider.position.z = .2;
     //#endregion
 
-    //#region Dimensions
-    //let DimlengthDim = new PebsDimension(15, 0, project_length, "z");
-    //DimlengthDim.DrawGeometry(ConfigScene);
-
-    //let DimspanDim = new PebsDimension(project_span / 2, 1, project_span, "x");
-    //DimspanDim.DrawGeometry(ConfigScene);
-    //#endregion
-
     Update(ConfigRenderer, ConfigCamera, ConfigScene);
+
+    document.getElementById("TemplateProductionConfigurations").addEventListener('mousedown', onDocumentMouseDown, false)
 
     //OnClick(onDocumentMouseDown);
     //OnHover(onDocumentMouseMove);
 
+    var configIntersected = null;
+    var oldColorRed = null;
+    var oldColorGreen = null;
+    var oldColorBlue = null;
+
+    var configOldColor = null;
     function onDocumentMouseDown(event) {
         //debugger
-
+        //confirm("moamen");
         let bounds = ConfigViewer.getBoundingClientRect();
         ConfigMouse.x = ((event.clientX - bounds.left) / ConfigViewer.clientWidth) * 2 - 1;
         ConfigMouse.y = - ((event.clientY - bounds.top) / ConfigViewer.clientHeight) * 2 + 1;
         ConfigRaycaster.setFromCamera(ConfigMouse, ConfigCamera);
-        let Dimintersects = ConfigRaycaster.intersectObjects(ConfigScene.children, true);
-        if (Dimintersects.length > 0) {
+        let ConfigIntersects = ConfigRaycaster.intersectObjects(ConfigScene.children, true);
 
-            if (Dimintersects[0].object.ObjectType != null && Dimintersects[0].object.ObjectType.includes("PEBS_OBJ")) {
-                //Dimintersects[0].object.material.color.setHex(Math.random() * 0xffffff);
-                //Dimintersects[0].object.material.color = new THREE.Color( 'rgb(238, 255, 0)' );
-                console.log(Dimintersects[0].object);
+        if (ConfigIntersects.length > 0) {
+
+            if (ConfigIntersects[0].object.ObjectType.includes("BackGround") === false) {
+                if (ConfigIntersects[0].object.ObjectType.includes("Window_Glass")) {
+
+                    configIntersected = ConfigIntersects[0].object.parent;
+                    oldColorRed = ConfigIntersects[0].object.parent.material.color.r;
+                    oldColorGreen = ConfigIntersects[0].object.parent.material.color.g;
+                    oldColorBlue = ConfigIntersects[0].object.parent.material.color.b;
+
+                    configOldColor = ConfigIntersects[0].object.parent.material.color.clone();
+
+                    ConfigIntersects[0].object.parent.material.color.r += 0.1;
+                    ConfigIntersects[0].object.parent.material.color.g += 0.1;
+                    ConfigIntersects[0].object.parent.material.color.b += 0.1;
+                }
+                else if (ConfigIntersects[0].object.ObjectType.includes("RowWd_RowGlass")) {
+                    configIntersected = ConfigIntersects[0].object.parent.parent;
+                    oldColorRed = ConfigIntersects[0].object.parent.parent.material.color.r;
+                    oldColorGreen = ConfigIntersects[0].object.parent.parent.material.color.g;
+                    oldColorBlue = ConfigIntersects[0].object.parent.parent.material.color.b;
+
+                    configOldColor = ConfigIntersects[0].object.parent.parent.material.color.clone();
+
+
+                    ConfigIntersects[0].object.parent.parent.material.color.r += 0.1;
+                    ConfigIntersects[0].object.parent.parent.material.color.g += 0.1;
+                    ConfigIntersects[0].object.parent.parent.material.color.b += 0.1;
+                }
+
+                else if ((ConfigIntersects[0].object.ObjectType.includes("Roof") === false) && (ConfigIntersects[0].object.ObjectType.includes("Wall") === false) && (ConfigIntersects[0].object.ObjectType.includes("Cladding") === false)) {
+                    configIntersected = ConfigIntersects[0].object;
+
+                    oldColorRed = ConfigIntersects[0].object.material.color.r;
+                    oldColorGreen = ConfigIntersects[0].object.material.color.g;
+                    oldColorBlue = ConfigIntersects[0].object.material.color.b;
+
+                    configOldColor = ConfigIntersects[0].object.material.color.clone();
+
+                    ConfigIntersects[0].object.material.color.r += 0.1;
+                    ConfigIntersects[0].object.material.color.g += 0.1;
+                    ConfigIntersects[0].object.material.color.b += 0.1;
+                }
+
+                if (configIntersected.ObjectType != null && configIntersected.ObjectType.includes("PEBS_OBJ")) {
+
+                    //Selecting Row Windows
+                    if (configIntersected.ObjectType.includes("RowWd")) {
+                        if (configIntersected.Instance.WorkPlane === "front") {
+                            txtbx_Position_X.value = configIntersected.Instance.X;
+                        }
+                        else {
+                            txtbx_Position_X.value = configIntersected.Instance.Z;
+                        }
+                        txtbx_Position_Y.value = configIntersected.Instance.Y;
+                        txtbx_Size_Width.value = configIntersected.Instance.TotalWidth;
+                        txtbx_Size_Height.value = configIntersected.Instance.Height;
+                    }
+
+                    //Selecting Doors Or Single Windows
+                    if (configIntersected.ObjectType.includes("Door") || configIntersected.ObjectType.includes("Window")) {
+                        if (configIntersected.Instance.WorkPlane === "front") {
+                            txtbx_Position_X.value = configIntersected.Instance.X;
+                        }
+                        else {
+                            txtbx_Position_X.value = configIntersected.Instance.Z;
+                        }
+                        txtbx_Position_Y.value = configIntersected.Instance.Y;
+                        txtbx_Size_Width.value = configIntersected.Instance.Width;
+                        txtbx_Size_Height.value = configIntersected.Instance.Height;
+                    }
+                }
             }
 
-            //Height SLider Functionality On Click
-            if (Dimintersects[0].object.ObjectType != null && Dimintersects[0].object.Name == "Height_Slider_Plus") {
-                //debugger;
-                let NewHeight = project_height + .25;
-                if (EditProjectHeight(NewHeight)) {
+            if (ConfigIntersects[0].object.ObjectType.includes("BackGround")) {
+                if (configIntersected != null) {
+
+                    configIntersected.material.color = configOldColor;
+                    //configIntersected.material.color.r = oldColorRed;
+                    //configIntersected.material.color.g = oldColorGreen;
+                    //configIntersected.material.color.b = oldColorBlue;
                 }
-            }
-            if (Dimintersects[0].object.ObjectType != null && Dimintersects[0].object.Name == "Height_Slider_Minus") {
-                let NewHeight = project_height - .25;
-                if (EditProjectHeight(NewHeight)) {
-                }
+                configIntersected = null;
+                DeselectObjectConfigurations();
+                //confirm("You Clicked BackGround");
             }
 
-            //Length SLider Functionality On Click
-            if (Dimintersects[0].object.ObjectType != null && Dimintersects[0].object.Name == "Length_Slider_Plus") {
-                let NewLength = project_length + .5;
-                if (EditProjectLength(NewLength)) {
-                    PlotProjectBays(project_span, project_spacing, NewLength);
-                }
+            //debugger;
+            //console.log(configIntersected);
 
-            }
-            if (Dimintersects[0].object.ObjectType != null && Dimintersects[0].object.Name == "Length_Slider_Minus") {
-                let NewLength = project_length - .5;
-                if (EditProjectLength(NewLength)) {
-                }
-            }
 
-            //Span SLider Functionality On Click
-            if (Dimintersects[0].object.ObjectType != null && Dimintersects[0].object.Name == "Span_Slider_Plus") {
-                let NewSpan = project_span + .5;
-                if (EditProjectSpan(NewSpan)) {
-                    DimlengthDim.DimensionLine.position.x += .5;
-                    DimlengthDim.StartExtent.position.x += .5;
-                    DimlengthDim.EndExtent.position.x += .5;
-                }
-            }
 
-            if (Dimintersects[0].object.ObjectType != null && Dimintersects[0].object.Name == "Span_Slider_Minus") {
-                let NewSpan = project_span - .5;
-                if (EditProjectSpan(NewSpan)) {
-                    DimlengthDim.DimensionLine.position.x -= .5;
-                    DimlengthDim.StartExtent.position.x -= .5;
-                    DimlengthDim.EndExtent.position.x -= .5;
-                }
-            }
-            //Slope SLider Functionality On Click
-            if (Dimintersects[0].object.ObjectType != null && Dimintersects[0].object.Name == "Slope_Slider_Plus") {
-                let NewSlope = project_slope + .01;
-                if (EditProjectSlope(NewSlope)) {
-                }
-            }
-            if (Dimintersects[0].object.ObjectType != null && Dimintersects[0].object.Name == "Slope_Slider_Minus") {
-                let NewSlope = project_slope - .01;
-                if (EditProjectSlope(NewSlope)) {
-                }
-            }
+
         }
     }
 
@@ -256,4 +1308,11 @@
         //}
     }
 
+    function DeselectObjectConfigurations() {
+        txtbx_Position_X.value = "";
+        txtbx_Position_Y.value = "";
+        txtbx_Size_Width.value = "";
+        txtbx_Size_Height.value = "";
+    }
 </script>
+

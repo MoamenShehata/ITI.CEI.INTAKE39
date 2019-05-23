@@ -37,19 +37,21 @@ class CladdingDoubleSide {
         CladdingTexture.repeat.set(5, 5);
         var materialCladding = new THREE.MeshBasicMaterial({ map: CladdingTexture });
 
-        var blueMaterial = NewMaterialByColor('rgb(115,115,115)');
         let RightCladding = CreateCube(0, this.Height, this.Length, materialCladding, "Side_Cladding", "Right_Side_Cladding");
         RightCladding.position.x = this.Span / 2;
         RightCladding.position.z = (this.Length / 2) * -1;
         this.RightCladding = RightCladding;
+        this.RightCladding.Instance = this;
 
         let LeftCladding = CreateCube(0, this.Height, this.Length, materialCladding, "Side_Cladding", "Left_Side_Cladding");
         LeftCladding.position.x = (this.Span / 2) * -1;
         LeftCladding.position.z = (this.Length / 2) * -1;
         this.LeftCladding = LeftCladding;
+        this.LeftCladding.Instance = this;
 
         scene.add(RightCladding);
         scene.add(LeftCladding);
+        return this;
     }
 
     SetSpan(span) {
@@ -86,6 +88,11 @@ class CladdingDoubleSide {
         this.Length = newLength;
     }
 
+    SetColor(newColor) {
+        this.RightCladding.material.color = new THREE.Color(newColor);
+        this.LeftCladding.material.color = new THREE.Color(newColor);
+    }
+
 }
 
 var numberOfWalls = 0;
@@ -96,6 +103,8 @@ class FrontWall {
         this.Height = height;
         this.Slope = slope;
         this.ZPosition = zPos;
+        this.Wall = null;
+        this.Triangle = null;
     }
 
     DrawGeometry(scene) {
@@ -105,7 +114,6 @@ class FrontWall {
         let WallTexture = new THREE.TextureLoader().load(cladd_image_path);
         WallTexture.wrapS = THREE.RepeatWrapping;
         WallTexture.repeat.set(7, 7);
-        let materialWallCladding = new THREE.MeshBasicMaterial({ map: WallTexture });
 
         let material = NewMaterialByColor('rgb(115, 115, 115)');
 
@@ -121,14 +129,19 @@ class FrontWall {
         triangleGeometry.computeFaceNormals();
         triangleGeometry.computeVertexNormals();
 
-        let mesh = new THREE.Mesh(triangleGeometry, new THREE.MeshBasicMaterial({ color: 'rgb(115, 115, 115)', side: THREE.DoubleSide }));
+        //let mesh = new THREE.Mesh(triangleGeometry, new THREE.MeshBasicMaterial({ color: 'rgb(115, 115, 115)', side: THREE.DoubleSide }));
+        let mesh = new PebsObject(triangleGeometry, new THREE.MeshBasicMaterial({ color: 'rgb(115, 115, 115)', side: THREE.DoubleSide }), "Front_Wall", "Front_Wall");
 
 
         scene.add(mesh);
         scene.add(wall);
 
+        this.Wall = wall;
+        this.Wall.Instance = this;
+        this.Triangle = mesh;
+        this.Triangle.Instance = this;
+        return this;
     }
-
 
     SetSpan(span) {
         this.RightCladding.position.x = span / 2;
@@ -164,6 +177,10 @@ class FrontWall {
         this.Length = newLength;
     }
 
+    SetColor(newColor) {
+        this.Wall.material.color = new THREE.Color(newColor);
+        this.Triangle.material.color = new THREE.Color(newColor);
+    }
 }
 
 class RoofDouble extends THREE.Mesh {
@@ -202,12 +219,14 @@ class RoofDouble extends THREE.Mesh {
         RightRoof.position.z = 0 - this.Length / 2;
         this.RightPivot = RightEdge;
         this.RightRoof = RightRoof;
+        this.RightRoof.Instance = this;
 
         let LeftRoof = CreateCube((finalLength) + .01, .02, this.Length * -1, leftRoofMaterial, "Roof", "Left Roof");
         LeftRoof.position.x = 0 + (finalLength / 2);
         LeftRoof.position.z = 0 - this.Length / 2;
         this.LeftPivot = LeftEdge;
         this.LeftRoof = LeftRoof;
+        this.LeftRoof.Instance = this;
 
         RightEdge.add(RightRoof);
         scene.add(RightEdge);
@@ -215,7 +234,7 @@ class RoofDouble extends THREE.Mesh {
         LeftEdge.add(LeftRoof);
         scene.add(LeftEdge);
 
-        return RightEdge;
+        return this;
     }
 
     SetSlope(newSlope) {
@@ -249,6 +268,11 @@ class RoofDouble extends THREE.Mesh {
         this.RightPivot.position.y = newHeight;
         this.LeftPivot.position.y = newHeight;
         this.ZPosition = newHeight;
+    }
+
+    SetColor(newColor) {
+        this.RightRoof.material.color = new THREE.Color(newColor);
+        this.LeftRoof.material.color = new THREE.Color(newColor);
     }
 }
 
@@ -311,8 +335,11 @@ class SingleWindow extends THREE.Mesh {
         Frame.add(Glass);
         scene.add(Frame);
 
+        Frame.Instance = this;
+        Glass.Instance = this;
         this.Window = Frame;
-        return Frame;
+        this.Window.Instance = this;
+        return this;
     }
 
     SetWidth(newWidth) {
@@ -369,24 +396,26 @@ class RowWindow extends THREE.Mesh {
 
         switch (this.WorkPlane) {
             case "front":
-                Frame = CreateCube(.0000001, .0000001, .0000001, frameMaterial, "Window_pivot", "Window_pivot_1");
+                Frame = CreateCube(.0000001, .0000001, .0000001, frameMaterial, "RowWd_pivot", "Window_pivot_1");
                 Frame.position.x = this.X + this.PWidth / 2;
                 Frame.position.y = this.Y - this.Height / 2;
                 Frame.position.z = this.Z;
 
                 for (var i = 0; i < this.Number; i++) {
-                    let frame = CreateCube(this.PWidth, this.Height, thick, frameMaterial, "Window_Frame", "Window_Frame_1");
-                    let glass = CreateCube(this.PWidth - .2, this.Height - .2, thick, glassMaterial, "Window_Glass", "Window_Glass_1");
+                    let frame = CreateCube(this.PWidth, this.Height, thick, frameMaterial, "RowWd_Frame", "Window_Frame_1");
+                    let glass = CreateCube(this.PWidth - .2, this.Height - .2, thick, glassMaterial, "RowWd_RowGlass", "Window_Glass_1");
                     this.Panels.push(glass);
                     glass.position.y = 0;
-                    if (this.Z > 0) {
-                        glass.position.z -= 0.005;
-                    }
-                    else {
+                    if (this.Z === 0) {
                         glass.position.z += 0.005;
+                    }
+                    else if (this.Z < 0) {
+                        glass.position.z -= 0.005;
                     }
                     frame.add(glass);
                     Frame.add(frame);
+                    frame.Instance = this;
+                    glass.Instance = this;
                     frame.position.x += i * this.PWidth;
                     frame.position.y -= this.Height / 2;
                 }
@@ -395,14 +424,14 @@ class RowWindow extends THREE.Mesh {
                 break;
 
             case "side":
-                Frame = CreateCube(.0000001, .0000001, .0000001, frameMaterial, "Window_pivot", "Window_pivot_1");
+                Frame = CreateCube(.0000001, .0000001, .0000001, frameMaterial, "RowWd_pivot", "Window_pivot_1");
                 Frame.position.x = this.X;
                 Frame.position.y = this.Y - this.Height / 2;
                 Frame.position.z = this.Z;
 
                 for (var i = 0; i < this.Number; i++) {
-                    let frame = CreateCube(thick, this.Height, this.PWidth, frameMaterial, "Window_Frame", "Window_Frame_1");
-                    let glass = CreateCube(thick, this.Height - .2, this.PWidth - .2, glassMaterial, "Window_Glass", "Window_Glass_1");
+                    let frame = CreateCube(thick, this.Height, this.PWidth, frameMaterial, "RowWd_Frame", "Window_Frame_1");
+                    let glass = CreateCube(thick, this.Height - .2, this.PWidth - .2, glassMaterial, "RowWd_RowGlass", "Window_Glass_1");
                     this.Panels.push(glass);
                     glass.position.y = 0;
                     if (this.X > 0) {
@@ -413,6 +442,8 @@ class RowWindow extends THREE.Mesh {
                     }
                     frame.add(glass);
                     Frame.add(frame);
+                    frame.Instance = this;
+                    glass.Instance = this;
                     frame.position.z -= i * this.PWidth;
                     frame.position.y -= this.Height / 2;
                 }
@@ -423,8 +454,10 @@ class RowWindow extends THREE.Mesh {
         }
         scene.add(Frame);
 
+        Frame.Instance = this;
         this.Window = Frame;
-        return Frame;
+        this.Window.Instance = this;
+        return this;
     }
 
     SetTotalWidth(newWidth) {
@@ -478,7 +511,7 @@ class IBeamColumn {
         this.TopFlange = null;
         this.BottomFlange = null;
         this.Web = null;
-        this.Instance = null;
+        this.Column = null;
     }
 
     DrawGeometry(scene) {
@@ -508,7 +541,8 @@ class IBeamColumn {
 
         scene.add(parent);
 
-        this.Instance = parent;
+        this.Column = parent;
+        this.Column.Instance = this;
         return parent;
     }
 
@@ -624,57 +658,178 @@ class Bay extends THREE.Mesh {
 
 }
 
-
-class MyWindow {
-    constructor(hieght, width, materialUrl, x, y) {
-        this.hieght = hieght;
-        this.width = width;
-        this.materialUrl = materialUrl;
-        this.x = x;
-        this.y = y;
-        this.Window = null;
-    }
-    DrawWindow(scene, material) {
-        var Windowgeometry = new THREE.BoxGeometry(this.hieght, this.width, .1);
-        //THREE.ImageUtils.crossOrigin = '';
-        //var Windowtexture = THREE.ImageUtils.loadTexture(this.materialUrl);
-        //Windowtexture.anisotropy = renderer.getMaxAnisotropy();
-        var WindowMaterial = [
-            new THREE.MeshBasicMaterial({
-                color: 'White' //left
-            }),
-            new THREE.MeshBasicMaterial({
-                color: 'White' // top
-            }),
-            new THREE.MeshBasicMaterial({
-                color: 'White' // bottom
-            }),
-            new THREE.MeshBasicMaterial({
-                color: 'White' //
-            }),
-            new THREE.MeshBasicMaterial({
-                map: material //front
-            }),
-            new THREE.MeshBasicMaterial({
-                map: material //front
-            }),
-        ];
-        this.Window = new THREE.Mesh(Windowgeometry, WindowMaterial);
-        this.Window.position.x = this.x;
-        this.Window.position.y = this.y;
-        scene.add(this.Window);
-        //camera.position.z = 3;
-    }
-    MoveWindow(X, Y) {
-        this.x = X;
-        this.y = Y;
-        // this.DrawWindow(scene);
-        this.Window.position.x = this.x;
-        this.Window.position.y = this.y;
+class SingleDoor extends THREE.Mesh {
+    constructor(width, height, color, workPlane, x, z) {
+        super();
+        this.Width = width;
+        this.Height = height;
+        this.Color = color;
+        this.WorkPlane = workPlane;
+        this.X = x;
+        this.Y = 0.0;
+        this.Z = z;
+        this.Door = null;
+        this.DoorHandle = null;
     }
 
+    DrawGeometry(scene, handleTexturePath) {
+        let door = null;
+        let doorHandel = null;
+        let thick = .1;
 
 
+
+        let handleMaterial = NewMaterialByColor("rgb(203,110,0)");
+        let sphereMat = NewMaterialByColor("rgb(136,74,0)");
+        let doorMaterial = NewMaterialByColor(this.Color);
+
+        var geometrySphere = new THREE.SphereGeometry(0.04, 100, 100);
+        var sphere = new THREE.Mesh(geometrySphere, sphereMat);
+
+        switch (this.WorkPlane) {
+            case "front":
+                door = CreateCube(this.Width, this.Height, thick, doorMaterial, "Door_Single", "Door_Single__Front");
+                door.position.x = this.X;
+                door.position.y = 0 + this.Height / 2;
+                door.position.z = this.Z;
+                doorHandel = CreateCube(.15, 0.4, .05, handleMaterial, "Door_Single_Handle", "Door_Single_Handle");
+                doorHandel.position.y = 0;
+                doorHandel.position.x = (-this.Width / 2) + .15;
+                if (this.Z === 0) {
+                    doorHandel.position.z = +.05;
+                    sphere.position.z = +.03;
+                }
+                else if (this.Z < 0) {
+                    doorHandel.position.z = -.05;
+                    sphere.position.z = -.03;
+                }
+                break;
+
+            case "side":
+                door = CreateCube(thick, this.Height, this.Width, doorMaterial, "Door_Single", "Door_Single_Side");
+                door.position.x = this.X;
+                door.position.y = 0 + this.Height / 2;
+                door.position.z = this.Z - this.Width / 2;
+                doorHandel = CreateCube(.05, .4, .15, handleMaterial, "Door_Single_Handle", "Door_Single_Handle");
+                doorHandel.position.y = 0;
+                doorHandel.position.z = (this.Width / 2) - .15;
+                if (this.X > 0) {
+                    doorHandel.position.x = +.05;
+                    sphere.position.x = +.03;
+                }
+                else if (this.X < 0) {
+                    doorHandel.position.x = -.05;
+                    sphere.position.x = -.03;
+                }
+                //doorHandel.position.x = -.005;
+
+                break;
+        }
+        doorHandel.add(sphere);
+        door.add(doorHandel);
+        scene.add(door);
+
+        this.Door = door;
+        this.Door.Instance = this;
+        this.DoorHandle = doorHandel;
+        return this;
+    }
+
+    SetWidth(newWidth) {
+        let oldWidth = this.Width;
+        switch (this.WorkPlane) {
+            case "front":
+                this.Door.scale.x *= (newWidth / oldWidth);
+                this.Width = newWidth;
+                break;
+
+            case "side":
+                this.Door.scale.z *= (newWidth / oldWidth);
+                this.Width = newWidth;
+                break;
+        }
+    }
+
+    SetHeight(newHeight) {
+        let oldHeight = this.Height;
+        this.Door.scale.y *= (newHeight / oldHeight);
+        this.Door.position.y = 0 + newHeight / 2;
+        this.Height = newHeight;
+    }
+
+    SetColor(newColor) {
+        this.Door.material.color = new THREE.Color(newColor);
+    }
+}
+
+class SectionalDoor extends THREE.Mesh {
+    constructor(width, height, workPlane, x, z) {
+        super();
+        this.Width = width;
+        this.Height = height;
+        this.WorkPlane = workPlane;
+        this.X = x;
+        this.Y = 0.0;
+        this.Z = z;
+        this.Door = null;
+    }
+
+    DrawGeometry(scene, material) {
+        let door = null;
+        let doorHandel;
+        let thick = .1;
+
+        //let handleTexture = new THREE.TextureLoader().load(handleTexturePath);
+        //let handleMaterial = new THREE.MeshBasicMaterial({ map: handleTexture });
+        switch (this.WorkPlane) {
+            case "front":
+                door = CreateCube(this.Width, this.Height, thick, material, "Door_Sectional", "Door_Sectional__Front");
+                door.position.x = this.X;
+                door.position.y = 0 + this.Height / 2;
+                door.position.z = this.Z;
+                break;
+
+            case "side":
+                door = CreateCube(thick, this.Height, this.Width, material, "Door_Sectional", "Door_Sectional_Side");
+                door.position.x = this.X;
+                door.position.y = 0 + this.Height / 2;
+                door.position.z = this.Z - this.Width / 2;
+                break;
+        }
+        scene.add(door);
+
+        this.Door = door;
+        this.Door.Instance = this;
+        return this;
+    }
+
+    SetWidth(newWidth) {
+        let oldWidth = this.Width;
+        switch (this.WorkPlane) {
+            case "front":
+                this.Door.scale.x *= (newWidth / oldWidth);
+                //this.Door.position.x = this.X - (newWidth / 2);
+                this.Width = newWidth;
+                break;
+
+            case "side":
+                this.Door.scale.z *= (newWidth / oldWidth);
+                //this.Door.position.z = this.Z - newWidth / 2;
+                this.Width = newWidth;
+                break;
+        }
+    }
+
+    SetHeight(newHeight) {
+        let oldHeight = this.Height;
+        this.Door.scale.y *= (newHeight / oldHeight);
+        this.Door.position.y = 0 + newHeight / 2;
+        this.Height = newHeight;
+    }
+
+    SetColor(newColor) {
+        this.Door.material.color = new THREE.Color(newColor);
+    }
 }
 
 
@@ -773,5 +928,57 @@ class IHeight {
         left.position.y = newHeight / 2;
         this.Height = newHeight;
     }
+}
+
+class MyWindow {
+    constructor(hieght, width, materialUrl, x, y) {
+        this.hieght = hieght;
+        this.width = width;
+        this.materialUrl = materialUrl;
+        this.x = x;
+        this.y = y;
+        this.Window = null;
+    }
+    DrawWindow(scene, material) {
+        var Windowgeometry = new THREE.BoxGeometry(this.hieght, this.width, .1);
+        //THREE.ImageUtils.crossOrigin = '';
+        //var Windowtexture = THREE.ImageUtils.loadTexture(this.materialUrl);
+        //Windowtexture.anisotropy = renderer.getMaxAnisotropy();
+        var WindowMaterial = [
+            new THREE.MeshBasicMaterial({
+                color: 'White' //left
+            }),
+            new THREE.MeshBasicMaterial({
+                color: 'White' // top
+            }),
+            new THREE.MeshBasicMaterial({
+                color: 'White' // bottom
+            }),
+            new THREE.MeshBasicMaterial({
+                color: 'White' //
+            }),
+            new THREE.MeshBasicMaterial({
+                map: material //front
+            }),
+            new THREE.MeshBasicMaterial({
+                map: material //front
+            }),
+        ];
+        this.Window = new THREE.Mesh(Windowgeometry, WindowMaterial);
+        this.Window.position.x = this.x;
+        this.Window.position.y = this.y;
+        scene.add(this.Window);
+        //camera.position.z = 3;
+    }
+    MoveWindow(X, Y) {
+        this.x = X;
+        this.y = Y;
+        // this.DrawWindow(scene);
+        this.Window.position.x = this.x;
+        this.Window.position.y = this.y;
+    }
+
+
+
 }
 // #endregion For Test*/

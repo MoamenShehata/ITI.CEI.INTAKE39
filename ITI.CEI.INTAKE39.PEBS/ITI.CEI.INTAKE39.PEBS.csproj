@@ -283,10 +283,16 @@
     <Content Include="Images\agri.jpeg" />
     <Content Include="Images\cladding_Material_1.jpg" />
     <Content Include="Images\cladding_Material_2.jpg" />
+    <Content Include="Images\Door_Handel.png" />
     <Content Include="Images\grass.jpg" />
+    <Content Include="Images\handle.jpg" />
+    <Content Include="Images\handle_1.jpg" />
+    <Content Include="Images\handle_2.jpg" />
     <Content Include="Images\Minus.jpg" />
     <Content Include="Images\Plus.jpg" />
     <Content Include="Images\production.jpg" />
+    <Content Include="Images\Sectional_Door.png" />
+    <Content Include="Images\Sectional_Door_1.jpg" />
     <Content Include="Images\shed.jpg" />
     <Content Include="Images\slider.png" />
     <Content Include="Images\steel_construction_technology.jpg" />

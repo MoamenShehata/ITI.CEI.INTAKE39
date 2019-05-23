@@ -43,10 +43,10 @@
 <div class="workspace" id="WorkSpace">
     <div id="WorkSpace_Content">
         @Html.Partial("_PartialNewProject", Model)
+        @*@Html.Partial("_PartialProjectViewCube")*@
         @*@Html.Partial("_PartialProjectDimensionProduction")*@
         @*@Html.Partial("_PartialProjectBaysProduction")*@
         @*@Html.Partial("_PartialConfigProductionEditor")*@
-        @*@Html.Partial("_PartialProjectViewCube")*@
     </div>
 
 
@@ -61,6 +61,7 @@
 </div>
 
 
+<script src="//unpkg.com/three-spritetext"></script>
 
 <script>
     let btn_next_stage = document.getElementById("next_stage");
@@ -147,11 +148,14 @@
             url: "/Account/RenderConfigView",
             success: function (result) {
                 $("#TemplateProductionBays").replaceWith(result);
+                $("#TemplateProductionViewCube").css("display", "block");
+
                 //console.log(result);
             },
             error: function (result) {
                 console.log("Error");
             }
         });
+
     }
 </script>

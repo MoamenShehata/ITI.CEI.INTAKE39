@@ -6,6 +6,7 @@
 
 </div>
 
+
 <script>
     //#region   Minimum Need
     let BaysfieldOfView = 45;
@@ -42,6 +43,10 @@
     var BaysLengthDim = new PebsDimension((project_span / -2) - 3, 0, project_length, "z");
     BaysLengthDim.DrawGeometry(Baysscene);
 
+    var myText = new SpriteText('Moamen');
+    myText.position.x = 0;
+    myText.position.z = 0;
+    Baysscene.add(myText);
     //#endregion
 
 
