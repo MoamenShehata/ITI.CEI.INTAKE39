@@ -498,10 +498,12 @@
 
     width_slider.oninput = function () {
         txtbx_Size_Width.value = width_slider.value;
+        IncreaseWidth(width_slider.value);
     }
 
     height_slider.oninput = function () {
         txtbx_Size_Height.value = height_slider.value;
+        IncreaseHeight(height_slider.value);
     }
 
     btn_Position_X_Plus.onclick = function () {
@@ -776,92 +778,22 @@
         }
     }
 
+
+
     btn_Size_Width_Plus.onclick = function () {
-
-        if (configIntersected.ObjectType != null && configIntersected.ObjectType.includes("PEBS_OBJ")) {
-
-            //Selecting Row Windows
-            if (configIntersected.ObjectType.includes("RowWd")) {
-                var currentWidth = parseFloat(txtbx_Size_Width.value);
-                currentWidth += 0.25;
-                txtbx_Size_Width.value = currentWidth;
-                configIntersected.Instance.SetTotalWidth(currentWidth);
-            }
-
-            //Selecting Doors Or Single Windows
-            if (configIntersected.ObjectType.includes("Door") || configIntersected.ObjectType.includes("Window")) {
-                var currentWidth = parseFloat(txtbx_Size_Width.value);
-                currentWidth += 0.25;
-                txtbx_Size_Width.value = currentWidth;
-                configIntersected.Instance.SetWidth(currentWidth);
-            }
-        }
+        IncreaseWidth(0);
     }
 
     btn_Size_Width_Minus.onclick = function () {
-
-        if (configIntersected.ObjectType != null && configIntersected.ObjectType.includes("PEBS_OBJ")) {
-
-            //Selecting Row Windows
-            if (configIntersected.ObjectType.includes("RowWd")) {
-                var currentWidth = parseFloat(txtbx_Size_Width.value);
-                currentWidth -= 0.25;
-                txtbx_Size_Width.value = currentWidth;
-                configIntersected.Instance.SetTotalWidth(currentWidth);
-            }
-
-            //Selecting Doors Or Windows
-            if (configIntersected.ObjectType.includes("Door") || configIntersected.ObjectType.includes("Window")) {
-                var currentWidth = parseFloat(txtbx_Size_Width.value);
-                currentWidth -= 0.25;
-                txtbx_Size_Width.value = currentWidth;
-                configIntersected.Instance.SetWidth(currentWidth);
-            }
-        }
+        DecreaseWidth();
     }
 
     btn_Size_Height_Plus.onclick = function () {
-
-        if (configIntersected.ObjectType != null && configIntersected.ObjectType.includes("PEBS_OBJ")) {
-
-            //Selecting Row Windows
-            if (configIntersected.ObjectType.includes("RowWd")) {
-                var currentHeight = parseFloat(txtbx_Size_Height.value);
-                currentHeight += 0.25;
-                txtbx_Size_Height.value = currentHeight;
-                configIntersected.Instance.SetHeight(currentHeight);
-            }
-
-            //Selecting Doors Or Windows
-            if (configIntersected.ObjectType.includes("Door") || configIntersected.ObjectType.includes("Window")) {
-                var currentHeight = parseFloat(txtbx_Size_Height.value);
-                currentHeight += 0.25;
-                txtbx_Size_Height.value = currentHeight;
-                configIntersected.Instance.SetHeight(currentHeight);
-            }
-        }
+        IncreaseHeight();
     }
 
     btn_Size_Height_Minus.onclick = function () {
-
-        if (configIntersected.ObjectType != null && configIntersected.ObjectType.includes("PEBS_OBJ")) {
-
-            //Selecting Row Windows
-            if (configIntersected.ObjectType.includes("RowWd")) {
-                var currentHeight = parseFloat(txtbx_Size_Height.value);
-                currentHeight -= 0.25;
-                txtbx_Size_Height.value = currentHeight;
-                configIntersected.Instance.SetHeight(currentHeight);
-            }
-
-            //Selecting Doors Or Windows
-            if (configIntersected.ObjectType.includes("Door") || configIntersected.ObjectType.includes("Window")) {
-                var currentHeight = parseFloat(txtbx_Size_Height.value);
-                currentHeight -= 0.25;
-                txtbx_Size_Height.value = currentHeight;
-                configIntersected.Instance.SetHeight(currentHeight);
-            }
-        }
+        DecreaseHeight()
     }
 
 
@@ -940,7 +872,7 @@
         panel4.style.display = "none";
         panel5.style.display = "none";
         panel6.style.display = "none";
-
+        //document.getElementById("Config_Panel").style.backgroundColor = "red";
 
     }
     panelHandle2.onclick = function () {
@@ -1048,6 +980,33 @@
     let ConfigRaycaster = new THREE.Raycaster();
     let ConfigMouse = new THREE.Vector2();
     //#endregion
+
+    //#region Project Parameters
+    single_door_min_width = 1.25;
+    single_door_max_width = 2.25;
+
+    single_door_min_height = 2.25;
+    single_door_max_height = 2.5;
+
+    sectional_door_min_width = 3.5;
+    sectional_door_max_width = 4.5;
+
+    sectional_door_min_height = 2.5;
+    sectional_door_max_height = 4.0;
+
+    single_window_min_width = 1.25;
+    single_window_max_width = 2.25;
+
+    single_window_min_height = 1.0;
+    single_window_max_height = 1.5;
+
+    row_window_min_width = 6.0;
+    row_window_max_width = 8.0;
+
+    row_window_min_height = 1.25;
+    row_window_max_height = 1.75;
+
+    //#endregion
 
     var objects = [];
     SetCameraPosition(ConfigCamera, 20, 20, 20);
@@ -1351,11 +1310,11 @@
         y_slider.setAttribute("min", project_height - 2 + configIntersected.Instance.Height);
         y_slider.setAttribute("max", project_height);
         y_slider.value = configIntersected.Instance.Y;
-        width_slider.setAttribute("min", 4);
-        width_slider.setAttribute("max", 7);
+        width_slider.setAttribute("min", row_window_min_width);
+        width_slider.setAttribute("max", row_window_max_width);
         width_slider.value = configIntersected.Instance.TotalWidth;
-        height_slider.setAttribute("min", 1);
-        height_slider.setAttribute("max", 2.25);
+        height_slider.setAttribute("min", row_window_min_height);
+        height_slider.setAttribute("max", row_window_max_height);
         height_slider.value = configIntersected.Instance.Height;
     }
 
@@ -1378,11 +1337,11 @@
         y_slider.setAttribute("min", 0);
         y_slider.setAttribute("max", 0.5);
         y_slider.value = configIntersected.Instance.Y;
-        width_slider.setAttribute("min", 2);
-        width_slider.setAttribute("max", 3.5);
+        width_slider.setAttribute("min", single_door_min_width);
+        width_slider.setAttribute("max", single_door_max_width);
         width_slider.value = configIntersected.Instance.Width;
-        height_slider.setAttribute("min", 2);
-        height_slider.setAttribute("max", 3);
+        height_slider.setAttribute("min", single_door_min_height);
+        height_slider.setAttribute("max", single_door_max_height);
         height_slider.value = configIntersected.Instance.Height;
     }
 
@@ -1405,11 +1364,11 @@
         y_slider.setAttribute("min", project_height - 2 + configIntersected.Instance.Height);
         y_slider.setAttribute("max", project_height);
         y_slider.value = configIntersected.Instance.Y;
-        width_slider.setAttribute("min", 2);
-        width_slider.setAttribute("max", 3.5);
+        width_slider.setAttribute("min", single_window_min_width);
+        width_slider.setAttribute("max", single_window_max_width);
         width_slider.value = configIntersected.Instance.Width;
-        height_slider.setAttribute("min", 1);
-        height_slider.setAttribute("max", 2);
+        height_slider.setAttribute("min", single_window_min_height);
+        height_slider.setAttribute("max", single_window_min_height);
         height_slider.value = configIntersected.Instance.Height;
 
     }
@@ -1473,6 +1432,198 @@
             else {
                 ConfigScene.remove(configIntersected);
             }
+        }
+    }
+
+    function IncreaseWidth(newWidth, rowMax, doorMax, windMax) {
+        if (configIntersected.ObjectType != null && configIntersected.ObjectType.includes("PEBS_OBJ")) {
+            if (newWidth == 0) {
+                //Selecting Row Windows
+                if (configIntersected.ObjectType.includes("RowWd")) {
+                    var currentWidth = parseFloat(txtbx_Size_Width.value);
+                    currentWidth += 0.25;
+                    if (currentWidth < rowMax) {
+                        txtbx_Size_Width.value = currentWidth;
+                        configIntersected.Instance.SetTotalWidth(currentWidth);
+                    }
+                }
+
+                //Selecting Doors
+                if (configIntersected.ObjectType.includes("Door")) {
+                    var currentWidth = parseFloat(txtbx_Size_Width.value);
+                    currentWidth += 0.25;
+                    if (currentWidth < doorMax) {
+                        txtbx_Size_Width.value = currentWidth;
+                        configIntersected.Instance.SetWidth(currentWidth);
+                    }
+                }
+
+                //Selecting Single Windows
+                if (configIntersected.ObjectType.includes("Window")) {
+                    var currentWidth = parseFloat(txtbx_Size_Width.value);
+                    currentWidth += 0.25;
+                    if (currentWidth < windMax) {
+                        txtbx_Size_Width.value = currentWidth;
+                        configIntersected.Instance.SetWidth(currentWidth);
+                    }
+                }
+            }
+            else {
+                //Selecting Row Windows
+                if (configIntersected.ObjectType.includes("RowWd")) {
+                    configIntersected.Instance.SetTotalWidth(newWidth);
+                }
+
+                //Selecting Doors Or Single Windows
+                if (configIntersected.ObjectType.includes("Door") || configIntersected.ObjectType.includes("Window")) {
+                    configIntersected.Instance.SetWidth(newWidth);
+                }
+            }
+
+        }
+    }
+
+    function DecreaseWidth(newWidth, rowMin, doorMin, windMin) {
+        if (configIntersected.ObjectType != null && configIntersected.ObjectType.includes("PEBS_OBJ")) {
+            if (newWidth == 0) {
+                //Selecting Row Windows
+                if (configIntersected.ObjectType.includes("RowWd")) {
+                    var currentWidth = parseFloat(txtbx_Size_Width.value);
+                    currentWidth -= 0.25;
+                    if (currentWidth > rowMin) {
+                        txtbx_Size_Width.value = currentWidth;
+                        configIntersected.Instance.SetTotalWidth(currentWidth);
+                    }
+                }
+
+                //Selecting Doors
+                if (configIntersected.ObjectType.includes("Door")) {
+                    var currentWidth = parseFloat(txtbx_Size_Width.value);
+                    currentWidth -= 0.25;
+                    if (currentWidth > doorMin) {
+                        txtbx_Size_Width.value = currentWidth;
+                        configIntersected.Instance.SetWidth(currentWidth);
+                    }
+                }
+
+                //Selecting  Windows
+                if (configIntersected.ObjectType.includes("Window")) {
+                    var currentWidth = parseFloat(txtbx_Size_Width.value);
+                    currentWidth -= 0.25;
+                    if (currentWidth > windMin) {
+                        txtbx_Size_Width.value = currentWidth;
+                        configIntersected.Instance.SetWidth(currentWidth);
+                    }
+                }
+            }
+            else {
+                //Selecting Row Windows
+                if (configIntersected.ObjectType.includes("RowWd")) {
+                    configIntersected.Instance.SetTotalWidth(newWidth);
+                }
+
+                //Selecting Doors Or Windows
+                if (configIntersected.ObjectType.includes("Door") || configIntersected.ObjectType.includes("Window")) {
+                    configIntersected.Instance.SetWidth(newWidth);
+                }
+            }
+
+        }
+    }
+
+    function IncreaseHeight(newHeight, rowMax, doorMax,windMax) {
+        if (configIntersected.ObjectType != null && configIntersected.ObjectType.includes("PEBS_OBJ")) {
+            if (newHeight == 0) {
+                //Selecting Row Windows
+                if (configIntersected.ObjectType.includes("RowWd")) {
+                    var currentHeight = parseFloat(txtbx_Size_Height.value);
+                    currentHeight += 0.25;
+                    if (currentHeight < rowMax) {
+                        txtbx_Size_Height.value = currentHeight;
+                        configIntersected.Instance.SetHeight(currentHeight);
+                    }
+                }
+
+                //Selecting Doors
+                if (configIntersected.ObjectType.includes("Door")) {
+                    var currentHeight = parseFloat(txtbx_Size_Height.value);
+                    currentHeight += 0.25;
+                    if (currentHeight < doorMax) {
+                        txtbx_Size_Height.value = currentHeight;
+                        configIntersected.Instance.SetHeight(currentHeight);
+                    }
+                }
+
+                //Selecting Windows
+                if (configIntersected.ObjectType.includes("Window")) {
+                    var currentHeight = parseFloat(txtbx_Size_Height.value);
+                    currentHeight += 0.25;
+                    if (currentHeight < windMax) {
+                        txtbx_Size_Height.value = currentHeight;
+                        configIntersected.Instance.SetHeight(currentHeight);
+                    }
+                }
+            }
+            else {
+                //Selecting Row Windows
+                if (configIntersected.ObjectType.includes("RowWd")) {
+                    configIntersected.Instance.SetHeight(newHeight);
+                }
+
+                //Selecting Doors Or Windows
+                if (configIntersected.ObjectType.includes("Door") || configIntersected.ObjectType.includes("Window")) {
+                    configIntersected.Instance.SetHeight(newHeight);
+                }
+            }
+
+        }
+    }
+
+    function DecreaseHeight(newHeight, rowMin, doorMin,windMin) {
+        if (configIntersected.ObjectType != null && configIntersected.ObjectType.includes("PEBS_OBJ")) {
+            if (newHeight == 0) {
+                //Selecting Row Windows
+                if (configIntersected.ObjectType.includes("RowWd")) {
+                    var currentHeight = parseFloat(txtbx_Size_Height.value);
+                    currentHeight -= 0.25;
+                    if (currentHeight > rowMin) {
+                        txtbx_Size_Height.value = currentHeight;
+                        configIntersected.Instance.SetHeight(currentHeight);
+                    }
+                }
+
+                //Selecting Doors
+                if (configIntersected.ObjectType.includes("Door") ) {
+                    var currentHeight = parseFloat(txtbx_Size_Height.value);
+                    currentHeight -= 0.25;
+                    if (currentHeight > doorMin) {
+                        txtbx_Size_Height.value = currentHeight;
+                        configIntersected.Instance.SetHeight(currentHeight);
+                    }
+                }
+
+                //Selecting Windows
+                if (configIntersected.ObjectType.includes("Window")) {
+                    var currentHeight = parseFloat(txtbx_Size_Height.value);
+                    currentHeight -= 0.25;
+                    if (currentHeight > windMin) {
+                        txtbx_Size_Height.value = currentHeight;
+                        configIntersected.Instance.SetHeight(currentHeight);
+                    }
+                }
+            }
+            else {
+                //Selecting Row Windows
+                if (configIntersected.ObjectType.includes("RowWd")) {
+                    configIntersected.Instance.SetHeight(newHeight);
+                }
+
+                //Selecting Doors Or Windows
+                if (configIntersected.ObjectType.includes("Door") || configIntersected.ObjectType.includes("Window")) {
+                    configIntersected.Instance.SetHeight(newHeight);
+                }
+            }
+
         }
     }
 
