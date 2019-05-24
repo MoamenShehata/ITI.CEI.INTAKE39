@@ -97,8 +97,10 @@ class PebsDimension {
         this.Length = length;
         this.Direction = direction;
         this.DimensionLine = null;
-        this.EndExtent = null;
         this.StartExtent = null;
+        this.EndExtent = null;
+        this.Text = null;
+
     }
 
     DrawGeometry(scene) {
@@ -108,6 +110,9 @@ class PebsDimension {
         let startExtentGeometry;
         let endExtentGeometry;
 
+        let dimText = new SpriteText(parseFloat(this.Length) + ' m');
+        dimText.textHeight = 1.25;
+        dimText.color = 'rgb(0,0,0)';
         switch (this.Direction) {
             case "z":
                 dimGeometry = CreateCube(.1, .01, totalLength, Material, "Dimension", "LengthDimension");
@@ -121,6 +126,10 @@ class PebsDimension {
                 endExtentGeometry = CreateCube(.6, .01, .06, Material, "Dimension_Extents", "Dimension_End_Extent");
                 endExtentGeometry.position.x = this.XPosition;
                 endExtentGeometry.position.z = this.ZPosition - this.Length;
+
+                dimText.position.x = this.XPosition - 1.0;
+                dimText.position.z = this.ZPosition - (this.Length / 2);
+
                 break;
             case "x":
                 dimGeometry = CreateCube(totalLength, .01, .1, Material, "Dimension", "LengthDimension");
@@ -129,38 +138,47 @@ class PebsDimension {
 
                 startExtentGeometry = CreateCube(.06, .01, .6, Material, "Dimension_Extents", "Dimension_Start_Extent");
                 startExtentGeometry.position.x = this.XPosition;
-                startExtentGeometry.position.z = this.ZPosition
+                startExtentGeometry.position.z = this.ZPosition;
 
                 endExtentGeometry = CreateCube(.06, .01, .6, Material, "Dimension_Extents", "Dimension_End_Extent");
                 endExtentGeometry.position.x = this.XPosition - this.Length;
                 endExtentGeometry.position.z = this.ZPosition;
+
+                dimText.position.z = this.ZPosition;
+                dimText.position.x = this.XPosition - (this.Length / 2);
                 break;
         }
 
         this.DimensionLine = dimGeometry;
-        this.EndExtent = endExtentGeometry;
         this.StartExtent = startExtentGeometry;
+        this.EndExtent = endExtentGeometry;
 
         scene.add(dimGeometry);
         scene.add(startExtentGeometry);
         scene.add(endExtentGeometry);
+        scene.add(dimText);
+        this.Text = dimText;
+        return this;
     }
 
     SetLength(newLength) {
-        let oldlength = this.Length;
-        let increment = newLength - oldlength;
+        let Oldlength = this.Length + .8;
+        let NewLength = newLength + 0.8;
+        this.Text.text = newLength;
+        //let increment = newLength - oldlength;
         switch (this.Direction) {
             case "z":
-                this.DimensionLine.scale.z *= (newLength / oldlength);
-                this.DimensionLine.position.z = this.ZPosition - (newLength / 2);
                 this.Length = newLength;
-                this.EndExtent.position.z -= increment;
+                this.DimensionLine.scale.z *= (NewLength / Oldlength);
+                this.DimensionLine.position.z = this.ZPosition - (NewLength / 2) + .4;
+                this.EndExtent.position.z = this.ZPosition - newLength;
+                this.Text.position.z = this.ZPosition - (newLength / 2);
                 break;
             case "x":
-                this.DimensionLine.scale.x *= (newLength / oldlength);
                 this.Length = newLength;
-                this.StartExtent.position.x = this.XPosition + newLength / 2;
-                this.EndExtent.position.x = this.XPosition - newLength / 2;
+                this.DimensionLine.scale.x *= (NewLength / Oldlength);
+                this.StartExtent.position.x = 0 + (newLength / 2);
+                this.EndExtent.position.x = 0 - (newLength / 2);
                 break;
         }
     }

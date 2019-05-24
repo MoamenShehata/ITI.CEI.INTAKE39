@@ -280,6 +280,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\AccessRooWindow.jpg" />
+    <Content Include="Images\AccessSingleDoor.jpg" />
+    <Content Include="Images\AccessSingleWindow.jpg" />
     <Content Include="Images\agri.jpeg" />
     <Content Include="Images\cladding_Material_1.jpg" />
     <Content Include="Images\cladding_Material_2.jpg" />

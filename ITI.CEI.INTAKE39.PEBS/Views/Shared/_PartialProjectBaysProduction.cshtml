@@ -40,13 +40,10 @@
     //#endregion
 
     //#region Dimensions
-    var BaysLengthDim = new PebsDimension((project_span / -2) - 3, 0, project_length, "z");
+    var BaysLengthDim = new PebsDimension((project_span / -2) - 2.25, 5, project_length, "z");
     BaysLengthDim.DrawGeometry(Baysscene);
 
-    var myText = new SpriteText('Moamen');
-    myText.position.x = 0;
-    myText.position.z = 0;
-    Baysscene.add(myText);
+
     //#endregion
 
 
@@ -60,28 +57,27 @@
         Baysscene.add(background);
         background.position.y = -.1;
 
-        BaysBayWidthSlider = new PebsHorizontalSlider(1, .3, "width", 0)
+        BaysBayWidthSlider = new PebsHorizontalSlider(1, .3, "width", 5)
         BaysBayWidthSlider.Draw(Baysscene);
-        BaysBayWidthSlider.Slider.position.x = (project_span / 2) + 1;
+        BaysBayWidthSlider.Slider.position.x = (project_span / 2) + 2;
         bays = [];
 
         let leftOrigin = 140;
         let topOrigin = 32;
         //step 74px in left;
-        for (var i = 0; i < totalLength; i += bayWidth) {
+        for (var i = -5; i < totalLength - 5; i += bayWidth) {
             let bay = new Bay(baySpan, bayWidth, -i);
-            bay.DrawGeometry(Baysscene);
+            let geometry = bay.DrawGeometry(Baysscene);
+            geometry.position.x += 1;
             bays.push(bay);
 
-            let text = document.createElement('label');
-            text.innerText = bayWidth + "m";
-            text.setAttribute("style", `position: absolute;top:${topOrigin}px;;left:${leftOrigin}px`)
-            document.getElementById("TemplateProductionBays").append(text);
             leftOrigin += 74;
         }
+
         for (var i = 0; i < bays.length; i++) {
             if (i != bays.length - 1) {
-                bays[i].Next = bays[i + 1].Instance;
+                //bays[i].Next = bays[i + 1].Instance;
+                bays[i].Next = bays[i + 1];
 
             }
         }
@@ -108,14 +104,17 @@
                     Baysintersects[0].object.material.color = new THREE.Color('rgb(0, 51, 127)');
                     Baysintersects[0].object.children[0].material.color = new THREE.Color('rgb(198, 255, 0)');
                     Baysintersects[0].object.children[1].material.color = new THREE.Color('rgb(198, 255, 0)');
+                    //selectedBay.Instance.Dimension.DimensionLine.material.color = new THREE.Color('rgb(255, 0, 0)');
+                    console.log(selectedBay);
                     BaysBayWidthSlider.Slider.position.z = Baysintersects[0].object.position.z + .5;
                 }
                 else {
+
                     selectedBay.material.color = new THREE.Color('rgb(0, 67, 168)');
                     selectedBay.children[0].material.color = new THREE.Color('rgb(255, 255, 255)');
                     selectedBay.children[1].material.color = new THREE.Color('rgb(255, 255, 255)');
                     selectedBay = Baysintersects[0].object;
-                    //confirm(selectedBay);
+                    console.log(selectedBay);
 
                     Baysintersects[0].object.material.color = new THREE.Color('rgb(0, 51, 127)');
                     Baysintersects[0].object.children[0].material.color = new THREE.Color('rgb(198, 255, 0)');
@@ -133,6 +132,8 @@
                     selectedBay.children[1].material.color = new THREE.Color('rgb(255, 255, 255)');
                     selectedBay.material.color = new THREE.Color('rgb(0, 67, 168)');
                     selectedBay = null;
+                    BaysBayWidthSlider.Slider.position.x = (project_span / 2) + 2;
+                    BaysBayWidthSlider.Slider.position.z = 5;
                 }
                 //confirm(Baysintersects[0].object.Name);
             }
@@ -147,6 +148,7 @@
                         let totalNewLength = project_length + .25;
                         if (EditProjectLength(totalNewLength)) {
                             selectedBay.Instance.SetWidth(w);
+                            BaysLengthDim.SetLength(totalNewLength);
                             console.log(project_length);
                             //selectedBay.Instance.Width = w;
                         }
@@ -168,6 +170,7 @@
                         let totalNewLength = project_length - .25;
                         if (EditProjectLength(totalNewLength)) {
                             selectedBay.Instance.SetWidth(w);
+                            BaysLengthDim.SetLength(totalNewLength);
                             console.log(project_length);
                             selectedBay.Instance.Width = w;
                         }

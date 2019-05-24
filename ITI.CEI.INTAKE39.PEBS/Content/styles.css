@@ -107,10 +107,27 @@ h1, h2, h3, h4, h5, h6, label, p {
 }
 /* #endregion */
 
+.img_acess {
+    box-sizing: border-box;
+    cursor: pointer;
+    width: 70px;
+    height: 80px;
+    border: 4px solid #5683ff;
+    transition: all 0.2s ease-in-out;
+    padding: 4px;
+    background-color: white;
+}
+
+.active_image {
+    border: 4px solid #1948c8;
+}
+    .img_acess:hover {
+        border: 4px solid #2a56d2;
+    }
 
 /* #region Workspace Styles */
-
 .workspace {
+    overflow: hidden;
     float: left;
     margin: 10px 0px 0px 0px;
     width: 90%;

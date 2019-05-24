@@ -626,8 +626,9 @@ class Bay extends THREE.Mesh {
         //text.innerText = "Moamen";
         //document.getElementById("TemplateProductionBays").append(text);
 
-        let dim = new PebsDimension((this.Length / -2) - 1, this.ZPosition, this.Width, "z");
+        let dim = new PebsDimension((this.Length / -2) - 0.25, this.ZPosition, this.Width, "z");
         dim.DrawGeometry(scene);
+        //dim.DimensionLine.material.color.setHex(Math.random() * 0xbf2020);
         this.Dimension = dim;
         Bay.Instance = this;
         return Bay;
@@ -639,16 +640,20 @@ class Bay extends THREE.Mesh {
         let Incerment = newWidth - oldWidth;
         this.Instance.scale.z *= (newWidth / oldWidth);
         this.Instance.position.z = this.ZPosition - (newWidth / 2);
+
         this.Dimension.SetLength(newWidth);
         let current = this;
         while (current.Next != null) {
             //debugger;
-            current.Next.position.z -= Incerment;
-            current.Next.Instance.ZPosition -= Incerment;
-            current.Next.Instance.Dimension.StartExtent.position.z -= Incerment;
-            current.Next.Instance.Dimension.EndExtent.position.z -= Incerment;
-            current.Next.Instance.Dimension.DimensionLine.position.z -= Incerment;
-            current = current.Next.Instance;
+            //Note Next = Instance = Gemoetry of the bay
+            current.Next.Instance.position.z -= Incerment;
+            current.Next.ZPosition -= Incerment;
+            current.Next.Dimension.DimensionLine.position.z -= Incerment;
+            current.Next.Dimension.ZPosition -= Incerment;
+            current.Next.Dimension.StartExtent.position.z -= Incerment;
+            current.Next.Dimension.EndExtent.position.z -= Incerment;
+            current.Next.Dimension.Text.position.z -= Incerment;
+            current = current.Next;
         }
         this.Width = newWidth;
         //this.ZPosition = this.Instance.position.z + (newWidth / 2);
@@ -832,6 +837,30 @@ class SectionalDoor extends THREE.Mesh {
     }
 }
 
+class CProjectMousePosToXYPlaneHelper {
+    constructor() {
+        this.m_vPos = new THREE.Vector3();
+        this.m_vDir = new THREE.Vector3();
+    }
+
+    Compute(nMouseX, nMouseY, Camera, vOutPos) {
+        let vPos = this.m_vPos;
+        let vDir = this.m_vDir;
+
+        vPos.set(
+            -1.0 + 2.0 * nMouseX / 1367,
+            -1.0 + 2.0 * nMouseY / 320,
+            0.5
+        ).unproject(Camera);
+
+        // Calculate a unit vector from the camera to the projected position
+        vDir.copy(vPos).sub(Camera.position).normalize();
+
+        // Project onto z=0
+        let flDistance = -Camera.position.z / vDir.z;
+        vOutPos.copy(Camera.position).add(vDir.multiplyScalar(flDistance));
+    }
+}
 
 // #region For Test*/
 class Column {
