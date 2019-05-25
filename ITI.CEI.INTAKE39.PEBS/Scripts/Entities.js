@@ -295,6 +295,8 @@ class SingleWindow extends THREE.Mesh {
         var frameMaterial = NewMaterialByColor(this.FrameColor);
         var glassMaterial = NewMaterialByColor('rgb(94, 92, 89)');
 
+        var materialGlass = new THREE.MeshLambertMaterial({ color: 0x00ff00, transparent: true, opacity: 0.5 });
+
         let Frame;
         let Glass;
         let thick = .1;
@@ -305,7 +307,7 @@ class SingleWindow extends THREE.Mesh {
                 Frame.position.x = this.X;
                 Frame.position.y = this.Y - this.Height / 2;
                 Frame.rotation.z = this.Z;
-                Glass = CreateCube(this.Width - .2, this.Height - .2, thick, glassMaterial, "Window_Glass", "Window_Glass_1");
+                Glass = CreateCube(this.Width - .2, this.Height - .2, thick, materialGlass, "Window_Glass", "Window_Glass_1");
                 Glass.position.y = 0;
                 if (this.Z > 0) {
                     Glass.position.z += 0.005;
@@ -321,7 +323,7 @@ class SingleWindow extends THREE.Mesh {
                 Frame.position.y = this.Y - this.Height / 2;
                 Frame.position.z = this.Z - this.Width / 2;
 
-                Glass = CreateCube(thick, this.Height - .2, this.Width - .2, glassMaterial, "Window_Glass", "Window_Glass_1");
+                Glass = CreateCube(thick, this.Height - .2, this.Width - .2, materialGlass, "Window_Glass", "Window_Glass_1");
                 Glass.position.y = 0;
                 if (this.X > 0) {
                     Glass.position.x += 0.005;

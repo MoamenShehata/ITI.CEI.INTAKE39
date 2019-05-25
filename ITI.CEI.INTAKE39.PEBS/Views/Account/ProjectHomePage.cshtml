@@ -38,7 +38,6 @@
 </div>
 
 <!-- Here Add Any Partial View  -->
-@*<input type="submit" value="Submit" />*@
 
 <div class="workspace" id="WorkSpace">
     <div id="WorkSpace_Content">
@@ -51,7 +50,7 @@
 
 
     @*<p class="dimension_label" id="dimension_label">Factory Dimensions</p>*@
-    <p class="Bays_label" id="Bays_label">Factory Bays</p>
+    @*<p class="Bays_label" id="Bays_label">Factory Bays</p>*@
 </div>
 
 <div class="project_slider">
@@ -66,6 +65,36 @@
 <script>
     let btn_next_stage = document.getElementById("next_stage");
     let btn_previous_stage = document.getElementById("previous_stage");
+
+    //#region SideBar Functions
+    var btn_dimensions = document.getElementById("sideBar_edit_dimensions");
+    var btn_configs = document.getElementById("sideBar_edit_configs");
+    var btn_localization = document.getElementById("sideBar_edit_location");
+    var btn_erection = document.getElementById("sideBar_edit_erection");
+    var btn_pricing = document.getElementById("sideBar_edit_pricing");
+
+    btn_dimensions.onclick = function (event) {
+        if (btn_dimensions.classList.contains("side_bar_element_inActive")) {
+            event.preventDefault();
+        }
+    }
+
+    btn_configs.onclick = function () {
+
+    }
+
+    btn_localization.onclick = function () {
+
+    }
+
+    btn_erection.onclick = function () {
+
+    }
+
+    btn_pricing.onclick = function () {
+
+    }
+    //#endregion
 
     //document.getElementById("dimension_label").onclick = function () {
 
@@ -91,30 +120,31 @@
     //    document.getElementById("TemplateProductionConfigurations").style.display = "none";
     //}
 
-    document.getElementById("Bays_label").onclick = function () {
+    //document.getElementById("Bays_label").onclick = function () {
 
-        RenderBaysView();
-        document.getElementById("Bays_label").style.display = "none";
-        //document.getElementById("TemplateProductionDimensions").style.display = "none";
-        //document.getElementById("TemplateProductionBays").style.display = "block";
-        //document.getElementById("TemplateProductionConfigurations").style.display = "none";
-    }
+    //    RenderBaysView();
+    //    document.getElementById("Bays_label").style.display = "none";
+    //    //document.getElementById("TemplateProductionDimensions").style.display = "none";
+    //    //document.getElementById("TemplateProductionBays").style.display = "block";
+    //    //document.getElementById("TemplateProductionConfigurations").style.display = "none";
+    //}
 
-    btn_next_stage.onclick = function () {
-        if (document.getElementById("project_name") != null) {
-            if (document.getElementById("project_name").value !== "" && document.getElementById("project_name").value !== null) {
-                project_started = true;
-                NextStage();
-            }
-            else {
-                document.getElementById("project_name").focus();
-            }
-        }
+    //btn_next_stage.onclick = function () {
+    //    if (document.getElementById("project_name") != null) {
+    //        if (document.getElementById("project_name").value !== "" && document.getElementById("project_name").value !== null) {
+    //            project_started = true;
+    //            NextStage();
+    //        }
+    //        else {
+    //            document.getElementById("project_name").focus();
+    //        }
+    //    }
 
-    };
+    //};
 
     btn_next_stage.onclick = NextStage;
-    btn_previous_stage.onclick = PreviousStage;
+
+    //btn_previous_stage.onclick = PreviousStage;
 
     document.getElementById("sideBar_edit_configs").onclick = function () {
         //document.getElementById("TemplateProductionConfigurations").style.display = "block";
@@ -142,6 +172,7 @@
             }
         });
     }
+
     function RenderConfigView() {
         $.ajax({
             type: "POST",
@@ -158,4 +189,13 @@
         });
 
     }
+
+    function RenderLocalizationView() {
+
+    }
+
+    function RenderErectionView() {
+
+    }
+
 </script>

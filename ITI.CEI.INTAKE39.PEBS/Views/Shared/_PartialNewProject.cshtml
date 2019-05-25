@@ -54,7 +54,7 @@
 
         <div class="project_create">
 
-            <input type="submit" value="Create" class="btn btn-primary" onclick="CreateNewProject()" />
+            <input type="submit" value="Create" class="btn_create btn btn-primary" onclick="NextStage()" />
 
             @*@Html.ActionLink("Create", "NewIFC", null, new { @class = "project_create_button" })*@
             @*<button class="project_create_button" onclick="CreateNewProject()"> Create</button>*@
@@ -157,7 +157,7 @@
                     project_current.innerText = project_name;
                     projectCounter++;
 
-                    NextStage();
+                    //NextStage();
                     project_started = true;
                 },
                 error: function (result) {
@@ -169,7 +169,6 @@
         else {
             document.getElementById("project_name").focus();
         }
-
     }
 
     function NextStage() {
@@ -188,9 +187,6 @@
                     document.getElementById("sideBar_edit_configs").classList.remove("side_bar_element_inActive");
                     document.getElementById("sideBar_edit_configs").classList.add("side_bar_element");
 
-
-
-
                     //Edit Location
                     document.getElementById("sideBar_edit_location").classList.remove("side_bar_element_inActive");
                     document.getElementById("sideBar_edit_location").classList.add("side_bar_element");
@@ -204,102 +200,119 @@
                     document.getElementById("sideBar_edit_pricing").classList.add("side_bar_element");
                     currentStage++;
                     break;
+                // Currently At Create New Project
+                // Go To View1 Factory Dimensions
                 case 1:
-                    ErectionIsAvailable = true;
-                    //New Project
-                    document.getElementById("sideBar_new_project").classList.remove("side_bar_element_Active");
-                    document.getElementById("sideBar_new_project").classList.add("side_bar_element");
+                    if (document.getElementById("project_name").value !== "" && document.getElementById("project_name").value !== null) {
+                        CreateNewProject();
+                        //New Project
+                        document.getElementById("sideBar_new_project").classList.remove("side_bar_element_Active");
+                        document.getElementById("sideBar_new_project").classList.add("side_bar_element_Completed");
 
+                        //Edit Dimensions
+                        document.getElementById("sideBar_edit_dimensions").classList.remove("side_bar_element_inActive");
+                        document.getElementById("sideBar_edit_dimensions").classList.add("side_bar_element_Active");
+
+                        currentStage++;
+                    }
+                    else {
+                        document.getElementById("project_name").focus();
+                    }
+
+                    //Edit Configurations
+                    //document.getElementById("sideBar_edit_configs").classList.remove("side_bar_element_inActive");
+                    //document.getElementById("sideBar_edit_configs").classList.add("side_bar_element");
+
+                    ////Edit Location
+                    //document.getElementById("sideBar_edit_location").classList.remove("side_bar_element_inActive");
+                    //document.getElementById("sideBar_edit_location").classList.add("side_bar_element");
+
+                    ////Edit Erection
+                    //document.getElementById("sideBar_edit_erection").classList.remove("side_bar_element_inActive");
+                    //document.getElementById("sideBar_edit_erection").classList.add("side_bar_element");
+
+                    //if (PriceIsAvailable) {
+                    //    //Edit Pricing
+                    //    document.getElementById("sideBar_edit_pricing").classList.remove("side_bar_element_Active");
+                    //    document.getElementById("sideBar_edit_pricing").classList.add("side_bar_element");
+                    //}
+
+                    break;
+                // Currently At Editing Factory Dimensions
+                // Go To View2 Factory Bays
+                case 2:
                     //Edit Dimensions
-                    document.getElementById("sideBar_edit_dimensions").classList.remove("side_bar_element_inActive");
-                    document.getElementById("sideBar_edit_dimensions").classList.add("side_bar_element_Active");
+                    RenderBaysView();
+
+                    currentStage++;
+                    break;
+                //Currently At Factory Bays
+                //Go to Configuration
+                case 3:
+                    //Edit Dimensions
+                    document.getElementById("sideBar_edit_dimensions").classList.remove("side_bar_element_Active");
+                    document.getElementById("sideBar_edit_dimensions").classList.add("side_bar_element_Completed");
 
                     //Edit Configurations
                     document.getElementById("sideBar_edit_configs").classList.remove("side_bar_element_inActive");
-                    document.getElementById("sideBar_edit_configs").classList.add("side_bar_element");
-
-                    //Edit Location
-                    document.getElementById("sideBar_edit_location").classList.remove("side_bar_element_inActive");
-                    document.getElementById("sideBar_edit_location").classList.add("side_bar_element");
-
-                    //Edit Erection
-                    document.getElementById("sideBar_edit_erection").classList.remove("side_bar_element_inActive");
-                    document.getElementById("sideBar_edit_erection").classList.add("side_bar_element");
-
-                    if (PriceIsAvailable) {
-                        //Edit Pricing
-                        document.getElementById("sideBar_edit_pricing").classList.remove("side_bar_element_Active");
-                        document.getElementById("sideBar_edit_pricing").classList.add("side_bar_element");
-                    }
-
-
-                    currentStage++;
-                    break;
-
-                case 2:
-                    //debugger;
-                    //Edit Dimensions
-                    document.getElementById("sideBar_edit_dimensions").classList.remove("side_bar_element_Active");
-                    document.getElementById("sideBar_edit_dimensions").classList.add("side_bar_element");
-
-                    //Edit Configurations
-                    document.getElementById("sideBar_edit_configs").classList.remove("side_bar_element");
                     document.getElementById("sideBar_edit_configs").classList.add("side_bar_element_Active");
                     RenderConfigView();
 
+                    ////Edit Location
+                    //document.getElementById("sideBar_edit_location").classList.remove("side_bar_element");
+                    //document.getElementById("sideBar_edit_location").classList.add("side_bar_element_Active");
 
-
-                    currentStage++;
-                    break;
-
-                case 3:
-                    //Edit Configurations
-                    document.getElementById("sideBar_edit_configs").classList.remove("side_bar_element_Active");
-                    document.getElementById("sideBar_edit_configs").classList.add("side_bar_element");
-
-                    //Edit Location
-                    document.getElementById("sideBar_edit_location").classList.remove("side_bar_element");
-                    document.getElementById("sideBar_edit_location").classList.add("side_bar_element_Active");
-
-                    //Edit Pricing
-                    document.getElementById("sideBar_edit_pricing").classList.remove("side_bar_element_inActive");
-                    document.getElementById("sideBar_edit_pricing").classList.add("side_bar_element");
+                    ////Edit Pricing
+                    //document.getElementById("sideBar_edit_pricing").classList.remove("side_bar_element_inActive");
+                    //document.getElementById("sideBar_edit_pricing").classList.add("side_bar_element");
 
                     currentStage++;
                     break;
 
                 case 4:
-                    PriceIsAvailable = true;
+                    //Edit Configurations
+                    document.getElementById("sideBar_edit_configs").classList.remove("side_bar_element_Active");
+                    document.getElementById("sideBar_edit_configs").classList.add("side_bar_element_Completed");
+                    RenderLocalizationView();
+
+
                     //Edit Location
-                    document.getElementById("sideBar_edit_location").classList.remove("side_bar_element_Active");
-                    document.getElementById("sideBar_edit_location").classList.add("side_bar_element");
+                    //PriceIsAvailable = true;
+                    document.getElementById("sideBar_edit_location").classList.remove("side_bar_element_inActive");
+                    document.getElementById("sideBar_edit_location").classList.add("side_bar_element_Active");
 
                     //Edit Erection
-                    document.getElementById("sideBar_edit_erection").classList.remove("side_bar_element");
-                    document.getElementById("sideBar_edit_erection").classList.add("side_bar_element_Active");
-
+                    //document.getElementById("sideBar_edit_erection").classList.remove("side_bar_element");
+                    //document.getElementById("sideBar_edit_erection").classList.add("side_bar_element_Active");
 
                     currentStage++;
                     break;
 
                 case 5:
-                    PriceIsAvailable = true;
-                    //Edit Erection
-                    document.getElementById("sideBar_edit_erection").classList.remove("side_bar_element_Active");
-                    document.getElementById("sideBar_edit_erection").classList.add("side_bar_element");
+                    //Edit Location
+                    //PriceIsAvailable = true;
+                    document.getElementById("sideBar_edit_location").classList.remove("side_bar_element_Active");
+                    document.getElementById("sideBar_edit_location").classList.add("side_bar_element_Completed");
+                    RenderErectionView();
 
-                    //Edit Pricing
-                    document.getElementById("sideBar_edit_pricing").classList.remove("side_bar_element");
-                    document.getElementById("sideBar_edit_pricing").classList.remove("side_bar_element_inActive");
-                    document.getElementById("sideBar_edit_pricing").classList.add("side_bar_element_Active");
-                    currentStage++;
+                    //Edit Erection
+                    //PriceIsAvailable = true;
+                    document.getElementById("sideBar_edit_erection").classList.remove("side_bar_element_inActive");
+                    document.getElementById("sideBar_edit_erection").classList.add("side_bar_element_Active");
+
+                    ////Edit Pricing
+                    //document.getElementById("sideBar_edit_pricing").classList.remove("side_bar_element");
+                    //document.getElementById("sideBar_edit_pricing").classList.remove("side_bar_element_inActive");
+                    //document.getElementById("sideBar_edit_pricing").classList.add("side_bar_element_Active");
+                    //currentStage++;
+
                     break;
             }
         }
-        else {
-            currentStage = 0;
-            NextStage();
-        }
+        //else {
+        //    currentStage = 0;
+        //    NextStage();
+        //}
 
     }
 

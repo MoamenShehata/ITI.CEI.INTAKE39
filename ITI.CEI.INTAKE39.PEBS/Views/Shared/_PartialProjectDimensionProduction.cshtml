@@ -125,6 +125,20 @@
     DimSlopeSlider.Draw(Dimscene);
     DimSlopeSlider.Slider.position.y = project_height;
     DimSlopeSlider.Slider.position.z = .2;
+
+    //var ambient = new THREE.AmbientLight(0x555555);
+    //Dimscene.add(ambient);
+
+    //var light = new THREE.DirectionalLight(0xffffff);
+    //Dimscene.position = Dimcamera.position;
+    //Dimscene.add(light);
+
+    var geometry2 = new THREE.SphereGeometry(0.8, 32, 24);
+    var material2 = new THREE.MeshLambertMaterial({ color: 'rgb(255,0,0)', transparent: true, opacity: 0.5 });
+    var sphere2 = new THREE.Mesh(geometry2, material2);
+    sphere2.position.x = - project_span / 2;
+    sphere2.position.y = 5;
+    Dimscene.add(sphere2);
     //#endregion
 
     //#region Dimensions

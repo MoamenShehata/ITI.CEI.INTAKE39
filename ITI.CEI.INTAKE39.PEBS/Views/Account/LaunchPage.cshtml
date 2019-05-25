@@ -49,6 +49,19 @@
                     @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
                 </div>
             </div>
+
+            <div class="form-group" style="margin-bottom:5px">
+                <div class="col-md-10">
+                    @*@Html.LabelFor(m => m.ConfirmPassword)*@
+                    <label>Choose A Provider</label>
+                    @*@Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control Login_field form_group_override" })*@
+                    @*@Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })*@
+                    <select class="form-control Login_field">
+                        @*<option value="">Select A Company</option>*@
+                        <option value="" selected="selected">Zamil - Steel</option>
+                    </select>
+                </div>
+            </div>
             <div class="form-group" style="margin-bottom:5px">
                 <div class="col-md-offset-2 col-md-10" style="text-align:center">
                     <input type="submit" class="btn btn-primary " value="Register As A Client" style="width:120%;margin:auto;left:50%;transform:translate(-18%,5px)" />

@@ -317,6 +317,7 @@
     </div>
 
 </div>
+
 @Html.Partial("_PartialProjectViewCube");
 
 
@@ -1039,16 +1040,16 @@
 
     var Grass_Image_path = document.getElementById("grass_image").getAttribute("src");
     var Grass_plus_texture = new THREE.TextureLoader().load(Grass_Image_path);
-    var GrassMaterial = new THREE.MeshBasicMaterial({ map: Grass_plus_texture, side: THREE.FrontSide });
+    var GrassMaterial = new THREE.MeshBasicMaterial({ map: Grass_plus_texture, side: THREE.DoubleSide });
 
-    var ground = CreateCube(project_span + 5, .005, project_length + 5, GrassMaterial, "Ground", "Ground-1");
+    var ground = CreateCube(project_span + 5, .01, project_length + 5, GrassMaterial, "Ground", "Ground-1");
     ground.position.z -= project_length / 2;
     ConfigScene.add(ground);
 
     var backGroundMaterial = NewMaterialByColor('rgb(205, 205, 205)');
 
     var backGround = CreateCube(500, .005, 500, backGroundMaterial, "BackGround", "MyBacGround");
-    backGround.position.y = -.008;
+    backGround.position.y = -.015;
     ConfigScene.add(backGround);
 
     var sideCladding1 = new CladdingDoubleSide(project_span, project_height, project_length);
@@ -1123,26 +1124,6 @@
     objects.push(sideCladding1.LeftCladding);
     objects.push(roof1.RightRoof);
     objects.push(roof1.LeftRoof);
-    //#endregion
-
-    //#region ThreeJsViewer Controls
-    //let DimHeightSlider = new PebsVerticalSlider(0.7, .2, "Height", -(project_span / 2) - 1);
-    //DimHeightSlider.Draw(ConfigScene);
-
-    //let DimLengthSlider = new PebsHorizontalSlider(0.7, .2, "Length", 0);
-    //DimLengthSlider.Draw(ConfigScene);
-    //DimLengthSlider.Slider.position.x = (project_span / 2) + 1;
-    ////LengthSlider.Slider.position.y = 0.5;
-
-    //let DimSpanSlider = new PebsHorizontalSlider(0.7, .2, "Span", 0);
-    //DimSpanSlider.Draw(ConfigScene);
-    //DimSpanSlider.Slider.rotation.y = Math.PI / 2;
-    ////SpanSlider.Slider.position.y = .5;
-
-    //let DimSlopeSlider = new PebsVerticalSlider(0.7, .2, "Slope", 0);
-    //DimSlopeSlider.Draw(ConfigScene);
-    //DimSlopeSlider.Slider.position.y = project_height;
-    //DimSlopeSlider.Slider.position.z = .2;
     //#endregion
 
     Update(ConfigRenderer, ConfigCamera, ConfigScene);
