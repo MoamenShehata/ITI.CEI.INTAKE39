@@ -95,6 +95,7 @@ h1, h2, h3, h4, h5, h6, label, p {
         left: 5px;
         content: '\f058';
         color: #059e03;
+        text-shadow: 3px 3px 5px grey;
     }
 
     .side_bar_element_Completed h5 {
@@ -233,7 +234,7 @@ h1, h2, h3, h4, h5, h6, label, p {
 
 .Config_Panel {
     position: absolute;
-    top: 375px;
+    top: 390px;
     width: 1367px;
     background-color: rgba(131, 131, 131, 0.8);
     transition: all 0.4s ease-in;

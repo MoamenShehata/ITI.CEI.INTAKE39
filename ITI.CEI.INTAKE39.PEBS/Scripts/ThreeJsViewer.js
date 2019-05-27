@@ -214,7 +214,7 @@ function SetCameraPosition(camera, x, y, z) {
 }
 
 function CreateRenderer(htmlId) {
-    let renderer = new THREE.WebGLRenderer();
+    let renderer = new THREE.WebGLRenderer({ alpha: true });
     renderer.setSize(1367, 520);
     var div_WebGL = document.getElementById(htmlId);
     div_WebGL.appendChild(renderer.domElement);

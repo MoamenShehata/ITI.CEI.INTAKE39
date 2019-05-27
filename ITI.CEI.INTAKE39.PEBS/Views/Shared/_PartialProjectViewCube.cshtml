@@ -1,13 +1,13 @@
 ﻿<div id="TemplateProductionViewCube" style="display:none; width:100px;height:100px;position:absolute;right:12px;">
     @* Original Material *@
-    <img src="@Url.Content("~/Images/ViewCube_Right.png")" alt="" style="display:none" id="Right_View" />
-    <img src="@Url.Content("~/Images/ViewCube_Front.png")" alt="" style="display:none" id="Front_View" />
-    <img src="@Url.Content("~/Images/ViewCube_Top.png")" alt="" style="display:none" id="Top_View" />
+    <img src="@Url.Content("~/Images/right_origin.jpg")" alt="" style="display:none" id="Right_View" />
+    <img src="@Url.Content("~/Images/front_origin.jpg")" alt="" style="display:none" id="Front_View" />
+    <img src="@Url.Content("~/Images/top_origin.jpg")" alt="" style="display:none" id="Top_View" />
 
     @* On Hover Material *@
-    <img src="@Url.Content("~/Images/ViewCube_Right_Hover.png")" alt="" style="display:none" id="Right_Hover" />
-    <img src="@Url.Content("~/Images/ViewCube_Front_Hover.png")" alt="" style="display:none" id="Front_Hover" />
-    <img src="@Url.Content("~/Images/ViewCube_Top_Hover.png")" alt="" style="display:none" id="Top_Hover" />
+    <img src="@Url.Content("~/Images/right_hover.jpg")" alt="" style="display:none" id="Right_Hover" />
+    <img src="@Url.Content("~/Images/front_hover.jpg")" alt="" style="display:none" id="Front_Hover" />
+    <img src="@Url.Content("~/Images/top_hover.jpg")" alt="" style="display:none" id="Top_Hover" />
 </div>
 
 <script>
@@ -26,7 +26,7 @@
     let cubeRenderer = CreateRenderer("TemplateProductionViewCube");
     cubeRenderer.setSize(100, 100);
 
-    //cubeRenderer.setClearColor('rgb(255, 255, 255,.001)');
+    cubeRenderer.setClearColor('rgb(255, 255, 255)', 0);
 
     //let BaysorbitControl = new THREE.OrbitControls(cubeCamera, cubeRenderer.domElement);
 

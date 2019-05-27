@@ -93,6 +93,7 @@ class CladdingDoubleSide {
         this.LeftCladding.material.color = new THREE.Color(newColor);
     }
 
+
 }
 
 var numberOfWalls = 0;
@@ -107,7 +108,7 @@ class FrontWall {
         this.Triangle = null;
     }
 
-    DrawGeometry(scene) {
+    DrawGeometry(scene, direction) {
         numberOfWalls++;
 
         let cladd_image_path = document.getElementById("cladding_image").getAttribute("src");
@@ -117,7 +118,18 @@ class FrontWall {
 
         let material = NewMaterialByColor('rgb(115, 115, 115)');
 
-        let wall = CreateCube(this.Span, this.Height, .05, material, "Front_Wall", "Front_Wall_" + numberOfWalls)
+        let wall;
+        let dir;
+        switch (direction) {
+            case "north":
+                dir = "_North";
+                break;
+            case "south":
+                dir = "_South";
+                break;
+        }
+
+        wall = CreateCube(this.Span, this.Height, .05, material, "Front_Wall" + dir, "Front_Wall_" + numberOfWalls)
         wall.position.z = this.ZPosition;
 
         let dH = (this.Span / 2) * this.Slope;
@@ -130,7 +142,7 @@ class FrontWall {
         triangleGeometry.computeVertexNormals();
 
         //let mesh = new THREE.Mesh(triangleGeometry, new THREE.MeshBasicMaterial({ color: 'rgb(115, 115, 115)', side: THREE.DoubleSide }));
-        let mesh = new PebsObject(triangleGeometry, new THREE.MeshBasicMaterial({ color: 'rgb(115, 115, 115)', side: THREE.DoubleSide }), "Front_Wall", "Front_Wall");
+        let mesh = new PebsObject(triangleGeometry, new THREE.MeshBasicMaterial({ color: 'rgb(115, 115, 115)', side: THREE.DoubleSide }), "Front_Wall" + dir, "Front_Wall");
 
 
         scene.add(mesh);
@@ -306,10 +318,10 @@ class SingleWindow extends THREE.Mesh {
                 Frame = CreateCube(this.Width, this.Height, thick, frameMaterial, "Window_Frame", "Window_Frame_1");
                 Frame.position.x = this.X;
                 Frame.position.y = this.Y - this.Height / 2;
-                Frame.rotation.z = this.Z;
+                Frame.position.z = this.Z;
                 Glass = CreateCube(this.Width - .2, this.Height - .2, thick, materialGlass, "Window_Glass", "Window_Glass_1");
                 Glass.position.y = 0;
-                if (this.Z > 0) {
+                if (this.Z >= 0) {
                     Glass.position.z += 0.005;
                 }
                 else {
@@ -393,6 +405,8 @@ class RowWindow extends THREE.Mesh {
         var frameMaterial = NewMaterialByColor(this.FrameColor);
         var glassMaterial = NewMaterialByColor('rgb(94, 92, 89)');
 
+        var materialGlass = new THREE.MeshLambertMaterial({ color: 0x00ff00, transparent: true, opacity: 0.5 });
+
         let Frame;
         let thick = .1;
 
@@ -405,8 +419,7 @@ class RowWindow extends THREE.Mesh {
 
                 for (var i = 0; i < this.Number; i++) {
                     let frame = CreateCube(this.PWidth, this.Height, thick, frameMaterial, "RowWd_Frame", "Window_Frame_1");
-                    let glass = CreateCube(this.PWidth - .2, this.Height - .2, thick, glassMaterial, "RowWd_RowGlass", "Window_Glass_1");
-                    this.Panels.push(glass);
+                    let glass = CreateCube(this.PWidth - .2, this.Height - .2, thick, materialGlass, "RowWd_RowGlass", "Window_Glass_1");
                     glass.position.y = 0;
                     if (this.Z === 0) {
                         glass.position.z += 0.005;
@@ -415,6 +428,7 @@ class RowWindow extends THREE.Mesh {
                         glass.position.z -= 0.005;
                     }
                     frame.add(glass);
+                    this.Panels.push(frame);
                     Frame.add(frame);
                     frame.Instance = this;
                     glass.Instance = this;
@@ -433,8 +447,7 @@ class RowWindow extends THREE.Mesh {
 
                 for (var i = 0; i < this.Number; i++) {
                     let frame = CreateCube(thick, this.Height, this.PWidth, frameMaterial, "RowWd_Frame", "Window_Frame_1");
-                    let glass = CreateCube(thick, this.Height - .2, this.PWidth - .2, glassMaterial, "RowWd_RowGlass", "Window_Glass_1");
-                    this.Panels.push(glass);
+                    let glass = CreateCube(thick, this.Height - .2, this.PWidth - .2, materialGlass, "RowWd_RowGlass", "Window_Glass_1");
                     glass.position.y = 0;
                     if (this.X > 0) {
                         glass.position.x += 0.005;
@@ -443,6 +456,7 @@ class RowWindow extends THREE.Mesh {
                         glass.position.x -= 0.005;
                     }
                     frame.add(glass);
+                    this.Panels.push(frame);
                     Frame.add(frame);
                     frame.Instance = this;
                     glass.Instance = this;
@@ -497,8 +511,79 @@ class RowWindow extends THREE.Mesh {
     }
 
     SetFrameColor(newColor) {
-        this.Window.material.color = new THREE.Color(newColor);
+        for (var i = 0; i < this.Panels.length; i++) {
+            this.Panels[i].material.color = new THREE.Color(newColor);
+        }
+        //this.Window.material.color = new THREE.Color(newColor);
     }
+
+    AddPanel() {
+        let r = false;
+        if (this.Number < 4) {
+            r = true;
+            var frameMaterial = NewMaterialByColor(this.Window.material.color);
+            var glassMaterial = NewMaterialByColor('rgb(94, 92, 89)');
+
+            switch (this.WorkPlane) {
+                case "front":
+                    let frame = CreateCube(this.PWidth, this.Height, .1, frameMaterial, "RowWd_Frame", "Window_Frame_1");
+                    let glass = CreateCube(this.PWidth - .2, this.Height - .2, .1, glassMaterial, "RowWd_RowGlass", "Window_Glass_1");
+                    glass.position.y = 0;
+                    if (this.Z === 0) {
+                        glass.position.z += 0.005;
+                    }
+                    else if (this.Z < 0) {
+                        glass.position.z -= 0.005;
+                    }
+                    frame.add(glass);
+                    this.Panels.push(frame);
+                    this.Window.add(frame);
+                    frame.Instance = this;
+                    glass.Instance = this;
+                    frame.position.x = 0 + this.TotalWidth;
+                    frame.position.y -= this.Height / 2;
+                    this.TotalWidth += this.PWidth;
+                    this.Number++;
+                    break;
+
+                case "side":
+                    let frame1 = CreateCube(.1, this.Height, this.PWidth, frameMaterial, "RowWd_Frame", "Window_Frame_1");
+                    let glass1 = CreateCube(.1, this.Height - .2, this.PWidth - .2, glassMaterial, "RowWd_RowGlass", "Window_Glass_1");
+                    glass1.position.y = 0;
+                    if (this.X > 0) {
+                        glass1.position.x += 0.005;
+                    }
+                    else {
+                        glass1.position.x -= 0.005;
+                    }
+                    frame1.add(glass1);
+                    this.Panels.push(frame1);
+                    this.Window.add(frame1);
+                    frame1.Instance = this;
+                    glass1.Instance = this;
+                    frame1.position.z = 0 + this.TotalWidth;
+                    frame1.position.y -= this.Height / 2;
+                    this.TotalWidth += this.PWidth;
+                    this.Number++;
+                    break;
+            }
+        }
+        return r;
+    }
+
+    DeletePanel() {
+        //debugger;
+        if (this.Panels.length > 1) {
+            let lastIndex = this.Panels.length - 1;
+            this.Window.remove(this.Panels[lastIndex]);
+            this.Panels.pop();
+            this.Number -= 1;
+            this.TotalWidth -= this.PWidth;
+        }
+
+    }
+
+
 }
 
 class IBeamColumn {
@@ -781,10 +866,13 @@ class SectionalDoor extends THREE.Mesh {
         this.Door = null;
     }
 
-    DrawGeometry(scene, material) {
+    DrawGeometry(scene, imgPath) {
         let door = null;
         let doorHandel;
         let thick = .1;
+
+        let _texture = new THREE.TextureLoader().load(imgPath);
+        let material = new THREE.MeshBasicMaterial({ map: _texture });
 
         //let handleTexture = new THREE.TextureLoader().load(handleTexturePath);
         //let handleMaterial = new THREE.MeshBasicMaterial({ map: handleTexture });

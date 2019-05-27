@@ -10,10 +10,10 @@
 
 <div id="Config_Panel" class="Config_Panel">
 
-    <div class="panel_docker">
-        <i id="panel_collapse" class="fas fa-angle-double-down"></i>
-        <i id="panel_expand" style="display:none" class="fas fa-angle-double-up"></i>
-    </div>
+    @*<div class="panel_docker">
+            <i id="panel_collapse" class="fas fa-angle-double-down"></i>
+            <i id="panel_expand" style="display:none" class="fas fa-angle-double-up"></i>
+        </div>*@
     <ul>
         <li id="panel1">Building Properties</li>
         <li id="panel2">Add Accessory</li>
@@ -305,9 +305,9 @@
         <div id="sec_properties" class="sec_properties disabled">
             <p>Number Of Rows</p>
             <div style="margin-left:30px;margin-top:10px">
-                <input type="button" name="name" value="-" />
-                <input type="text" name="name" value="" />
-                <input type="button" name="name" value="+" />
+                <input id="btn_rows_count_minus" type="button" name="name" value="-" class="dim_control" />
+                <input id="txt_rows_count" type="text" name="name" value="" class="dim_input" />
+                <input id="btn_rows_count_plus" type="button" name="name" value="+" class="dim_control" />
             </div>
         </div>
 
@@ -324,19 +324,19 @@
 <script>
 
     //#region Dom Interaction
-    var panel_collapse = document.getElementById("panel_collapse");
-    var panel_expand = document.getElementById("panel_expand");
+    //var panel_collapse = document.getElementById("panel_collapse");
+    //var panel_expand = document.getElementById("panel_expand");
 
-    panel_collapse.onclick = function () {
-        panel_collapse.style.display = "none";
-        panel_expand.style.display = "block";
-        document.getElementById("Config_Panel").style.top = "545px";
-    }
+    //panel_collapse.onclick = function () {
+    //    //panel_collapse.style.display = "none";
+    //    //panel_expand.style.display = "block";
+    //    //document.getElementById("Config_Panel").style.top = "545px";
+    //}
 
-    panel_expand.onclick = function () {
-        panel_expand.style.display = "none";
-        panel_collapse.style.display = "block";
-    }
+    //panel_expand.onclick = function () {
+    //    //panel_expand.style.display = "none";
+    //    //panel_collapse.style.display = "block";
+    //}
 
     var imgSingleDoor = document.getElementById("img_accss_single_door");
     var imgSectionalDoor = document.getElementById("img_accss_sectional_door");
@@ -346,6 +346,9 @@
     imgSingleDoor.onclick = function () {
         document.getElementById("TemplateProductionConfigurations").style.cursor = "crosshair";
         toAddSingleDoor = true;
+        toAddSectionalDoor = false;
+        toAddSingleWindow = false;
+        toAddRowWindow = false;
         imgSingleDoor.classList.add("active_image");
         imgSectionalDoor.classList.remove("active_image");
         imgSingleWindow.classList.remove("active_image");
@@ -355,6 +358,9 @@
     imgSectionalDoor.onclick = function () {
         document.getElementById("TemplateProductionConfigurations").style.cursor = "crosshair";
         toAddSectionalDoor = true;
+        toAddSingleDoor = false;
+        toAddSingleWindow = false;
+        toAddRowWindow = false;
         imgSectionalDoor.classList.add("active_image");
         imgSingleDoor.classList.remove("active_image");
         imgSingleWindow.classList.remove("active_image");
@@ -364,6 +370,9 @@
     imgSingleWindow.onclick = function () {
         document.getElementById("TemplateProductionConfigurations").style.cursor = "crosshair";
         toAddSingleWindow = true;
+        toAddSectionalDoor = false;
+        toAddSingleDoor = false;
+        toAddRowWindow = false;
         imgSingleWindow.classList.add("active_image");
         imgSingleDoor.classList.remove("active_image");
         imgSectionalDoor.classList.remove("active_image");
@@ -373,6 +382,9 @@
     imgRowWindow.onclick = function () {
         document.getElementById("TemplateProductionConfigurations").style.cursor = "crosshair";
         toAddRowWindow = true;
+        toAddSingleDoor = false;
+        toAddSectionalDoor = false;
+        toAddSingleWindow = false;
         imgRowWindow.classList.add("active_image");
         imgSingleDoor.classList.remove("active_image");
         imgSectionalDoor.classList.remove("active_image");
@@ -415,53 +427,89 @@
 
     colorAccessoryRed.onclick = function () {
         if (configIntersected != null) {
-            configIntersected.material.color = new THREE.Color('#571111');
+            if (configIntersected.ObjectType.includes("RowWd_pivot")) {
+                configIntersected.Instance.SetFrameColor('#571111');
+            }
+            else {
+                configIntersected.material.color = new THREE.Color('#571111');
+            }
             configOldColor = new THREE.Color('#571111');
-
         }
     }
 
     colorAccessoryGrey.onclick = function () {
         if (configIntersected != null) {
-            configIntersected.material.color = new THREE.Color('#7c7c7c');
+            if (configIntersected.ObjectType.includes("RowWd_pivot")) {
+                configIntersected.Instance.SetFrameColor('#7c7c7c');
+            }
+            else {
+                configIntersected.material.color = new THREE.Color('#7c7c7c');
+            }
             configOldColor = new THREE.Color('#7c7c7c');
         }
     }
 
     colorAccessoryBlue.onclick = function () {
         if (configIntersected != null) {
-            configIntersected.material.color = new THREE.Color('#0d2664');
+            if (configIntersected.ObjectType.includes("RowWd_pivot")) {
+                configIntersected.Instance.SetFrameColor('#0d2664');
+            }
+            else {
+                configIntersected.material.color = new THREE.Color('#0d2664');
+            }
             configOldColor = new THREE.Color('#0d2664');
         }
     }
 
     colorAccessoryGreen.onclick = function () {
         if (configIntersected != null) {
-            configIntersected.material.color = new THREE.Color('#049e20');
-            configOldColor = new THREE.Color('#7c7c7c');
+            if (configIntersected.ObjectType.includes("RowWd_pivot")) {
+                configIntersected.Instance.SetFrameColor('#049e20');
+            }
+            else {
+                configIntersected.material.color = new THREE.Color('#049e20');
+            }
+            configOldColor = new THREE.Color('#049e20');
         }
     }
 
     colorAccessoryOrange.onclick = function () {
         if (configIntersected != null) {
-            configIntersected.material.color = new THREE.Color('#ff6a00');
+            if (configIntersected.ObjectType.includes("RowWd_pivot")) {
+                configIntersected.Instance.SetFrameColor('#ff6a00');
+            }
+            else {
+                configIntersected.material.color = new THREE.Color('#ff6a00');
+            }
             configOldColor = new THREE.Color('#ff6a00');
         }
     }
 
     colorAccessoryCyan.onclick = function () {
         if (configIntersected != null) {
-            configIntersected.material.color = new THREE.Color('#0094ff');
+            if (configIntersected.ObjectType.includes("RowWd_pivot")) {
+                configIntersected.Instance.SetFrameColor('#0094ff');
+            }
+            else {
+                configIntersected.material.color = new THREE.Color('#0094ff');
+            }
             configOldColor = new THREE.Color('#0094ff');
         }
     }
 
     colorAccessoryPurble.onclick = function () {
         if (configIntersected != null) {
-            configIntersected.material.color = new THREE.Color('#4800ff');
+            if (configIntersected.ObjectType.includes("RowWd_pivot")) {
+                configIntersected.Instance.SetFrameColor('#4800ff');
+            }
+            else {
+                configIntersected.material.color = new THREE.Color('#4800ff');
+            }
             configOldColor = new THREE.Color('#4800ff');
         }
     }
+
+
 
     var btn_pebs_Delete = document.getElementById("btn_delete");
 
@@ -488,6 +536,52 @@
 
     var width_slider = document.getElementById("width_slider");
     var height_slider = document.getElementById("height_slider");
+
+    var btn_rows_count_plus = document.getElementById("btn_rows_count_plus");
+    var btn_rows_count_minus = document.getElementById("btn_rows_count_minus");
+    var txt_rows_count = document.getElementById("txt_rows_count");
+
+    document.addEventListener('keydown', documentKeyPressed);
+
+    function doNotAddAccessory() {
+        toAddSingleDoor = false;
+        toAddSectionalDoor = false;
+        toAddSingleWindow = false;
+        toAddRowWindow = false;
+        document.getElementById("TemplateProductionConfigurations").style.cursor = "default";
+        imgSingleDoor.classList.remove("active_image");
+        imgSectionalDoor.classList.remove("active_image");
+        imgSingleWindow.classList.remove("active_image");
+        imgRowWindow.classList.remove("active_image");
+    }
+
+    function documentKeyPressed(e) {
+        if (e.key === "Escape") {
+            doNotAddAccessory();
+        }
+    }
+
+    btn_rows_count_plus.onclick = function () {
+        //debugger;
+        if (configIntersected != null) {
+            //Selecting Row Windows
+            if (configIntersected.ObjectType.includes("RowWd")) {
+                configIntersected.Instance.AddPanel();
+                txt_rows_count.value = configIntersected.Instance.Number;
+            }
+        }
+    }
+
+    btn_rows_count_minus.onclick = function () {
+        if (configIntersected != null) {
+            //Selecting Row Windows
+            if (configIntersected.ObjectType.includes("RowWd")) {
+                configIntersected.Instance.DeletePanel();
+                txt_rows_count.value = configIntersected.Instance.Number;
+            }
+        }
+    }
+
 
     x_slider.oninput = function () {
         txtbx_Position_X.value = x_slider.value;
@@ -1048,7 +1142,8 @@
 
     var backGroundMaterial = NewMaterialByColor('rgb(205, 205, 205)');
 
-    var backGround = CreateCube(500, .005, 500, backGroundMaterial, "BackGround", "MyBacGround");
+    var backMaterial = new THREE.MeshLambertMaterial({ color: 'rgb(205,205,205)', transparent: true, opacity: 0.0001 });
+    var backGround = CreateCube(500, .005, 500, backMaterial, "BackGround", "MyBacGround");
     backGround.position.y = -.015;
     ConfigScene.add(backGround);
 
@@ -1061,11 +1156,11 @@
     myStaticObjects.push(roof1);
 
     var frontWall = new FrontWall(project_span, project_height, project_slope, 0);
-    frontWall.DrawGeometry(ConfigScene);
+    frontWall.DrawGeometry(ConfigScene,"north");
     myStaticObjects.push(frontWall);
 
     var backWall = new FrontWall(project_span, project_height, project_slope, -project_length);
-    backWall.DrawGeometry(ConfigScene);
+    backWall.DrawGeometry(ConfigScene,"south");
     myStaticObjects.push(backWall);
 
     var dblWindwoFront = new RowWindow(2, 1, "rgb(180, 118, 4)", "front", -3, 6.5, 0, 3);
@@ -1077,15 +1172,13 @@
     myStaticObjects.push(dblWindwoBack);
 
     var door_Image_sectional = document.getElementById("door_Sectional_image").getAttribute("src");
-    var door_plus_texture = new THREE.TextureLoader().load(door_Image_sectional);
-    var doorMaterial = new THREE.MeshBasicMaterial({ map: door_plus_texture });
 
     var frontDoor = new SectionalDoor(3, 3, "front", 0, 0);
-    frontDoor.DrawGeometry(ConfigScene, doorMaterial);
+    frontDoor.DrawGeometry(ConfigScene, door_Image_sectional);
     myStaticObjects.push(frontDoor);
 
     var backDoor = new SectionalDoor(3, 3, "front", 0, -project_length);
-    backDoor.DrawGeometry(ConfigScene, doorMaterial);
+    backDoor.DrawGeometry(ConfigScene, door_Image_sectional);
     myStaticObjects.push(backDoor);
 
 
@@ -1130,9 +1223,6 @@
 
     document.getElementById("TemplateProductionConfigurations").addEventListener('mousedown', onDocumentMouseDown, false)
 
-    //OnClick(onDocumentMouseDown);
-    //OnHover(onDocumentMouseMove);
-
     var configIntersected = null;
     var oldColorRed = null;
     var oldColorGreen = null;
@@ -1144,7 +1234,7 @@
     var toAddSingleWindow = false;
     var toAddRowWindow = false;
     var ConfigIntersects;
-
+    var selectedPoint;
 
 
     function onDocumentMouseDown(event) {
@@ -1153,69 +1243,139 @@
         let bounds = ConfigViewer.getBoundingClientRect();
         ConfigMouse.x = ((event.clientX - bounds.left) / ConfigViewer.clientWidth) * 2 - 1;
         ConfigMouse.y = - ((event.clientY - bounds.top) / ConfigViewer.clientHeight) * 2 + 1;
-        //confirm("ConfigX is " + ConfigMouse.x + "ConfigY is " + ConfigMouse.y);
-        //confirm("EventX is " + event.clientX + "EventY is " + event.clientY);
-
-        //let Helper = new CProjectMousePosToXYPlaneHelper();
-        //let pos = new THREE.Vector3();
-
-        //Helper.Compute(event.clientX, event.clientY, ConfigCamera, pos);
-
         ConfigRaycaster.setFromCamera(ConfigMouse, ConfigCamera);
         ConfigIntersects = ConfigRaycaster.intersectObjects(ConfigScene.children, true);
 
         if (ConfigIntersects.length > 0) {
-
+            selectedPoint = ConfigIntersects[0].point;
+            //debugger;
             //Set Selected Object and activate it
             if (ConfigIntersects[0].object.ObjectType.includes("BackGround") === false) {
-
                 //Selecting  Single window by click on glass
                 if (ConfigIntersects[0].object.ObjectType.includes("Window_Glass")) {
-                    setSelectedSingleWidnowByGlass();
+                    if (configIntersected == null) {
+                        setSelectedSingleWidnowByGlass();
+                    } else {
+                        DeselectObject();
+                        setSelectedSingleWidnowByGlass();
+                    }
                 }
                 //Selecting  Row window by click on glass
                 else if (ConfigIntersects[0].object.ObjectType.includes("RowWd_RowGlass")) {
-                    setSelectedRowWidnowByGlass();
-                }
+                    if (configIntersected == null) {
+                        setSelectedRowWidnowByGlass();
+                    } else {
+                        DeselectObject();
+                        setSelectedRowWidnowByGlass();
 
+                    }
+                }
                 //Selecting  Door on single window by frame
-                else if ((ConfigIntersects[0].object.ObjectType.includes("Roof") === false) && (ConfigIntersects[0].object.ObjectType.includes("Wall") === false) && (ConfigIntersects[0].object.ObjectType.includes("Cladding") === false)) {
-                    setSelectedDoorOrSingleWindow();
+                else if ((ConfigIntersects[0].object.ObjectType.includes("Roof") === false) &&
+                    (ConfigIntersects[0].object.ObjectType.includes("Wall") === false) &&
+                    (ConfigIntersects[0].object.ObjectType.includes("Cladding") === false) && (ConfigIntersects[0].object.ObjectType.includes("Ground") === false)) {
+                    //debugger;
+                    if (configIntersected == null) {
+                        setSelectedDoorOrSingleWindow();
+                    } else {
+                        DeselectObject();
+                        setSelectedDoorOrSingleWindow();
+                    }
                 }
-
                 //Selecting  Roof
                 else if (ConfigIntersects[0].object.ObjectType.includes("Roof")) {
                     confirm("you Selected Roof");
                     //configIntersected = ConfigIntersects[0].object;
                 }
-
                 //Selecting  Cladding i.e Side-Wall (Right / Left) To Add Accessory
                 else if (ConfigIntersects[0].object.ObjectType.includes("Cladding")) {
                     //Clicked The Right Cladding
                     if (ConfigIntersects[0].object.Name.includes("Right_Side_Cladding")) {
-                        if (toAddSingleDoor === true) {
-                            addSingleDoor("side", project_span / 2, pos.y);
-
+                        let xCordinate = project_span / 2;
+                        let yCordinate = selectedPoint.y;
+                        let zCordinate = selectedPoint.z;
+                        if (isAddSingleDoor() === true) {
+                            addSingleDoor("side", xCordinate, zCordinate);
                         }
+                        else if (isAddSectionalDoor() === true) {
+                            addSectionalDoor("side", xCordinate, zCordinate);
+                        }
+                        else if (isAddSingleWindow() === true) {
+                            addSingleWindow("side", xCordinate, yCordinate, zCordinate);
+                        }
+                        else if (isAddRowWindow() === true) {
+                            addRowWindow("side", xCordinate, yCordinate, zCordinate);
+                        }
+
                     }
-                    //confirm("you Selected Side Wall");
+                    else if (ConfigIntersects[0].object.Name.includes("Left_Side_Cladding")) {
+                        let xCordinate = -project_span / 2;
+                        let yCordinate = selectedPoint.y;
+                        let zCordinate = selectedPoint.z;
+
+                        if (isAddSingleDoor() === true) {
+                            addSingleDoor("side", xCordinate, zCordinate);
+                        }
+                        else if (isAddSectionalDoor() === true) {
+                            addSectionalDoor("side", xCordinate, zCordinate);
+                        }
+                        else if (isAddSingleWindow() === true) {
+                            addSingleWindow("side", xCordinate, yCordinate, zCordinate);
+                        }
+                        else if (isAddRowWindow() === true) {
+                            addRowWindow("side", xCordinate, yCordinate, zCordinate);
+                        }
+
+                    }
                 }
 
                 //Selecting  Wall i.e Front-Wall (Front / Back) To Add Accessory
                 else if (ConfigIntersects[0].object.ObjectType.includes("Wall")) {
-                    confirm("you Selected Front Wall");
-                    //configIntersected = ConfigIntersects[0].object;
+                    if (ConfigIntersects[0].object.ObjectType.includes("Front_Wall_North")) {
+                        let xCordinate = selectedPoint.x;
+                        let yCordinate = selectedPoint.y;
+                        let zCordinate = 0;
+                        if (isAddSingleDoor() === true) {
+                            addSingleDoor("front", xCordinate, zCordinate);
+                        }
+                        else if (isAddSectionalDoor() === true) {
+                            addSectionalDoor("front", xCordinate, zCordinate);
+                        }
+                        else if (isAddSingleWindow() === true) {
+                            addSingleWindow("front", xCordinate, yCordinate, zCordinate);
+                        }
+                        else if (isAddRowWindow() === true) {
+                            addRowWindow("front", xCordinate, yCordinate, zCordinate);
+                        }
+                    }
+                    else if (ConfigIntersects[0].object.ObjectType.includes("Front_Wall_South")) {
+                        let xCordinate = selectedPoint.x;
+                        let yCordinate = selectedPoint.y;
+                        let zCordinate = -project_length;
+                        if (isAddSingleDoor() === true) {
+                            addSingleDoor("front", xCordinate, zCordinate);
+                        }
+                        else if (isAddSectionalDoor() === true) {
+                            addSectionalDoor("front", xCordinate, zCordinate);
+                        }
+                        else if (isAddSingleWindow() === true) {
+                            addSingleWindow("front", xCordinate, yCordinate, zCordinate);
+                        }
+                        else if (isAddRowWindow() === true) {
+                            addRowWindow("front", xCordinate, yCordinate, zCordinate);
+                        }
+                    }
                 }
+
 
                 // ********** here you sure that configIntersected is not null ********** \\
                 activateConfigurations();
-
-
-
-
             }
-
-            DeselectObject();
+            //Deselct Object
+            // Selecting BackGround (Deselecting any object)
+            else {
+                DeselectObject();
+            }
 
         }
     }
@@ -1227,7 +1387,7 @@
 
     function addSectionalDoor(workPlane, x, z) {
         let mySectionalDoor = new SectionalDoor(3, 3, workPlane, x, z);
-        mySectionalDoor.DrawGeometry(ConfigScene, doorMaterial);
+        mySectionalDoor.DrawGeometry(ConfigScene, door_Image_sectional);
     }
 
     function addSingleWindow(workPlane, x, y, z) {
@@ -1237,7 +1397,7 @@
 
     function addRowWindow(workPlane, x, y, z) {
         let myRowWindow = new RowWindow(2, 1, "rgb(180, 118, 4)", workPlane, x, y, z, 3);
-        dblWindwoFront.DrawGeometry(ConfigScene);
+        myRowWindow.DrawGeometry(ConfigScene);
     }
 
     function setSelectedSingleWidnowByGlass() {
@@ -1253,28 +1413,47 @@
     function setSelectedDoorOrSingleWindow() {
         configIntersected = ConfigIntersects[0].object;
         configOldColor = ConfigIntersects[0].object.material.color.clone();
-        ConfigIntersects[0].object.material.color.r += 0.1;
-        ConfigIntersects[0].object.material.color.g += 0.1;
-        ConfigIntersects[0].object.material.color.b += 0.1;
+        configIntersected.material.color.r += 0.1;
+        configIntersected.material.color.g += 0.1;
+        configIntersected.material.color.b += 0.1;
     }
 
     function setSelectedRowWidnowByGlass() {
-        configIntersected = ConfigIntersects[0].object.parent.parent;
+        //debugger;
         configOldColor = ConfigIntersects[0].object.parent.parent.material.color.clone();
-        ConfigIntersects[0].object.parent.parent.material.color.r += 0.1;
-        ConfigIntersects[0].object.parent.parent.material.color.g += 0.1;
-        ConfigIntersects[0].object.parent.parent.material.color.b += 0.1;
+        let newColor = ConfigIntersects[0].object.parent.parent.material.color.clone();
+        newColor.r += 0.1;
+        newColor.g += 0.1;
+        newColor.b += 0.1;
+        configIntersected = ConfigIntersects[0].object.parent.parent;
+        //for (var i = 0; i < configIntersected.children.length; i++) {
+        //    configIntersected.children[i].material.color.r += 0.1;
+        //    configIntersected.children[i].material.color.g += 0.1;
+        //    configIntersected.children[i].material.color.b += 0.1;
+        //}
+        configIntersected.Instance.SetFrameColor(newColor);
+        //ConfigIntersects[0].object.parent.parent.material.color.r += 0.1;
+        //ConfigIntersects[0].object.parent.parent.material.color.g += 0.1;
+        //ConfigIntersects[0].object.parent.parent.material.color.b += 0.1;
     }
 
     function DeselectObject() {
-        /// Selecting BackGround (Deselecting any object)
-        if (ConfigIntersects[0].object.ObjectType.includes("BackGround")) {
-            if (configIntersected != null) {
+        //debugger;
+        if (configIntersected != null) {
+            if (configIntersected.ObjectType.includes("RowWd_pivot")) {
+                for (var i = 0; i < configIntersected.children.length; i++) {
+                    configIntersected.children[i].material.color = configOldColor;
+                    deActivateConfigurations();
+                }
+            }
+            else {
                 configIntersected.material.color = configOldColor;
+                deActivateConfigurations();
             }
             configIntersected = null;
-            deActivateConfigurations();
+
         }
+
     }
 
     function setConfigsForRowWindows() {
@@ -1302,6 +1481,7 @@
         height_slider.setAttribute("min", row_window_min_height);
         height_slider.setAttribute("max", row_window_max_height);
         height_slider.value = configIntersected.Instance.Height;
+        txt_rows_count.value = configIntersected.Instance.Number;
     }
 
     function setConfigsForSingleDoor() {
@@ -1418,6 +1598,7 @@
         txtbx_Position_Y.value = "";
         txtbx_Size_Width.value = "";
         txtbx_Size_Height.value = "";
+        txt_rows_count.value = "";
         x_slider.setAttribute("min", "0");
         y_slider.setAttribute("min", "0");
         width_slider.setAttribute("min", "0");
@@ -1684,6 +1865,39 @@
             }
 
         }
+    }
+
+
+    function isAddSingleDoor() {
+        let r = false;
+        if (toAddSingleDoor === true && toAddSectionalDoor === false && toAddSingleWindow === false && toAddRowWindow === false) {
+            r = true;
+        }
+        return r;
+    }
+
+    function isAddSectionalDoor() {
+        let r = false;
+        if (toAddSectionalDoor === true && toAddSingleDoor === false && toAddSingleWindow === false && toAddRowWindow === false) {
+            r = true;
+        }
+        return r;
+    }
+
+    function isAddSingleWindow() {
+        let r = false;
+        if (toAddSingleWindow === true && toAddSectionalDoor === false && toAddSingleDoor === false && toAddRowWindow === false) {
+            r = true;
+        }
+        return r;
+    }
+
+    function isAddRowWindow() {
+        let r = false;
+        if (toAddRowWindow === true && toAddSectionalDoor === false && toAddSingleWindow === false && toAddSingleDoor === false) {
+            r = true;
+        }
+        return r;
     }
 
 </script>
