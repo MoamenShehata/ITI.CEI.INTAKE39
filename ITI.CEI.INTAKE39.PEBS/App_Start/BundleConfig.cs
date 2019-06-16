@@ -14,7 +14,7 @@ namespace ITI.CEI.INTAKE39.PEBS
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/THREE-JS").Include(
+            bundles.Add(new ScriptBundle("~/bundles/THREE_JS").Include(
                        "~/Scripts/three.js",
                        "~/Scripts/OrbitControls.js",
                        "~/Scripts/ThreeJsViewer.js",
