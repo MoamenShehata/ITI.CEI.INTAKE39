@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ITI.CEI.INTAKE39.PEBS.Models;
+using ITI.CEI.INTAKE39.PEBS.Models.Entities;
 using ITI.CEI.INTAKE39.PEBS.Entities.ViewModels;
 using IFC.Base;
 using IFC.Geometry;
@@ -72,7 +73,11 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
         {
             if (Request.IsAjaxRequest())
             {
-                Project  project = new Project() { }
+                Models.Entities.Project project = new Models.Entities.Project();
+                project.Name = pName;
+                project.FK_PebsClientId = User.Identity.GetUserId();
+                _ctxt.Projects.Add(project);
+                _ctxt.SaveChanges();
                 return PartialView("_PartialProjectDimensionProduction");
             }
             return null;
@@ -172,7 +177,7 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
 
             string Path = @"C:\Users\Ahmed Alaa\Desktop\tempAmrIsThatYou";
             Model model = Model.Create(Path);
-            Project project = Project.Create(model);
+            IFC.Base.Project project = IFC.Base.Project.Create(model);
 
             Site site = Site.Create(model);
             project.AddSite(site);
@@ -608,7 +613,7 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
 
                 userRole = user.RoleType.ToString();
             }
-            var Projects = _ctxt.Projects.ToList();
+            var Projects = _ctxt.Projects.Where(pr => pr.FK_PebsClientId == userId).ToList();
             List<ApplicationUser> projectsUsers = new List<ApplicationUser>();
             foreach (var p in Projects)
             {
@@ -617,6 +622,7 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
             }
             ClientViewModel clientViewModel = new ClientViewModel()
             {
+                PebsClient=user,
                 Projects = Projects
             };
 
