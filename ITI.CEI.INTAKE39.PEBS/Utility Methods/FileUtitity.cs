@@ -10,7 +10,7 @@ namespace ITI.CEI.INTAKE39.PEBS.Utility_Methods
     {
         public static string CreateFolder(string userName)
         {
-            string folderName = @"C:\Users\Ahmed Alaa\Desktop\AMR\PEBStDataBase";
+            string folderName = @"C:\Users\Ahmed Alaa\Desktop\AMR\PEBSDataBase";
 
             string pathString = System.IO.Path.Combine(folderName, userName);
 
@@ -34,7 +34,7 @@ namespace ITI.CEI.INTAKE39.PEBS.Utility_Methods
 
         public static string ReadFile(string fileName, string userName)
         {
-            string folderName = @"C:\Users\Ahmed Alaa\Desktop\AMR\PEBStDataBase";
+            string folderName = @"C:\Users\Ahmed Alaa\Desktop\AMR\PEBSDataBase";
 
             string pathString = System.IO.Path.Combine(folderName, userName);
 

@@ -28,7 +28,8 @@
                 <td>@project.PebsClient.Name</td>
 
                 <td>
-                    @Html.ActionLink("View", "View", new { id = project.Id }) |
+                    <button onclick="ViewModel(@project.Id)"> View Model</button>
+                    @*@Html.ActionLink("View", "View", new { id = project.Id }) |*@
                 </td>
                 <td>
                     @Html.ActionLink("Report", "Report", "Employee", new { id = project.Id }, null)
@@ -40,3 +41,33 @@
 
         </tbody>
     </table>
+
+    <script>
+
+        
+    ViewModel= function (id) {
+  
+
+       
+        $.ajax({
+            type: "POST",
+            url: "/Account/ViewModel",
+            //dataType: "string",
+            // contentType: "application/json; charset=utf-8",
+            data: {id:id},
+
+            success: function (result) {
+                var x = JSON.parse(result);
+                console.log(x)
+            },
+            error: function (result) {
+                console.log(result);
+                console.log("Error");
+            }
+        });
+    }
+
+
+
+
+    </script>

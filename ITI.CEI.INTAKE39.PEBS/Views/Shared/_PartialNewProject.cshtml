@@ -174,15 +174,15 @@
 
     function CreateNewProject() {
         //debugger;
-        if (document.getElementById("project_name").value !== "" && document.getElementById("project_name").value !== null) {
             let project_name = document.getElementById("project_name").value;
+        if (project_name !== "" && project_name !== null) {
 
             $.ajax({
                 type: "POST",
                 url: "/Account/RenderDimsView",
                 //dataType: "json",
                 //contentType: "application/json; charset=utf-8",
-                //data: JSON.stringify({ 'pName': project_name, 'projectType': project_template }),
+                data: { pName: project_name },
 
                 success: function (result) {
                     $("#WorkSpace_Content").replaceWith(result);

@@ -99,8 +99,8 @@ toJson(array) {
     var MyCladdingDoubleSide = {
         "Span": this.Span,
         "Height": this.Height,
-        "RightCladding": this.RightCladding,
-        "LeftCladding": this.LeftCladding,
+       // "RightCladding": this.RightCladding,
+       // "LeftCladding": this.LeftCladding,
 
     }
     array.push(MyCladdingDoubleSide);
@@ -213,8 +213,8 @@ class FrontWall {
             "Height": this.Height,
             "Slope": this.Slope,
             "ZPosition": this.ZPosition,
-            "Wall": this.Wall,
-            "Triangle": this.Triangle,
+            //"Wall": this.Wall,
+           // "Triangle": this.Triangle,
         }
         array.push(MyFrontWall);
     }
@@ -322,10 +322,10 @@ class RoofDouble extends THREE.Mesh {
             "Length": this.length,
             "Slope": this.Slope,
             "ZPosition": this.ZPosition,
-            "RightPivot": this.RightPivot,
-            "LeftPivot": this.LeftPivot,
-            "RightRoof": this.RightRoof,
-            "LeftRoof": this.LeftRoof
+           // "RightPivot": this.RightPivot,
+         //   "LeftPivot": this.LeftPivot,
+          //  "RightRoof": this.RightRoof,
+           // "LeftRoof": this.LeftRoof
         }
         array.push(MyRoofDouble);
     }
@@ -432,13 +432,13 @@ class SingleWindow extends THREE.Mesh {
             "Width": this.Width,
             "Height": this.Height,
             "FrameColor": this.FrameColor,
-            "WorkPlane": this.WorkPlane,
+            //"WorkPlane": this.WorkPlane,
             "X": this.X,
             "Y": this.Y,
             "Z": this.Z,
-            "Frame": this.Frame,
-            "Glass": this.Glass,
-            "Window": this.Window
+           // "Frame": this.Frame,
+           // "Glass": this.Glass,
+           // "Window": this.Window
         }
         array.push(MySingleWindow);
     }
@@ -655,14 +655,14 @@ class RowWindow extends THREE.Mesh {
             "TotalWidth": this.TotalWidth,
             "Height": this.Height,
             "FrameColor": this.FrameColor,
-            "WorkPlane": this.WorkPlane,
+           // "WorkPlane": this.WorkPlane,
             "Number": this.Number,
             "X": this.X,
             "Y": this.Y,
             "Z": this.Z,
-            "Frame": this.Frame,
-            "Window": this.Window,
-            "Panels": this.Window,
+           // "Frame": this.Frame,
+           // "Window": this.Window,
+          //  "Panels": this.Window,
         }
         array.push(MyRowWindow);
     }
@@ -955,12 +955,12 @@ class SingleDoor extends THREE.Mesh {
             "Width": this.Width,
             "Height": this.Height,
             "Color": this.Color,
-            "WorkPlane": this.WorkPlane,
+           // "WorkPlane": this.WorkPlane,
             "X": this.X,
             "Y": this.Y,
             "Z": this.Z,
-            "Door": this.Door,
-            "DoorHandle": this.DoorHandle,
+          //  "Door": this.Door,
+           // "DoorHandle": this.DoorHandle,
 
         }
         array.push(MySingleDoor);
@@ -1046,11 +1046,11 @@ class SectionalDoor extends THREE.Mesh {
     var MySectionalDoor = {
             "Width": this.Width,
             "Height": this.Height,
-            "WorkPlane": this.WorkPlane,
+            //"WorkPlane": this.WorkPlane,
             "X": this.X,
             "Y": this.Y,
             "Z": this.Z,
-            "Door": this.Door,
+           // "Door": this.Door,
         }
     array.push(MySectionalDoor);
     }
