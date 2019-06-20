@@ -10,6 +10,8 @@
     };
 }
 
+
+
 <div class="partial_project" id="partial_project">
 
     <div class="project_new" id="project_new">
@@ -20,6 +22,7 @@
             @*@Html.TextBoxFor(p => p.Name, new { @class = "project_name_textbox", placeholder = "Write Project Name" })*@
             <input type="text" id="project_name" placeholder="Write Project Name" class="project_name_textbox">
         </div>
+        
         <div class="template">
             <h3>Select Template</h3>
 
@@ -83,6 +86,38 @@
 </div>
 
 <script>
+    //debugger;
+    //var h1 = project_height * 1000;
+    //var h2 = h1 + 1000;
+    //var span = project_span * 1000;
+
+    //function save() {
+    //    $.ajax({
+    //        type: "POST",
+    //        url: "/Account/DownloadIfc",
+    //        dataType: "json",
+    //        contentType: "application/json; charset=utf-8",
+    //        data: JSON.stringify({ 'h2': 5000, 'h1': 4000, 'span': 20000 }),
+
+    //        success: function (result) {
+    //            $("#WorkSpace_Content").replaceWith(result);
+    //            //console.log(result);
+
+    //            project_current = document.getElementById("project_current");
+    //            project_current.innerText = project_name;
+    //            projectCounter++;
+
+    //            //NextStage();
+    //            project_started = true;
+    //        },
+    //        error: function (result) {
+    //            console.log(result);
+    //            console.log("Error");
+    //        }
+    //    });
+    //}
+
+
     let currentStage = 1; // At  user is in stage of creating new Project
     let project_started = false;
     let PriceIsAvailable = false;

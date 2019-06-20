@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "AdminHomePage";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+
+@model ClientViewModel
+
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Project Name</th>
+                <th>Client Name</th>
+                <th>3D View </th>
+                <th> Report</th>
+   
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var project in Model.Projects)
+            {
+               
+                // in case of open Employees link
+
+            <tr>
+                <td>@project.Name</td>
+                <td>@project.PebsClient.Name</td>
+
+                <td>
+                    @Html.ActionLink("View", "View", new { id = project.Id }) |
+                </td>
+                <td>
+                    @Html.ActionLink("Report", "Report", "Employee", new { id = project.Id }, null)
+                </td>
+            </tr>
+
+            }
+
+
+        </tbody>
+    </table>

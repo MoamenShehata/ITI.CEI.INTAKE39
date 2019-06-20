@@ -7,13 +7,13 @@ namespace ITI.CEI.INTAKE39.PEBS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class AddProjectEntityToDataBaseforce : IMigrationMetadata
+    public sealed partial class updateUser : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddProjectEntityToDataBaseforce));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(updateUser));
         
         string IMigrationMetadata.Id
         {
-            get { return "201903220633540_AddProjectEntityToDataBase-force"; }
+            get { return "201906191139267_updateUser"; }
         }
         
         string IMigrationMetadata.Source

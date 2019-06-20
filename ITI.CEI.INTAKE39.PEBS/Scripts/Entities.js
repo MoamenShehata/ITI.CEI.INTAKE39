@@ -94,6 +94,18 @@ class CladdingDoubleSide {
     }
 
 
+
+toJson(array) {
+    var MyCladdingDoubleSide = {
+        "Span": this.Span,
+        "Height": this.Height,
+        "RightCladding": this.RightCladding,
+        "LeftCladding": this.LeftCladding,
+
+    }
+    array.push(MyCladdingDoubleSide);
+}
+
 }
 
 var numberOfWalls = 0;
@@ -193,6 +205,19 @@ class FrontWall {
         this.Wall.material.color = new THREE.Color(newColor);
         this.Triangle.material.color = new THREE.Color(newColor);
     }
+
+
+    toJson(array) {
+        var MyFrontWall = {
+            "Span": this.Span,
+            "Height": this.Height,
+            "Slope": this.Slope,
+            "ZPosition": this.ZPosition,
+            "Wall": this.Wall,
+            "Triangle": this.Triangle,
+        }
+        array.push(MyFrontWall);
+    }
 }
 
 class RoofDouble extends THREE.Mesh {
@@ -285,6 +310,24 @@ class RoofDouble extends THREE.Mesh {
     SetColor(newColor) {
         this.RightRoof.material.color = new THREE.Color(newColor);
         this.LeftRoof.material.color = new THREE.Color(newColor);
+    }
+
+
+
+
+    toJson(array) {
+        var MyRoofDouble =
+        {
+            "Span": this.Span,
+            "Length": this.length,
+            "Slope": this.Slope,
+            "ZPosition": this.ZPosition,
+            "RightPivot": this.RightPivot,
+            "LeftPivot": this.LeftPivot,
+            "RightRoof": this.RightRoof,
+            "LeftRoof": this.LeftRoof
+        }
+        array.push(MyRoofDouble);
     }
 }
 
@@ -381,6 +424,27 @@ class SingleWindow extends THREE.Mesh {
     SetFrameColor(newColor) {
         this.Window.material.color = new THREE.Color(newColor);
     }
+
+
+    toJson(array) {
+        var MySingleWindow ={
+  
+            "Width": this.Width,
+            "Height": this.Height,
+            "FrameColor": this.FrameColor,
+            "WorkPlane": this.WorkPlane,
+            "X": this.X,
+            "Y": this.Y,
+            "Z": this.Z,
+            "Frame": this.Frame,
+            "Glass": this.Glass,
+            "Window": this.Window
+        }
+        array.push(MySingleWindow);
+    }
+
+
+
 }
 
 class RowWindow extends THREE.Mesh {
@@ -584,6 +648,26 @@ class RowWindow extends THREE.Mesh {
     }
 
 
+
+    toJson(array) {
+        var MyRowWindow = {
+            "PWidth": this.PWidth,
+            "TotalWidth": this.TotalWidth,
+            "Height": this.Height,
+            "FrameColor": this.FrameColor,
+            "WorkPlane": this.WorkPlane,
+            "Number": this.Number,
+            "X": this.X,
+            "Y": this.Y,
+            "Z": this.Z,
+            "Frame": this.Frame,
+            "Window": this.Window,
+            "Panels": this.Window,
+        }
+        array.push(MyRowWindow);
+    }
+
+
 }
 
 class IBeamColumn {
@@ -670,7 +754,7 @@ class IBeamColumn {
         this.Instance.position.y = 0;
         this.Height = newHeight;
     }
-}
+}   /////not but json
 
 class Bay extends THREE.Mesh {
 
@@ -748,7 +832,14 @@ class Bay extends THREE.Mesh {
         //return newWidth;
     }
 
-}
+    toJson(array) {
+        var mybay =
+        {
+            "Width": this.Width
+        }
+        array.push(mybay);
+    }
+}   /////not but json
 
 class SingleDoor extends THREE.Mesh {
     constructor(width, height, color, workPlane, x, z) {
@@ -824,6 +915,12 @@ class SingleDoor extends THREE.Mesh {
         this.Door = door;
         this.Door.Instance = this;
         this.DoorHandle = doorHandel;
+
+
+
+       
+
+
         return this;
     }
 
@@ -852,6 +949,25 @@ class SingleDoor extends THREE.Mesh {
     SetColor(newColor) {
         this.Door.material.color = new THREE.Color(newColor);
     }
+
+    toJson(array) {
+        var MySingleDoor = {
+            "Width": this.Width,
+            "Height": this.Height,
+            "Color": this.Color,
+            "WorkPlane": this.WorkPlane,
+            "X": this.X,
+            "Y": this.Y,
+            "Z": this.Z,
+            "Door": this.Door,
+            "DoorHandle": this.DoorHandle,
+
+        }
+        array.push(MySingleDoor);
+    }
+
+
+
 }
 
 class SectionalDoor extends THREE.Mesh {
@@ -924,6 +1040,19 @@ class SectionalDoor extends THREE.Mesh {
 
     SetColor(newColor) {
         this.Door.material.color = new THREE.Color(newColor);
+    }
+
+    toJson(array) {
+    var MySectionalDoor = {
+            "Width": this.Width,
+            "Height": this.Height,
+            "WorkPlane": this.WorkPlane,
+            "X": this.X,
+            "Y": this.Y,
+            "Z": this.Z,
+            "Door": this.Door,
+        }
+    array.push(MySectionalDoor);
     }
 }
 
@@ -1097,6 +1226,17 @@ class MyWindow {
         this.Window.position.y = this.y;
     }
 
+    toJson(array) {
+        var MyWindow = {
+            "hieght": this.hieght,
+            "width": this.width,
+            "materialUrl": this.materialUrl,
+            "X": this.x,
+            "Y": this.y,
+            "Window": this.Window,
+        }
+        array.push(MyWindow);
+    }
 
 
 }

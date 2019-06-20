@@ -1,7 +1,4 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -9,8 +6,13 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ITI.CEI.INTAKE39.PEBS.Models;
-using ITI.CEI.INTAKE39.PEBS.Entities;
 using ITI.CEI.INTAKE39.PEBS.Entities.ViewModels;
+using IFC.Base;
+using IFC.Geometry;
+using IFC;
+using ITI.CEI.INTAKE39.PEBS.Json;
+using System.Collections.Generic;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ITI.CEI.INTAKE39.PEBS.Controllers
 {
@@ -141,6 +143,58 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
             }
         }
 
+        [HttpPost]
+        public void DownloadIfc(JsonObject JsonData)
+        {
+
+            JsonObject y = new JsonObject();
+
+            y.h1 = JsonData.h1;
+            y.h2 = JsonData.h2;
+            y.span = JsonData.span;
+            y.Mybays = JsonData.Mybays;
+
+            double []spacing = new double[y.Mybays.Count+1];
+            double cumulative = 0;
+           
+            for (int b = 0; b <spacing.Length; b++)
+            {
+                spacing[b] = cumulative;
+                if (b<spacing.Length-1)
+                {
+                cumulative += (y.Mybays[b].Width) * 1000;
+
+                }
+            }
+            
+
+            string Path = @"C:\Users\Ahmed Alaa\Desktop\tempAmrIsThatYou";
+            Model model = Model.Create(Path);
+            Project project = Project.Create(model);
+
+            Site site = Site.Create(model);
+            project.AddSite(site);
+
+            Building build = Building.Create(model);
+            site.AddBuilding(build);
+
+
+            Storey storey2 = Storey.Create(model, 3000);
+
+            build.AddStorey(storey2);
+            Point pointcol1 = Point.Create(model, 0, 0, 0);
+
+          //  double[] y = new double[] { 0.0, 5000.0, 8000.0, 12000.0, 15000.0, 18000.0, 20000.0, 25000.0 };
+
+            Program.DrawFactory(model, storey2, y.h2, y.h1, y.span, pointcol1, spacing);
+            model.Save(/*Path + $"{"Amr"}" + ".ifc"*/);
+
+
+        }
+
+
+
+
         //
         // GET: /Account/VerifyCode
         [AllowAnonymous]
@@ -202,10 +256,16 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.ClientName };
-
+          
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    // Temp code
+                    //var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                    //var roleManager = new RoleManager<IdentityRole>(roleStore);
+                    //await roleManager.CreateAsync(new IdentityRole("CanCreateProject"));
+                    //await UserManager.AddToRoleAsync(user.Id, "CanCreateProject");
+
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -538,15 +598,43 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
 
         public ActionResult ProjectHomePage()
         {
+            var userRole="";
             var userId = User.Identity.GetUserId();
+            var user = _ctxt.Users.Find(userId);
+            if (user.RoleType!=null)
+            {
+
+             userRole = user.RoleType.ToString();
+            }
+            var Projects = _ctxt.Projects.ToList();
+            List<ApplicationUser> projectsUsers = new List<ApplicationUser>();
+            foreach (var p in Projects)
+            {
+                var projectClient = _ctxt.Users.Find(p.FK_PebsClientId);
+                p.PebsClient = projectClient;
+            }
             ClientViewModel clientViewModel = new ClientViewModel()
             {
-                Projects = _ctxt.Projects.Where(p => p.FK_PebsClientId == userId).ToList()
+                Projects = Projects
             };
-            return View("ProjectHomePage", clientViewModel);
+
+            if (userRole == "Admin")
+            {
+                return View("AdminHomePage", clientViewModel);
+                
+            }
+            else
+            {
+                return View("ProjectHomePage", clientViewModel);    
+
+            }
         }
 
+        [HttpPost]
+        public void SaveModel()
+        {
 
+        }
 
 
         public ActionResult NewIFC() => View();

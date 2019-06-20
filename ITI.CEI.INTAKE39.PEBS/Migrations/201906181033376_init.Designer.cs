@@ -7,13 +7,13 @@ namespace ITI.CEI.INTAKE39.PEBS.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Initial_Model : IMigrationMetadata
+    public sealed partial class init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial_Model));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201903210854035_Initial_Model"; }
+            get { return "201906181033376_init"; }
         }
         
         string IMigrationMetadata.Source

@@ -1,4 +1,5 @@
 ﻿using ITI.CEI.INTAKE39.PEBS.Models;
+using ITI.CEI.INTAKE39.PEBS.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

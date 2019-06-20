@@ -21,6 +21,10 @@
         <li id="panel4">Colors</li>
         <li id="panel5">Properties</li>
         <li id="panel6">Delete</li>
+        <li id="panel7">Download IFC</li>
+
+        <li id="panel8">Save Model</li>
+
     </ul>
 
     <div style="clear:both"></div>
@@ -314,6 +318,13 @@
         <div id="sec_delete" class="sec_delete disabled">
             <button id="btn_delete" class="btn_delete">Delete</button>
         </div>
+
+        <div id="sec_download" class="sec_download disabled">
+            <button id="btn_download" class="btn_download">DownloadIfc</button>  //////////////////////////////////
+        </div>
+        <div id="sec_save" class="sec_save disabled">
+            <button id="btn_save" class="btn_save">Save Model</button>  //////////////////////////////////
+        </div>
     </div>
 
 </div>
@@ -399,6 +410,9 @@
     var panel4 = document.getElementById("sec_colors");
     var panel5 = document.getElementById("sec_properties");
     var panel6 = document.getElementById("sec_delete");
+    var panel7 = document.getElementById("sec_download");
+    var panel8 = document.getElementById("sec_save");
+
 
     var panelHandle1 = document.getElementById("panel1");
     var panelHandle2 = document.getElementById("panel2");
@@ -406,6 +420,10 @@
     var panelHandle4 = document.getElementById("panel4");
     var panelHandle5 = document.getElementById("panel5");
     var panelHandle6 = document.getElementById("panel6");
+    var panelHandle7 = document.getElementById("panel7");
+
+    var panelHandle8 = document.getElementById("panel8");  /////
+
 
     var colorRoofRed = document.getElementById("color_roof_red");
     var colorRoofGrey = document.getElementById("color_roof_grey");
@@ -1056,6 +1074,103 @@
         panel5.style.display = "none";
         panel2.style.display = "none";
     }
+
+    
+   
+    //let IfcBays = function () {
+    //    let bayswidth = [];
+    //    for (let i = 0; i < bays.length; i++) {
+    //        bayswidth.push(bays[i].Width);
+    //    }
+
+
+    //    return bayswidth;
+    //}
+  
+
+     var jsonBays=[];
+
+    panelHandle7.onclick = function () {
+        let h1 = project_height * 1000;
+        let span = project_span * 1000;
+        let slop = project_slope;
+        let h2 = h1 + span * slop;
+        
+
+
+        for (let i = 0; i < bays.length; i++) {
+            bays[i].toJson(jsonBays);
+        }
+
+        console.log(jsonBays)
+        var JsonData = { "h2":h2,"h1":h1,"span":span,"Mybays":jsonBays}
+        $.ajax({
+            type: "POST",
+            url: "/Account/DownloadIfc",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({JsonData}),
+
+            success: function (result) {
+                $("#WorkSpace_Content").replaceWith(result);
+                //console.log(result);
+
+                project_current = document.getElementById("project_current");
+                project_current.innerText = project_name;
+                projectCounter++;
+
+                //NextStage();
+                project_started = true;
+            },
+            error: function (result) {
+                console.log(result);
+                console.log("Error");
+            }
+        });
+    }
+
+    ////////////////////////Save Model  in database
+
+    var Mywindows = [];
+    var Mysectiondoor = [];
+    var Mysingledoor = [];
+    var Myrowwindows = [];
+    var Mysinglewindows = [];
+    var Myroofdouble = [];
+    var Myfrontwall = [];
+    var Mycladdingdoubleside = [];
+
+
+
+     panelHandle8.onclick = function () {
+       
+   
+        $.ajax({
+            type: "POST",
+            url: "/Account/SaveModel",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({JsonData}),
+
+            success: function (result) {
+                $("#WorkSpace_Content").replaceWith(result);
+                //console.log(result);
+
+                project_current = document.getElementById("project_current");
+                project_current.innerText = project_name;
+                projectCounter++;
+
+                //NextStage();
+                project_started = true;
+            },
+            error: function (result) {
+                console.log(result);
+                console.log("Error");
+            }
+        });
+    }
+
+
     //#endregion
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////

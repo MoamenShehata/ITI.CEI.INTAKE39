@@ -1,7 +1,9 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ITI.CEI.INTAKE39.PEBS.Entities;
+using ITI.CEI.INTAKE39.PEBS.Models.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -14,6 +16,8 @@ namespace ITI.CEI.INTAKE39.PEBS.Models
         public string Name { get; set; }
         public string Address { get; set; }
         public string Nantionality { get; set; }
+        public string RoleType { get; set; }
+        public List<Project>  Projects { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
