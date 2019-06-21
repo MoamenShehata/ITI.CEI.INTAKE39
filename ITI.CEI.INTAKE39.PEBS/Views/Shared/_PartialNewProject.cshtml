@@ -22,7 +22,7 @@
             @*@Html.TextBoxFor(p => p.Name, new { @class = "project_name_textbox", placeholder = "Write Project Name" })*@
             <input type="text" id="project_name" placeholder="Write Project Name" class="project_name_textbox">
         </div>
-        
+
         <div class="template">
             <h3>Select Template</h3>
 
@@ -130,6 +130,7 @@
 
     let project_listHTML = document.getElementById("my_projects");
     let project_current;
+    var project_name = null;
 
     //function CreateNewProject() {
     //    if (document.getElementById("project_name").value !== "" && document.getElementById("project_name").value !== null) {
@@ -175,7 +176,7 @@
 
     function CreateNewProject() {
         //debugger;
-            let project_name = document.getElementById("project_name").value;
+            project_name = document.getElementById("project_name").value;
         if (project_name !== "" && project_name !== null) {
 
             $.ajax({
