@@ -608,56 +608,80 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
             var userRole = "";
             var userId = User.Identity.GetUserId();
             var user = _ctxt.Users.Find(userId);
-            if (user.RoleType != null)
+            
+            userRole = user.RoleType;
+            if (userRole=="Admin")
             {
-
-                userRole = user.RoleType.ToString();
-            }
-            var Projects = _ctxt.Projects.Where(pr => pr.FK_PebsClientId == userId).ToList();
-            List<ApplicationUser> projectsUsers = new List<ApplicationUser>();
-            foreach (var p in Projects)
-            {
-                var projectClient = _ctxt.Users.Find(p.FK_PebsClientId);
-                p.PebsClient = projectClient;
-            }
-            ClientViewModel clientViewModel = new ClientViewModel()
-            {
-                PebsClient=user,
-                Projects = Projects
-            };
-
-            if (userRole == "Admin")
-            {
+                ClientViewModel clientViewModel = new ClientViewModel();
+                var Projects = _ctxt.Projects.ToList();
+                foreach (var p in Projects)
+                {
+                    var client = _ctxt.Users.Find(p.FK_PebsClientId);
+                    p.PebsClient = client;
+                    
+                }
+                clientViewModel.Projects = Projects;
                 return View("AdminHomePage", clientViewModel);
 
             }
+
             else
             {
+                ClientViewModel clientViewModel = new ClientViewModel();
+                clientViewModel.PebsClient = user;
+                var projects = _ctxt.Projects.Where(p => p.FK_PebsClientId == user.Id).ToList();
+                clientViewModel.PebsClient.Projects = projects;
+                var reports = _ctxt.Reports;
+                foreach (var project in projects)
+                {
+                    var projectReport = reports.Where(e => e.Projectid == project.Id).ToList().LastOrDefault();
+                    project.Report = projectReport;
+                }
                 return View("ProjectHomePage", clientViewModel);
 
             }
         }
 
+
+        public Report ViewReport(int id)
+        {
+            var report = _ctxt.Reports.Where(p => p.Projectid == id).LastOrDefault();
+            return report;
+        }
         [HttpPost]
         public ActionResult SaveModel()
         {
-            var user = User.Identity.GetUserName();
-            var xxs = Request;
+            var folderName = User.Identity.GetUserName();
+            //var xxs = Request;
             string jsonData = Request.Form[0];
             ///change this to username from the database
-            string pathString = FileUtitity.CreateFolder(user);
+            string pathString = FileUtitity.CreateFolder(folderName);
             //string fileName= 
+
+            //var fileName
             FileUtitity.WriteFile(jsonData,  "file001.txt", pathString);
 
             return Json("valid saving");
         }
-        
+
+
+        [HttpPost]
+        public void SendReport(Report r )
+        {
+            var project = _ctxt.Projects.Find(r.Projectid);
+            project.Report = r;
+            _ctxt.Reports.Add(r);
+            _ctxt.SaveChanges();
+            
+        }
+
         [HttpPost]
         public string ViewModel( int id)
         {
             var project = _ctxt.Projects.Find(id);
             var user = _ctxt.Users.Find(project.FK_PebsClientId);
             var modelString = FileUtitity.ReadFile("file001.txt", user.UserName);
+
 
             //var z = Request.Form;
             //var x = Request.Form[0];

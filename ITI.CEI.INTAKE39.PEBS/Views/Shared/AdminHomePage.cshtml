@@ -6,55 +6,106 @@
 
 @model ClientViewModel
 
+@Styles.Render("~/MyContent/css")
+@Styles.Render("~/Bootsrtap/css")
+@Scripts.Render("~/bundles/modernizr")
 
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th>Project Name</th>
-                <th>Client Name</th>
-                <th>3D View </th>
-                <th> Report</th>
+<table class="table table-striped table-hover">
+
+
+    <thead>
+        <tr>
+            <th>Project Name</th>
+            <th>Client Name</th>
+            <th>3D View </th>
+            <th>View Details </th>
+            <th>Download IFC </th>
+            <th>Send Report</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var project in Model.Projects)
+        {
+            //  var report = project.Report;
+
+            // in case of open Employees link
+            var pId = project.Id;
+        <tr>
+            <td>@project.Name</td>
+            <td>@project.PebsClient.Name</td>
+
+            <td>
+                <button type="button" class="btn btn-primary" onclick="ViewModel(@pId)">View Model</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" onclick="ViewModel(@pId)">View Details</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" onclick="ViewModel(@pId)">Download IFC</button>
+            </td>
+            <td>
+                <button type="button" id="Savebutton-@project.Id" class="btn btn-primary" pj="@project.Id" data-toggle="modal" data-target="#exampleModal-@project.Id">SendReport</button>
+            </td>
+            <td fuck="@project.Id">
+                <div class="modal fade" id="exampleModal-@project.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="col-form-label">Cost</label>
+                                        <input type="text" class="form-control" id="recipient-name-@project.Id">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">Due Date</label>
+                                        <input type="text" class="form-control" id="message-text-@project.Id">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="message-text" class="col-form-label">Notes</label>
+                                        <input type="text" class="form-control" id="notes-text-@project.Id">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" alaa="" onclick="SendReport(@project.Id)" class="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+
+        </tr>
    
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var project in Model.Projects)
-            {
-               
-                // in case of open Employees link
 
-            <tr>
-                <td>@project.Name</td>
-                <td>@project.PebsClient.Name</td>
+        }
 
-                <td>
-                    <button onclick="ViewModel(@project.Id)"> View Model</button>
-                    @*@Html.ActionLink("View", "View", new { id = project.Id }) |*@
-                </td>
-                <td>
-                    @Html.ActionLink("Report", "Report", "Employee", new { id = project.Id }, null)
-                </td>
-            </tr>
+    </tbody>
 
-            }
+</table>
 
 
-        </tbody>
-    </table>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/jqueryval")
 
-    <script>
+<script>
+    
+    ViewModel = function (id) {
 
-        
-    ViewModel= function (id) {
-  
-
-       
         $.ajax({
             type: "POST",
             url: "/Account/ViewModel",
             //dataType: "string",
             // contentType: "application/json; charset=utf-8",
-            data: {id:id},
+            data: { id: id },
 
             success: function (result) {
                 var x = JSON.parse(result);
@@ -69,5 +120,37 @@
 
 
 
+    SendReport = function (id) {
+        debugger;
+         var cost = document.getElementById(`recipient-name-${id}`).value;
+         var date = document.getElementById(`message-text-${id}`).value;
+        var notes =document.getElementById(`notes-text-${id}`).value;
+      //  var Button = $(`#Savebutton-${id}`)
+      //  var pid= Button
+        //   var x= $("#Savebutton").attr("Projectid").valueOf();
+       // var Pid = Button.getAttribute("pj");
+        console.log( id);
+        
+    $.ajax({
+        type: "POST",
+        url: "/Account/SendReport",
+        //dataType: "string",k
+        // contentType: "application/json; charset=utf-8",
 
-    </script>
+        data: { Cost: cost, DueDate: date, Notes:notes, Projectid: id },
+
+        success: function (result) {
+            //var x = JSON.parse(result);
+            //console.log(x)
+        },
+        error: function (result) {
+            console.log(result);
+            console.log("Error");
+        }
+    });
+}
+
+
+
+
+</script>

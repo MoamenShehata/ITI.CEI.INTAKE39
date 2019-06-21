@@ -234,10 +234,39 @@
     <Compile Include="Migrations\201906191139267_updateUser.Designer.cs">
       <DependentUpon>201906191139267_updateUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906211217133_addReport.cs" />
+    <Compile Include="Migrations\201906211217133_addReport.Designer.cs">
+      <DependentUpon>201906211217133_addReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906211220500_EditReport.cs" />
+    <Compile Include="Migrations\201906211220500_EditReport.Designer.cs">
+      <DependentUpon>201906211220500_EditReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906211225355_Amr.cs" />
+    <Compile Include="Migrations\201906211225355_Amr.Designer.cs">
+      <DependentUpon>201906211225355_Amr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906211238482_alaaaaa.cs" />
+    <Compile Include="Migrations\201906211238482_alaaaaa.Designer.cs">
+      <DependentUpon>201906211238482_alaaaaa.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906211340200_xxx.cs" />
+    <Compile Include="Migrations\201906211340200_xxx.Designer.cs">
+      <DependentUpon>201906211340200_xxx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906211410589_drshams.cs" />
+    <Compile Include="Migrations\201906211410589_drshams.Designer.cs">
+      <DependentUpon>201906211410589_drshams.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906211725214_addnotestoreport.cs" />
+    <Compile Include="Migrations\201906211725214_addnotestoreport.Designer.cs">
+      <DependentUpon>201906211725214_addnotestoreport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ColumnViewModel.cs" />
     <Compile Include="Models\Entities\Project.cs" />
+    <Compile Include="Models\Entities\Report.cs" />
     <Compile Include="Models\Enum\UserType.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -385,6 +414,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906191139267_updateUser.resx">
       <DependentUpon>201906191139267_updateUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906211217133_addReport.resx">
+      <DependentUpon>201906211217133_addReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906211220500_EditReport.resx">
+      <DependentUpon>201906211220500_EditReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906211225355_Amr.resx">
+      <DependentUpon>201906211225355_Amr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906211238482_alaaaaa.resx">
+      <DependentUpon>201906211238482_alaaaaa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906211340200_xxx.resx">
+      <DependentUpon>201906211340200_xxx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906211410589_drshams.resx">
+      <DependentUpon>201906211410589_drshams.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906211725214_addnotestoreport.resx">
+      <DependentUpon>201906211725214_addnotestoreport.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

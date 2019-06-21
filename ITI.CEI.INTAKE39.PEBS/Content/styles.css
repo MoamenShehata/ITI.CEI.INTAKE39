@@ -815,9 +815,12 @@ body {
 .project_item {
     padding: 5px;
     color: #F6F8FA;
+    display: block;
     background-color: rgb(2, 55, 200);
     transition: all 0.3s ease-in-out;
     cursor: pointer;
+    text-align: center;
+    justify-content: center;
     margin: 5px 0;
 }
 

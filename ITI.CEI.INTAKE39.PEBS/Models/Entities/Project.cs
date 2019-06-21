@@ -15,7 +15,7 @@ namespace ITI.CEI.INTAKE39.PEBS.Models.Entities
         public double Cost { get; set; }
         public string Report_Path { get; set; }
         public string Project_Path { get; set; }
-
+       public Report Report { get; set; }
         public ApplicationUser PebsClient { get; set; }
 
         [ForeignKey("PebsClient")]

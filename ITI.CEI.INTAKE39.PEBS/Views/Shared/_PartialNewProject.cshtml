@@ -10,113 +10,148 @@
     };
 }
 
+@Styles.Render("~/MyContent/css")
+@Styles.Render("~/Bootsrtap/css")
+@Scripts.Render("~/bundles/modernizr")
 
 
-<div class="partial_project" id="partial_project">
 
-    <div class="project_new" id="project_new">
-        <h2>Create A New Project</h2>
+    <div class="container-fluid">
+        <div class="row  partial_project" id="partial_project">
 
-        <div class="project_name">
-            <label>Project Name*</label>
-            @*@Html.TextBoxFor(p => p.Name, new { @class = "project_name_textbox", placeholder = "Write Project Name" })*@
-            <input type="text" id="project_name" placeholder="Write Project Name" class="project_name_textbox">
-        </div>
-        
-        <div class="template">
-            <h3>Select Template</h3>
+            <div class="col-lg-8 project_new" id="project_new">
+                <h2>Create A New Project</h2>
 
-            <div class="template_field">
-                <input type="checkbox" name="tmpt_production" id="production" onclick="ProductionChecked()">
-                <label for="production" id="production_lbl">Production</label>
+                <div class="project_name">
+                    <label>Project Name*</label>
+                    @*@Html.TextBoxFor(p => p.Name, new { @class = "project_name_textbox", placeholder = "Write Project Name" })*@
+                    <input type="text" id="project_name" placeholder="Write Project Name" class="project_name_textbox">
+                </div>
+
+                <div class="template">
+                    <h3>Select Template</h3>
+
+                    <div class="template_field">
+                        <input type="checkbox" name="tmpt_production" id="production" onclick="ProductionChecked()">
+                        <label for="production" id="production_lbl">Production</label>
+                    </div>
+
+                    <div class="template_field">
+                        <input type="checkbox" name="tmpt_double_span" id="double_span" onclick="DoubleSpanChecked()">
+                        <label for="double_span" id="double_span_lbl">Double Span</label>
+                    </div>
+
+                    <div class="template_field">
+                        <input type="checkbox" name="tmpt_shed" id="shed" onclick="ShedChecked()">
+                        <label for="shed" id="shed_lbl">Shed</label>
+                    </div>
+
+                    <div class="template_field">
+                        <input type="checkbox" name="tmpt_double_shed" id="double_shed" onclick="DoubleShedChecked()">
+                        <label for="double_shed" id="double_shed_lbl">Double Shed</label>
+                    </div>
+
+
+                </div>
+                <div class="template_image" id="temp_image">
+                    <div class="template_image_content" id="template_image_content">
+                        <h2 id="temp_name"></h2>
+                        <p id="temp_context"></p>
+                    </div>
+                </div>
+
+                <div class="project_create">
+
+                    <input type="submit" value="Create" class="btn_create btn btn-primary" onclick="NextStage()" />
+
+                    @*@Html.ActionLink("Create", "NewIFC", null, new { @class = "project_create_button" })*@
+                    @*<button class="project_create_button" onclick="CreateNewProject()"> Create</button>*@
+                </div>
             </div>
 
-            <div class="template_field">
-                <input type="checkbox" name="tmpt_double_span" id="double_span" onclick="DoubleSpanChecked()">
-                <label for="double_span" id="double_span_lbl">Double Span</label>
-            </div>
+            <div class="col-lg-3 project_list" id="project_list">
+                <h2 class="row">My Projects</h2>
+                <div class="row my_projects" id="my_projects">
+                    @{
+                        //var curUserProjects=
+                        if (Model.PebsClient.Projects != null && Model.PebsClient.Projects.Count > 0)
+                        {
+                            foreach (var project in Model.PebsClient.Projects)
+                            {
+                                <div class="col-lg-12">
+                                    <div class=" project_item" onclick="ViewAdminReport(@project.Id)" data-toggle="modal" data-target="#exampleModalCenter-@project.Id">
+                                       @project.Name
+                                   </div>    
+                                </div>
 
-            <div class="template_field">
-                <input type="checkbox" name="tmpt_shed" id="shed" onclick="ShedChecked()">
-                <label for="shed" id="shed_lbl">Shed</label>
-            </div>
 
-            <div class="template_field">
-                <input type="checkbox" name="tmpt_double_shed" id="double_shed" onclick="DoubleShedChecked()">
-                <label for="double_shed" id="double_shed_lbl">Double Shed</label>
-            </div>
+                                <div class="modal fade" id="exampleModalCenter-@project.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Project Report</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                @{
+                                                    if (project.Report != null)
+                                                    {
+                                                        <table class="table table-striped thead-dark">
+                                                            <thead class="thead-dark">
+                                                                <tr>
+                                                                    <th scope="col">Project Name</th>
+                                                                    <th scope="col">Project Cost</th>
+                                                                    <th scope="col">Project DeadLine</th>
+                                                                    <th scope="col">Provider Notes</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th>@project.Name</th>
+                                                                    <td>@project.Report.Cost</td>
+                                                                    <td>@project.Report.DueDate</td>
+                                                                    <td>@project.Report.Notes</td>
+                                                                </tr>
+                                                                
+                                                            </tbody>
+                                                        </table>
+                                                    }
 
+                                                    else
+                                                    {
+                                                        <span>pending....</span>
+                                                    }
+                                                }
 
-        </div>
-        <div class="template_image" id="temp_image">
-            <div class="template_image_content" id="template_image_content">
-                <h2 id="temp_name"></h2>
-                <p id="temp_context"></p>
-            </div>
-        </div>
-
-        <div class="project_create">
-
-            <input type="submit" value="Create" class="btn_create btn btn-primary" onclick="NextStage()" />
-
-            @*@Html.ActionLink("Create", "NewIFC", null, new { @class = "project_create_button" })*@
-            @*<button class="project_create_button" onclick="CreateNewProject()"> Create</button>*@
-        </div>
-    </div>
-
-    <div class="project_list" id="project_list">
-        <h2>My Projects</h2>
-        <div class="my_projects" id="my_projects">
-            @{
-                //var curUserProjects=
-                if (Model.Projects != null && Model.Projects.Count > 0)
-                {
-                    foreach (var project in Model.Projects)
-                    {
-                        <div class="project_item" onclick="SetCurrentProject('@project.Name')">@project.Name</div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <label>You Have No Projects...</label>
+                        }
                     }
-                }
-                else
-                {
-                    <label>You Have No Projects...</label>
-                }
-            }
-        </div>
+                </div>
 
+            </div>
+        </div>
     </div>
-</div>
+    
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Scripts.Render("~/bundles/jqueryval")
 
 <script>
-    //debugger;
-    //var h1 = project_height * 1000;
-    //var h2 = h1 + 1000;
-    //var span = project_span * 1000;
 
-    //function save() {
-    //    $.ajax({
-    //        type: "POST",
-    //        url: "/Account/DownloadIfc",
-    //        dataType: "json",
-    //        contentType: "application/json; charset=utf-8",
-    //        data: JSON.stringify({ 'h2': 5000, 'h1': 4000, 'span': 20000 }),
-
-    //        success: function (result) {
-    //            $("#WorkSpace_Content").replaceWith(result);
-    //            //console.log(result);
-
-    //            project_current = document.getElementById("project_current");
-    //            project_current.innerText = project_name;
-    //            projectCounter++;
-
-    //            //NextStage();
-    //            project_started = true;
-    //        },
-    //        error: function (result) {
-    //            console.log(result);
-    //            console.log("Error");
-    //        }
-    //    });
-    //}
 
 
     let currentStage = 1; // At  user is in stage of creating new Project
@@ -131,47 +166,7 @@
     let project_listHTML = document.getElementById("my_projects");
     let project_current;
 
-    //function CreateNewProject() {
-    //    if (document.getElementById("project_name").value !== "" && document.getElementById("project_name").value !== null) {
-    //        let project_name = document.getElementById("project_name").value;
 
-    //        $.ajax({
-    //            type: "POST",
-    //            url: "/Account/NewProject",
-    //            contentType: "application/json; charset=utf-8",
-    //            data: JSON.stringify({ 'pName': project_name, 'projectType': project_template }),
-    //            //data: { 'pName': "ITI", 'pLocation': "ITI-3"},
-    //            dataType: "json",
-    //            success: function (result) {
-    //                //confirm(result.Template);
-
-    //                myProjects[projectCounter] = document.createElement('div');
-    //                myProjects[projectCounter].classList.add("project_item");
-    //                myProjects[projectCounter].innerText = result.Name;
-    //                myProjects[projectCounter].addEventListener("click", SetCurrentProject);
-    //                project_listHTML.append(myProjects[projectCounter]);
-
-    //                project_current = document.getElementById("project_current");
-    //                project_current.innerText = result.Name;
-    //                projectCounter++;
-
-    //                document.getElementById("partial_project").style.display = "none";
-    //                document.getElementById("TemplateProductionDimensions").style.display = "block";
-
-    //                NextStage();
-    //                project_started = true;
-    //                //$('#project_new').replaceWith();
-    //            },
-    //            error: function (result) {
-    //                confirm(result);
-    //            }
-    //        });
-    //    }
-    //    else {
-    //        document.getElementById("project_name").focus();
-    //    }
-
-    //}
 
     function CreateNewProject() {
         //debugger;
@@ -451,10 +446,58 @@
 
     }
 
-    function SetCurrentProject(projectName) {
-        project_current = document.getElementById("project_current");
-        project_current.innerText = projectName;
+    function ViewAdminReport(projectId) {
+        //project_current = document.getElementById("project_current");
+        //project_current.innerText = projectName;
+
+         $.ajax({
+        type: "POST",
+        url: "/Account/SendReport",
+        //dataType: "string",k
+        // contentType: "application/json; charset=utf-8",
+
+        data: { Cost: cost, DueDate: date, Notes:notes, Projectid: id },
+
+             success: function (result) {
+
+            //var x = JSON.parse(result);
+            //console.log(x)
+        },
+        error: function (result) {
+            console.log(result);
+            console.log("Error");
+        }
+    });
+
+
+
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     function InitializeProject() {
         //document.getElementById("project_section_NameAndType").style.display="none";
@@ -499,6 +542,16 @@
     shed_lbl.onclick = function () { ShedChecked();}
     double_shed_lbl.onclick = function () { DoubleShedChecked();}
     double_span_lbl.onclick = function () { DoubleSpanChecked();}
+
+
+
+
+
+
+
+
+
+
 
     //
     function ProductionChecked() {

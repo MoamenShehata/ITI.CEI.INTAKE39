@@ -1188,14 +1188,14 @@
          }
          Factory.push(JsnArrCl);
          console.log(Factory);
-         let loaiObj = JSON.stringify(Factory);
-         console.log(loaiObj);
+         let x = JSON.stringify(Factory);
+         console.log(x);
          $.ajax({
              type: "POST",
              url: "/Account/SaveModel",
              dataType: "json",
              
-             data: {model: loaiObj },
+             data: {model: x },
 
             success: function (result) {
                 $("#WorkSpace_Content").replaceWith(result);
