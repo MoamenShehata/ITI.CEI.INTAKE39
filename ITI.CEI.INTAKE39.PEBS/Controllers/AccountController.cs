@@ -649,17 +649,16 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
             return report;
         }
         [HttpPost]
-        public ActionResult SaveModel()
+        public ActionResult SaveModel(string projName)
         {
-            var folderName = User.Identity.GetUserName();
-            //var xxs = Request;
+            var user = User.Identity.GetUserName();
+            var xxs = Request;
+            var projId = _ctxt.Projects.Where(p=>p.Name==projName).FirstOrDefault().Id;
             string jsonData = Request.Form[0];
             ///change this to username from the database
-            string pathString = FileUtitity.CreateFolder(folderName);
-            //string fileName= 
-
-            //var fileName
-            FileUtitity.WriteFile(jsonData,  "file001.txt", pathString);
+            string pathString = FileUtitity.CreateFolder(user);
+            //string fileName=
+            FileUtitity.WriteFile(jsonData, projName + "-" + projId + ".txt", pathString);
 
             return Json("valid saving");
         }
@@ -676,7 +675,7 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
         }
 
         [HttpPost]
-        public string ViewModel( int id)
+        public string ViewModel(int id)
         {
             var project = _ctxt.Projects.Find(id);
             var user = _ctxt.Users.Find(project.FK_PebsClientId);
@@ -689,13 +688,13 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
             //string myFile = FileUtitity.ReadFile(x);
 
             return modelString;
-            
+
         }
 
-    public ActionResult NewIFC() => View();
+        public ActionResult NewIFC() => View();
 
-    [AllowAnonymous]
-    public ActionResult LaunchPage() => View();
+        [AllowAnonymous]
+        public ActionResult LaunchPage() => View();
     }
 
 

@@ -1075,8 +1075,8 @@
         panel2.style.display = "none";
     }
 
-    
-   
+
+
     //let IfcBays = function () {
     //    let bayswidth = [];
     //    for (let i = 0; i < bays.length; i++) {
@@ -1086,7 +1086,7 @@
 
     //    return bayswidth;
     //}
-  
+
 
      var jsonBays=[];
 
@@ -1095,7 +1095,7 @@
         let span = project_span * 1000;
         let slop = project_slope;
         let h2 = h1 + span * slop;
-        
+
 
 
         for (let i = 0; i < bays.length; i++) {
@@ -1193,9 +1193,9 @@
          $.ajax({
              type: "POST",
              url: "/Account/SaveModel",
-             dataType: "json",
-             
-             data: {model: x },
+             //dataType: "json",
+
+             data: { projName: project_name },
 
             success: function (result) {
                 $("#WorkSpace_Content").replaceWith(result);
@@ -1272,19 +1272,6 @@
     SetCameraPosition(ConfigCamera, 20, 20, 20);
     ConfigCamera.lookAt(new THREE.Vector3(0, 0, -project_length / 2));
 
-    //var dragControls = new THREE.DragControls(objects, ConfigCamera, ConfigRenderer.domElement);
-
-    //dragControls.addEventListener('dragstart', function (controls) {
-    //    //confirm("Drag Started");
-    //    controls.enabled = false;
-
-    //});
-    //dragControls.addEventListener('dragend', function (controls) {
-    //    //confirm("Drag Ended");
-
-    //    controls.enabled = true;
-    //});
-    //dragControls.addEventListener('mousedown', mouseDown, false);
 
 
     //#region Project_Components
@@ -1344,7 +1331,7 @@
     var singleDoor1 = new SingleDoor(2, 3, 'rgb(120,150,180)', "side", project_span / 2, -12);
     singleDoor1.DrawGeometry(ConfigScene, door_Image_single);
     Mysingledoor.push(singleDoor1);
-    
+
 
     var singleDoor2 = new SingleDoor(2, 3, 'rgb(120,150,180)', "side", project_span / 2, -project_length + 24);
     singleDoor2.DrawGeometry(ConfigScene, door_Image_single);

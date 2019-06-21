@@ -165,12 +165,13 @@
 
     let project_listHTML = document.getElementById("my_projects");
     let project_current;
+    var project_name = null;
 
 
 
     function CreateNewProject() {
         //debugger;
-            let project_name = document.getElementById("project_name").value;
+            project_name = document.getElementById("project_name").value;
         if (project_name !== "" && project_name !== null) {
 
             $.ajax({
