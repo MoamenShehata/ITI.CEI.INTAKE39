@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ITI.CEI.INTAKE39.PEBS.Models;
+using ITI.CEI.INTAKE39.PEBS.Models.Entities;
 using ITI.CEI.INTAKE39.PEBS.Entities.ViewModels;
 using IFC.Base;
 using IFC.Geometry;
@@ -13,6 +14,7 @@ using IFC;
 using ITI.CEI.INTAKE39.PEBS.Json;
 using System.Collections.Generic;
 using Microsoft.AspNet.Identity.EntityFramework;
+using ITI.CEI.INTAKE39.PEBS.Utility_Methods;
 
 namespace ITI.CEI.INTAKE39.PEBS.Controllers
 {
@@ -67,10 +69,15 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
         }
 
         [HttpPost]
-        public ActionResult RenderDimsView()
+        public ActionResult RenderDimsView(string pName)
         {
             if (Request.IsAjaxRequest())
             {
+                Models.Entities.Project project = new Models.Entities.Project();
+                project.Name = pName;
+                project.FK_PebsClientId = User.Identity.GetUserId();
+                _ctxt.Projects.Add(project);
+                _ctxt.SaveChanges();
                 return PartialView("_PartialProjectDimensionProduction");
             }
             return null;
@@ -154,23 +161,23 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
             y.span = JsonData.span;
             y.Mybays = JsonData.Mybays;
 
-            double []spacing = new double[y.Mybays.Count+1];
+            double[] spacing = new double[y.Mybays.Count + 1];
             double cumulative = 0;
-           
-            for (int b = 0; b <spacing.Length; b++)
+
+            for (int b = 0; b < spacing.Length; b++)
             {
                 spacing[b] = cumulative;
-                if (b<spacing.Length-1)
+                if (b < spacing.Length - 1)
                 {
-                cumulative += (y.Mybays[b].Width) * 1000;
+                    cumulative += (y.Mybays[b].Width) * 1000;
 
                 }
             }
-            
+
 
             string Path = @"C:\Users\Ahmed Alaa\Desktop\tempAmrIsThatYou";
             Model model = Model.Create(Path);
-            Project project = Project.Create(model);
+            IFC.Base.Project project = IFC.Base.Project.Create(model);
 
             Site site = Site.Create(model);
             project.AddSite(site);
@@ -184,7 +191,7 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
             build.AddStorey(storey2);
             Point pointcol1 = Point.Create(model, 0, 0, 0);
 
-          //  double[] y = new double[] { 0.0, 5000.0, 8000.0, 12000.0, 15000.0, 18000.0, 20000.0, 25000.0 };
+            //  double[] y = new double[] { 0.0, 5000.0, 8000.0, 12000.0, 15000.0, 18000.0, 20000.0, 25000.0 };
 
             Program.DrawFactory(model, storey2, y.h2, y.h1, y.span, pointcol1, spacing);
             model.Save(/*Path + $"{"Amr"}" + ".ifc"*/);
@@ -256,7 +263,7 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Name = model.ClientName };
-          
+
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -598,15 +605,15 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
 
         public ActionResult ProjectHomePage()
         {
-            var userRole="";
+            var userRole = "";
             var userId = User.Identity.GetUserId();
             var user = _ctxt.Users.Find(userId);
-            if (user.RoleType!=null)
+            if (user.RoleType != null)
             {
 
-             userRole = user.RoleType.ToString();
+                userRole = user.RoleType.ToString();
             }
-            var Projects = _ctxt.Projects.ToList();
+            var Projects = _ctxt.Projects.Where(pr => pr.FK_PebsClientId == userId).ToList();
             List<ApplicationUser> projectsUsers = new List<ApplicationUser>();
             foreach (var p in Projects)
             {
@@ -615,48 +622,75 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
             }
             ClientViewModel clientViewModel = new ClientViewModel()
             {
+                PebsClient=user,
                 Projects = Projects
             };
 
             if (userRole == "Admin")
             {
                 return View("AdminHomePage", clientViewModel);
-                
+
             }
             else
             {
-                return View("ProjectHomePage", clientViewModel);    
+                return View("ProjectHomePage", clientViewModel);
 
             }
         }
 
         [HttpPost]
-        public void SaveModel()
+        public ActionResult SaveModel()
         {
+            var user = User.Identity.GetUserName();
+            var xxs = Request;
+            string jsonData = Request.Form[0];
+            ///change this to username from the database
+            string pathString = FileUtitity.CreateFolder(user);
+            //string fileName= 
+            FileUtitity.WriteFile(jsonData,  "file001.txt", pathString);
 
+            return Json("valid saving");
+        }
+        
+        [HttpPost]
+        public string ViewModel( int id)
+        {
+            var project = _ctxt.Projects.Find(id);
+            var user = _ctxt.Users.Find(project.FK_PebsClientId);
+            var modelString = FileUtitity.ReadFile("file001.txt", user.UserName);
+
+            //var z = Request.Form;
+            //var x = Request.Form[0];
+
+            //string myFile = FileUtitity.ReadFile(x);
+
+            return modelString;
+            
         }
 
+    public ActionResult NewIFC() => View();
 
-        public ActionResult NewIFC() => View();
-
-        [AllowAnonymous]
-        public ActionResult LaunchPage() => View();
-
-        #endregion
-
-        #region Oweda
-
-
-
-
-        #endregion
-
-        #region Alaa
-
-        #endregion
-
-        #region Rizk
-
-        #endregion
+    [AllowAnonymous]
+    public ActionResult LaunchPage() => View();
     }
+
+
+
+    #endregion
+
+    #region Oweda
+
+
+
+
+    #endregion
+
+    #region Alaa
+
+    #endregion
+
+    #region Rizk
+
+    #endregion
 }
+

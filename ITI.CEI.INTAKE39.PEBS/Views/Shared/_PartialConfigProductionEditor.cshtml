@@ -1131,26 +1131,71 @@
 
     ////////////////////////Save Model  in database
 
-    var Mywindows = [];
+    var Mysinglewindows = [];
+    var Myrowwindows = [];
     var Mysectiondoor = [];
     var Mysingledoor = [];
-    var Myrowwindows = [];
-    var Mysinglewindows = [];
     var Myroofdouble = [];
     var Myfrontwall = [];
     var Mycladdingdoubleside = [];
 
+    ///JsonArrays
+    var JsnArrSw = [];
+    var JsnArrRw = [];
+    var JsnArrScd = [];
+    var JsnArrSd = [];
+    var JsnArrRf = [];
+    var JsnArrFw = [];
+    var JsnArrCl = [];
+
+    var Factory = [];
 
 
      panelHandle8.onclick = function () {
-       
-   
-        $.ajax({
-            type: "POST",
-            url: "/Account/SaveModel",
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify({JsonData}),
+       // single window to json
+          for (let i = 0; i < Mysinglewindows.length; i++) {
+            Mysinglewindows[i].toJson(JsnArrSw);
+         }
+         Factory.push(JsnArrSw);
+          // row window to json
+          for (let i = 0; i < Myrowwindows.length; i++) {
+            Myrowwindows[i].toJson(JsnArrRw);
+         }
+         Factory.push(JsnArrRw);
+
+          // single door to json
+          for (let i = 0; i < Mysingledoor.length; i++) {
+            Mysingledoor[i].toJson(JsnArrSd);
+         }
+         Factory.push(JsnArrSd);
+
+          // section door to json
+          for (let i = 0; i < Mysectiondoor.length; i++) {
+            Mysectiondoor[i].toJson(JsnArrScd);
+         }
+         Factory.push(JsnArrScd);
+
+          // front wall to json
+          for (let i = 0; i < Myfrontwall.length; i++) {
+            Myfrontwall[i].toJson(JsnArrFw);
+         }
+         Factory.push(JsnArrFw);
+
+
+           // Mycladdingdoubleside wall to json
+          for (let i = 0; i < Mycladdingdoubleside.length; i++) {
+            Mycladdingdoubleside[i].toJson(JsnArrCl);
+         }
+         Factory.push(JsnArrCl);
+         console.log(Factory);
+         let loaiObj = JSON.stringify(Factory);
+         console.log(loaiObj);
+         $.ajax({
+             type: "POST",
+             url: "/Account/SaveModel",
+             dataType: "json",
+             
+             data: {model: loaiObj },
 
             success: function (result) {
                 $("#WorkSpace_Content").replaceWith(result);
@@ -1230,9 +1275,6 @@
 
 
     //#region Project_Components
-    var myWindows = [];
-    var myDoors = [];
-    var myStaticObjects = [];
 
     var Grass_Image_path = document.getElementById("grass_image").getAttribute("src");
     var Grass_plus_texture = new THREE.TextureLoader().load(Grass_Image_path);
@@ -1251,64 +1293,65 @@
 
     var sideCladding1 = new CladdingDoubleSide(project_span, project_height, project_length);
     sideCladding1.DrawGeometry(ConfigScene);
-    myStaticObjects.push(sideCladding1);
+    Mycladdingdoubleside.push(sideCladding1);
 
     var roof1 = new RoofDouble(project_span, project_length, project_slope, project_height);
     roof1.DrawGeometry(ConfigScene);
-    myStaticObjects.push(roof1);
+    Myroofdouble.push(roof1);
 
     var frontWall = new FrontWall(project_span, project_height, project_slope, 0);
     frontWall.DrawGeometry(ConfigScene,"north");
-    myStaticObjects.push(frontWall);
+    Myfrontwall.push(frontWall);
 
     var backWall = new FrontWall(project_span, project_height, project_slope, -project_length);
     backWall.DrawGeometry(ConfigScene,"south");
-    myStaticObjects.push(backWall);
+    Myfrontwall.push(backWall);
 
     var dblWindwoFront = new RowWindow(2, 1, "rgb(180, 118, 4)", "front", -3, 6.5, 0, 3);
     dblWindwoFront.DrawGeometry(ConfigScene);
-    myStaticObjects.push(dblWindwoFront);
+    Myrowwindows.push(dblWindwoFront);
 
     var dblWindwoBack = new RowWindow(2, 1, "rgb(180, 118, 4)", "front", -3, 6.5, -project_length, 3);
     dblWindwoBack.DrawGeometry(ConfigScene);
-    myStaticObjects.push(dblWindwoBack);
+    Myrowwindows.push(dblWindwoBack);
 
     var door_Image_sectional = document.getElementById("door_Sectional_image").getAttribute("src");
 
     var frontDoor = new SectionalDoor(3, 3, "front", 0, 0);
     frontDoor.DrawGeometry(ConfigScene, door_Image_sectional);
-    myStaticObjects.push(frontDoor);
+    Mysectiondoor.push(frontDoor);
 
     var backDoor = new SectionalDoor(3, 3, "front", 0, -project_length);
     backDoor.DrawGeometry(ConfigScene, door_Image_sectional);
-    myStaticObjects.push(backDoor);
+    Mysectiondoor.push(backDoor);
 
 
     var door_Image_single = document.getElementById("door_Single_image_2").getAttribute("src");
 
     var singleDoor1 = new SingleDoor(2, 3, 'rgb(120,150,180)', "side", project_span / 2, -12);
     singleDoor1.DrawGeometry(ConfigScene, door_Image_single);
-    myStaticObjects.push(singleDoor1);
+    Mysingledoor.push(singleDoor1);
+    
 
     var singleDoor2 = new SingleDoor(2, 3, 'rgb(120,150,180)', "side", project_span / 2, -project_length + 24);
     singleDoor2.DrawGeometry(ConfigScene, door_Image_single);
-    myStaticObjects.push(singleDoor2);
+    Mysingledoor.push(singleDoor2);
 
     var singleDoor3 = new SingleDoor(2, 3, 'rgb(120,150,180)', "side", -project_span / 2, -12);
     singleDoor3.DrawGeometry(ConfigScene, door_Image_single);
-    myStaticObjects.push(singleDoor3);
+    Mysingledoor.push(singleDoor3);
 
     var singleDoor4 = new SingleDoor(2, 3, 'rgb(120,150,180)', "side", -project_span / 2, -project_length + 24);
     singleDoor4.DrawGeometry(ConfigScene, door_Image_single);
-    myStaticObjects.push(singleDoor4);
+    Mysingledoor.push(singleDoor4);
 
     for (let i = 5; i < project_length; i += 15) {
         let windowright = new SingleWindow(2, 1.5, "rgb(180, 118, 4)", "side", project_span / 2, project_height - 0.5, -i);
         let windowleft = new SingleWindow(2, 1.5, "rgb(180, 118, 4)", "side", -project_span / 2, project_height - 0.5, -i);
-        myWindows.push(windowright);
-        myWindows.push(windowleft);
-        myStaticObjects.push(windowright);
-        myStaticObjects.push(windowleft);
+        Mysinglewindows.push(windowright);
+        Mysinglewindows.push(windowleft);
+        //myStaticObjects.push(windowright); /////
+        //myStaticObjects.push(windowleft);  //////
 
         windowright.DrawGeometry(ConfigScene);
         windowleft.DrawGeometry(ConfigScene);
@@ -1485,21 +1528,25 @@
     function addSingleDoor(workPlane, x, z) {
         let mySingleDoor = new SingleDoor(2, 3, 'rgb(120,150,180)', workPlane, x, z);
         mySingleDoor.DrawGeometry(ConfigScene, door_Image_single);
+        Mysingledoor.push(mySingleDoor);
     }
 
     function addSectionalDoor(workPlane, x, z) {
         let mySectionalDoor = new SectionalDoor(3, 3, workPlane, x, z);
         mySectionalDoor.DrawGeometry(ConfigScene, door_Image_sectional);
+        Mysectiondoor.push(mySectionalDoor);
     }
 
     function addSingleWindow(workPlane, x, y, z) {
-        let mySingleWindow = new SingleWindow(2, 1.5, "rgb(180, 118, 4)", workPlane, x, y, z);
-        mySingleWindow.DrawGeometry(ConfigScene);
+        let mySingleWindow1 = new SingleWindow(2, 1.5, "rgb(180, 118, 4)", workPlane, x, y, z);
+        mySingleWindow1.DrawGeometry(ConfigScene);
+        mySingleWindow.push(mySingleWindow1)
     }
 
     function addRowWindow(workPlane, x, y, z) {
         let myRowWindow = new RowWindow(2, 1, "rgb(180, 118, 4)", workPlane, x, y, z, 3);
         myRowWindow.DrawGeometry(ConfigScene);
+        Myrowwindows.push(myRowWindow);
     }
 
     function setSelectedSingleWidnowByGlass() {
@@ -1719,21 +1766,30 @@
         if (configIntersected != null) {
             //debugger;
             if (configIntersected.ObjectType.includes("Window_Glass")) {
+
                 ConfigScene.remove(configIntersected.parent);
+                Mysinglewindows.remove(configIntersected.Instance);
             }
             if (configIntersected.ObjectType.includes("RowWd_RowGlass")) {
                 ConfigScene.remove(configIntersected.parent.parent);
+                Myrowwindows.remove(configIntersected.Instance);
             }
             else if (configIntersected.ObjectType.includes("RowWd_Frame")) {
                 ConfigScene.remove(configIntersected.parent);
+                Myrowwindows.remove(configIntersected.Instance);
+
             }
 
             else if (configIntersected.ObjectType.includes("Cladding") === true || configIntersected.ObjectType.includes("Wall") === true || configIntersected.ObjectType.includes("Roof") || configIntersected.ObjectType.includes("Roof") === true) {
                 confirm("This Item Can not Be Deleted!");
             }
 
-            else {
-                ConfigScene.remove(configIntersected);
+            else if(configIntersected.ObjectType.includes("Door_Single")){
+                Mysingledoor.remove(configIntersected.Instance);
+            }
+
+            else if(configIntersected.ObjectType.includes("Door_Sectional")){
+                Mysectiondoor.remove(configIntersected.Instance);
             }
         }
     }
