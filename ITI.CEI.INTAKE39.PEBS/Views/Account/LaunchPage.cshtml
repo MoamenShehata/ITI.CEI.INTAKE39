@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_My_Layout_Launch.cshtml";
 }
 
-<div class="background" style="background-image:url('/Images/steel_construction_technology.jpg');background-size:cover;height:629px">
+<div class="background" style="background-image:url('/Images/steel_construction_technology.jpg');background-size:cover;height:680px">
 
 </div>
 
@@ -53,13 +53,13 @@
             <div class="form-group" style="margin-bottom:5px">
                 <div class="col-md-10">
                     @*@Html.LabelFor(m => m.ConfirmPassword)*@
-                    <label>Choose A Provider</label>
+                    @*<label>Choose A Provider</label>*@
                     @*@Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control Login_field form_group_override" })*@
                     @*@Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })*@
-                    <select class="form-control Login_field">
+                    @*<select class="form-control Login_field">*@
                         @*<option value="">Select A Company</option>*@
-                        <option value="" selected="selected">Zamil - Steel</option>
-                    </select>
+                        @*<option value="" selected="selected">Zamil - Steel</option>*@
+                    @*</select>*@
                 </div>
             </div>
             <div class="form-group" style="margin-bottom:5px">
@@ -67,13 +67,13 @@
                     <input type="submit" class="btn btn-primary " value="Register As A Client" style="width:120%;margin:auto;left:50%;transform:translate(-18%,5px)" />
                 </div>
             </div>
-            <div class="form-group admin_register" style="margin-top:10px">
+            @*<div class="form-group admin_register" style="margin-top:10px">
                 <div class="col-md-offset-2 col-md-10" style="text-align:center">
                     <label style="width:120%;margin:auto;left:50%;transform:translateX(-10%)"> OR </label>
                     <input type="submit" class="btn btn-primary " value="Register As Provider" style="margin-top:10px;width:120%;margin:auto;left:50%;transform:translate(-18%,5px)" />
                 </div>
 
-            </div>
+            </div>*@
         }
     </div>
 </div>

@@ -663,6 +663,10 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
             return Json("valid saving");
         }
 
+        public ActionResult ViewHelp()
+        {
+            return View("HelpPage");
+        }
 
         [HttpPost]
         public void SendReport(Report r )

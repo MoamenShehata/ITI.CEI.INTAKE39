@@ -10,11 +10,14 @@
 @Styles.Render("~/Bootsrtap/css")
 @Scripts.Render("~/bundles/modernizr")
 
+<h1 style="text-align:center; margin-bottom:50px;">Project List</h1>
 <table class="table table-striped table-hover">
 
 
     <thead>
         <tr>
+            <th></th>
+            <th></th>
             <th>Project Name</th>
             <th>Client Name</th>
             <th>3D View </th>
@@ -32,6 +35,8 @@
             // in case of open Employees link
             var pId = project.Id;
         <tr>
+            <td></td>
+            <td></td>
             <td>@project.Name</td>
             <td>@project.PebsClient.Name</td>
 
@@ -56,8 +61,192 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body-@project.Id">   
-                               <div></div>
+                            <div class="modal-body-@project.Id">
+                                <h3 style="margin-left:180px;">Project Main Details</h3>
+                                <table class="table table-striped table-hover main_details">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th></th>
+                                            <th scope="col">Info.</th>
+                                            <th scope="col">Value</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <th>Span</th>
+                                            <td class="span_value"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td></td>
+                                            <th scope="row">Height</th>
+                                            <td class="Height_value"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td></td>
+
+                                            <th scope="row">Length</th>
+                                            <td class="Lenght_value"></td>
+                                        </tr>
+
+
+
+                                        <tr>
+                                            <td></td>
+
+                                            <th scope="row">Slope</th>
+                                            <td class="Slope_value"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td></td>
+
+                                            <th scope="row">Roof Color</th>
+                                            <td class="RoofColor_value"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td></td>
+
+                                            <th scope="row">Cladding Color</th>
+                                            <td class="CladdingColor_value"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td></td>
+
+                                            <th scope="row">No. of Frames</th>
+                                            <td class="NoOfFrames_value"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td></td>
+
+                                            <th scope="row">No. of Single Windows</th>
+                                            <td class="NoOfSingleWindows_value"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td></td>
+
+                                            <th scope="row">No. of Row Windows</th>
+                                            <td class="NoOfRowWindows_value"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td></td>
+
+                                            <th scope="row">No. of Single Doors</th>
+                                            <td class="NoOfSingleDoors_value"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td></td>
+
+                                            <th scope="row">No. of Sectional Doors</th>
+                                            <td class="NoOfSecDoors_value"></td>
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+
+                                <h3 style="margin-left:220px;">Bays Details</h3>
+                                <table class="table table-striped table-hover bays_details">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th></th>
+                                            <th scope="col">No.</th>
+                                            <th scope="col">Lenght(m)</th>
+                                            <th scope="col">Cumulative(m)</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+
+                                        </tr>
+                                    </thead>
+
+                                    <tbody></tbody>
+                                </table>
+
+                                <h3 style="margin-left:180px;">Single Windows Details</h3>
+                                <table class="table table-striped table-hover singleWindows_details">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th></th>
+                                            <th scope="col">No.</th>
+                                            <th scope="col">Width(m)</th>
+                                            <th scope="col">Height(m)</th>
+                                            <th scope="col">Frame Color</th>
+                                            <th scope="col">X Position</th>
+                                            <th scope="col">Y Position</th>
+                                            <th scope="col">Z Position</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody></tbody>
+                                </table>
+
+
+                                <h3 style="margin-left:180px;">Row Windows Details</h3>
+                                <table class="table table-striped table-hover rowWindows_details">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th></th>
+                                            <th scope="col">No.</th>
+                                            <th scope="col">Cell Width(m)</th>
+                                            <th scope="col">Cells</th>
+                                            <th scope="col">Total Width(m)</th>
+                                            <th scope="col">Height(m)</th>
+                                            <th scope="col">  Color</th>
+                                            <th scope="col">X Pos.</th>
+                                            <th scope="col">Y Pos.</th>
+                                            <th scope="col">Z Pos.</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody></tbody>
+                                </table>
+
+
+                                <h3 style="margin-left:180px;">Single Doors Details</h3>
+                                <table class="table table-striped table-hover singleDoors_details">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th></th>
+                                            <th scope="col">No.</th>
+                                            <th scope="col">Width(m)</th>
+                                            <th scope="col">Height(m)</th>
+                                            <th scope="col">Door Color</th>
+                                            <th scope="col">X Pos.</th>
+                                            <th scope="col">Y Pos.</th>
+                                            <th scope="col">Z Pos.</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody></tbody>
+                                </table>
+
+                                <h3 style="margin-left:180px;">Sectional  Doors Details</h3>
+                                <table class="table table-striped table-hover secDoors_details">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th></th>
+                                            <th scope="col">No.</th>
+                                            <th scope="col">Width(m)</th>
+                                            <th scope="col">Height(m)</th>
+                                            <th scope="col">Color</th>
+                                            <th scope="col">X Pos.</th>
+                                            <th scope="col">Y Pos.</th>
+                                            <th scope="col">Z Pos.</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody></tbody>
+                                </table>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -145,7 +334,6 @@
         });
     }
     var y = [];
-    //let {  JsnArrSw:singleWinArr, rowWinArr: JsnArrRw, singleDoorArr: JsnArrSd, secDoorArr: JsnArrScd, frontWallArr: JsnArrFw, doubleCladArr: JsnArrCl, roofArr: JsnArrRf } = y;
     let singleWinArr = [];
     let rowWinArr = [];
     let singleDoorArr = [];
@@ -170,36 +358,147 @@
              //   console.log(result)
                 //console.log(x)
                 y = JSON.parse(result);
-                console.log(y)
+             //   console.log(y)
                 singleWinArr = y[0];
                 rowWinArr =      y[1];
                 singleDoorArr =  y[2];
                 secDoorArr =     y[3];
-                frontWallArr =   y[4];
+                frontWallArr = y[4];
                 doubleCladArr =  y[5];
                 roofArr = y[6];
                 baysArr = y[7];
-                console.log(singleWinArr);
-               
-                for (var i = 0; i < rowWinArr.length; i++) {
-                    var x = rowWinArr[i]; //x
-                    var label1 = "<label>" + x.PWidth + "</label>"
-                     $(`.modal-body-${id}`).append(label1);
-                    var label2 = "<label>" + x.TotalWidth + "</label>"
-                     $(`.modal-body-${id}`).append(label2);
-                    var label3 = "<label>" + x.Height + "</label>"
-                     $(`.modal-body-${id}`).append(label3);
-                    var label4 = "<label>" + x.FrameColor + "</label>"
-                     $(`.modal-body-${id}`).append(label4);
-                    var label5 = "<label>" + x.Number + "</label>"
-                     $(`.modal-body-${id}`).append(label5);
+             
 
-                }       console.log(x);
-                var y = x.PWidth;
-                console.log(y);
-         
-              //  console.log(singleDoor1.Height);
-                  var label = "<label>" + y+ "</label>"
+
+
+
+                
+                /////////////Basic information///////////////////////////
+               
+                var singlewall = frontWallArr[0];
+                var singlewall2 = frontWallArr[1];
+
+                let span = singlewall.Span;
+                $(`.modal-body-${id} > table.main_details >tbody > tr > .span_value`).text(span);//totla span
+
+                let slope = singlewall.Slope;
+                $(`.modal-body-${id} > table.main_details >tbody > tr > .Slope_value`).text(slope);//totla slope
+               
+                
+                let height = singlewall.Height; 
+                $(`.modal-body-${id} > table.main_details >tbody > tr > .Height_value`).text(height);//totla slope
+           
+                 let NOfFrams = baysArr.length+1;
+                $(`.modal-body-${id} > table.main_details >tbody > tr > .NoOfFrames_value`).text(NOfFrams); //no of frams
+
+                let length =(Math.abs(singlewall.ZPosition - singlewall2.ZPosition));
+                $(`.modal-body-${id} > table.main_details >tbody > tr > .Lenght_value`).text(length);//lenght
+
+                let roofColor = roofArr[0].Color;
+                $(`.modal-body-${id} > table.main_details >tbody > tr > .RoofColor_value`).append(`<div  style="width:20px; height:20px; border-radius:4px;  background-color:${roofColor}"></div>`)//Roof Color
+
+                let claddingColor = doubleCladArr[0].Color;
+                $(`.modal-body-${id} > table.main_details >tbody > tr > .CladdingColor_value`).append(`<div  style="width:20px; height:20px; border-radius:4px;  background-color:${claddingColor}"></div>`)//cladding Color
+
+                let noOfSingleWindows = singleWinArr.length;
+                $(`.modal-body-${id} > table.main_details >tbody > tr > .NoOfSingleWindows_value`).text(noOfSingleWindows);//No of Single windows
+
+
+                let noOfRowWindows = rowWinArr.length;
+                $(`.modal-body-${id} > table.main_details >tbody > tr > .NoOfRowWindows_value`).text(noOfRowWindows);//No of Row windows
+
+                let noOfSingleDoors = singleDoorArr.length;
+                $(`.modal-body-${id} > table.main_details >tbody > tr > .NoOfSingleDoors_value`).text(noOfSingleDoors);//No of Single Doors
+
+
+                let noOfSecDoors = secDoorArr.length;
+                $(`.modal-body-${id} > table.main_details >tbody > tr > .NoOfSecDoors_value`).text(noOfSecDoors);//No of Sectionals Doors
+
+
+
+                /////////////Bays information///////////////////////////
+                let cumBay = 0;
+                for (var i = 0; i < baysArr.length; i++)
+                {
+                    cumBay = cumBay + baysArr[i].Width;
+                    $(`.modal-body-${id} > table.bays_details >tbody`).append(`<tr>
+                                                                                    <th></th>
+                                                                                    <th>${i + 1}</th>
+                                                                                    <td>${baysArr[i].Width}</td>
+                                                                                    <td>${cumBay}</td>
+                                                                                    <td></td>
+                                                                                    <td></td>
+                                                                                    <td></td>
+                                                                                    <td></td>
+                                                                                    <td></td>
+                                                                                    <td></td>
+                                                                                </tr>`)
+                }
+
+
+                /////////////Single Windows Information information///////////////////////////
+                for (var i = 0; i < singleWinArr.length; i++)
+                {
+                    $(`.modal-body-${id} > table.singleWindows_details >tbody`).append(`<tr>
+                                                                                            <td></td>
+                                                                                            <th>${i + 1}</th>
+                                                                                            <td>${singleWinArr[i].Width}</td>
+                                                                                            <td>${singleWinArr[i].Height}</td>
+                                                                                            <td><div width="10px" height="10px" style="width:20px; height:20px; border-radius:4px; margin-left:20px; background-color:${singleWinArr[i].FrameColor}"></div></td>
+                                                                                            <td>${singleWinArr[i].X}</td>
+                                                                                            <td>${singleWinArr[i].Y}</td>
+                                                                                            <td>${singleWinArr[i].Z}</td>
+                                                                                        </tr>`)
+                }
+
+
+                   /////////////Row Windows Information information///////////////////////////
+                for (var i = 0; i < rowWinArr.length; i++)
+                {
+                    $(`.modal-body-${id} > table.rowWindows_details >tbody`).append(`<tr>
+                                                                                            <td></td>
+                                                                                            <th>${i + 1}</th>
+                                                                                            <td>${rowWinArr[i].PWidth}</td>
+                                                                                            <td>${rowWinArr[i].Number}</td>
+                                                                                            <td>${rowWinArr[i].TotalWidth}</td>
+                                                                                            <td>${rowWinArr[i].Height}</td>
+                                                                                            <td><div width="10px" height="10px" style="width:20px; height:20px; border-radius:4px; margin-left:10px; background-color:${rowWinArr[i].FrameColor}"></div></td>
+                                                                                            <td>${rowWinArr[i].X}</td>
+                                                                                            <td>${rowWinArr[i].Y}</td>
+                                                                                            <td>${rowWinArr[i].Z}</td>
+                                                                                        </tr>`)
+                }
+
+                    /////////////Single Doors Information information///////////////////////////
+                for (var i = 0; i < singleDoorArr.length; i++)
+                {
+                    $(`.modal-body-${id} > table.singleDoors_details >tbody`).append(`<tr>
+                                                                                            <td></td>
+                                                                                            <th>${i + 1}</th>
+                                                                                            <td>${singleDoorArr[i].Width}</td>
+                                                                                            <td>${singleDoorArr[i].Height}</td>
+                                                                                            <td><div width="10px" height="10px" style="width:20px; height:20px; border-radius:4px; margin-left:20px; background-color:${singleDoorArr[i].Color}"></div></td>
+                                                                                            <td>${singleDoorArr[i].X}</td>
+                                                                                            <td>${singleDoorArr[i].Y}</td>
+                                                                                            <td>${singleDoorArr[i].Z}</td>
+                                                                                        </tr>`)
+                }
+
+
+                     /////////////Sectional Doors Information information///////////////////////////
+                for (var i = 0; i < secDoorArr.length; i++)
+                {
+                    $(`.modal-body-${id} > table.secDoors_details >tbody`).append(`<tr>
+                                                                                            <td></td>
+                                                                                            <th>${i + 1}</th>
+                                                                                            <td>${secDoorArr[i].Width}</td>
+                                                                                            <td>${secDoorArr[i].Height}</td>
+                                                                                            <td><div  style="width:20px; height:20px; border-radius:4px; margin-left:10px; background-color:${secDoorArr[i].Color}"></div></td>
+                                                                                            <td>${secDoorArr[i].X}</td>
+                                                                                            <td>${secDoorArr[i].Y}</td>
+                                                                                            <td>${secDoorArr[i].Z}</td>
+                                                                                        </tr>`)
+                }
               
 
 

@@ -27,6 +27,7 @@ class CladdingDoubleSide {
         this.Length = length;
         this.RightCladding = null;
         this.LeftCladding = null;
+        this.Color = "rgb(0,0,0)";
     }
 
     DrawGeometry(scene) {
@@ -91,6 +92,7 @@ class CladdingDoubleSide {
     SetColor(newColor) {
         this.RightCladding.material.color = new THREE.Color(newColor);
         this.LeftCladding.material.color = new THREE.Color(newColor);
+        this.Color = newColor;
     }
 
 
@@ -101,7 +103,8 @@ class CladdingDoubleSide {
        
         "Span": this.Span,
         "Height": this.Height,
-        "Length": this.Length
+        "Length": this.Length,
+        "Color": this.Color
 
     }
     array.push(MyCladdingDoubleSide);
@@ -232,6 +235,7 @@ class RoofDouble extends THREE.Mesh {
         this.LeftPivot = null;
         this.RightRoof = null;
         this.LeftRoof = null;
+        this.Color = "rgb(255,0,0)";
     }
 
     DrawGeometry(scene) {
@@ -309,8 +313,10 @@ class RoofDouble extends THREE.Mesh {
     }
 
     SetColor(newColor) {
+
         this.RightRoof.material.color = new THREE.Color(newColor);
         this.LeftRoof.material.color = new THREE.Color(newColor);
+        this.Color = newColor;
     }
 
 
@@ -324,10 +330,7 @@ class RoofDouble extends THREE.Mesh {
             "Length": this.Length,
             "Slope": this.Slope,
             "ZPosition": this.ZPosition,
-           // "RightPivot": this.RightPivot,
-         //   "LeftPivot": this.LeftPivot,
-          //  "RightRoof": this.RightRoof,
-           // "LeftRoof": this.LeftRoof
+            "Color": this.Color
         }
         array.push(MyRoofDouble);
     }
@@ -982,6 +985,7 @@ class SectionalDoor extends THREE.Mesh {
         this.Y = 0.0;
         this.Z = z;
         this.Door = null;
+        this.Color = "rgb(0, 131, 136)";
     }
 
     DrawGeometry(scene, imgPath) {
@@ -1042,17 +1046,17 @@ class SectionalDoor extends THREE.Mesh {
 
     SetColor(newColor) {
         this.Door.material.color = new THREE.Color(newColor);
+        this.Color = newColor;
     }
 
     toJson(array) {
     var MySectionalDoor = {
             "Width": this.Width,
             "Height": this.Height,
-            //"WorkPlane": this.WorkPlane,
+            "Color": this.Color,
             "X": this.X,
             "Y": this.Y,
             "Z": this.Z,
-           // "Door": this.Door,
         }
     array.push(MySectionalDoor);
     }

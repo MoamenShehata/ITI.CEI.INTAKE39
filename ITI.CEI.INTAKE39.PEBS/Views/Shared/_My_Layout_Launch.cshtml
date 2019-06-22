@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <title>@ViewBag.Title</title>
+
     @Styles.Render("~/MyContent/css")
     @Styles.Render("~/Bootsrtap/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -30,18 +31,20 @@
 </head>
 <body>
 
-    <nav class="nav">
+
+
+    <nav class="nav" style="height:60px;">
 
         <div class="container">
             <div class="navbar" style="min-height:50px!important;padding:10px 0">
                 <div class="left_nav">
                     <ul>
-                        <li><a href="~/Account/LaunchPage"><img src="~/Images/LinkedInLogo.png" alt="PEBS LOGO" /></a></li>
+                        <li style="margin-top:-20px;"><a href="~/Account/LaunchPage"><h3>PEBS</h3></a></li>
                     </ul>
                 </div>
                 <div class="right_nav">
                     <ul style="border:none;margin:0;padding:0">
-                        @Html.Partial("_PartialUserLogin") 
+                        @Html.Partial("_PartialUserLogin")
 
                     </ul>
                 </div>
@@ -51,18 +54,18 @@
     </nav>
 
     @*@using Microsoft.AspNet.Identity
-    @if (Request.IsAuthenticated)
-    {
-        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        @if (Request.IsAuthenticated)
         {
-            @Html.AntiForgeryToken()
+            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+            {
+                @Html.AntiForgeryToken()
 
+            }
         }
-    }
-    else
-    {
+        else
+        {
 
-    }*@
+        }*@
 
     <div>
         @RenderBody()

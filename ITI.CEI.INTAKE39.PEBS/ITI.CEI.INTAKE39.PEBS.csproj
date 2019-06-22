@@ -391,6 +391,7 @@
     <Content Include="Views\Account\NewProject.cshtml" />
     <Content Include="Views\Shared\_PartialProjectDims.cshtml" />
     <Content Include="Views\Shared\AdminHomePage.cshtml" />
+    <Content Include="Views\Shared\HelpPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
