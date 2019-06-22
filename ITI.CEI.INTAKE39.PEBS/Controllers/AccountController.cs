@@ -679,7 +679,8 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
         {
             var project = _ctxt.Projects.Find(id);
             var user = _ctxt.Users.Find(project.FK_PebsClientId);
-            var modelString = FileUtitity.ReadFile("file001.txt", user.UserName);
+            var fileName = project.Name + "-" + project.Id;
+            var modelString = FileUtitity.ReadFile(fileName, user.UserName);
 
 
             //var z = Request.Form;
@@ -690,6 +691,18 @@ namespace ITI.CEI.INTAKE39.PEBS.Controllers
             return modelString;
 
         }
+
+        public string ViewDetails(int id)
+        {
+            var project = _ctxt.Projects.Find(id);
+            var user = _ctxt.Users.Find(project.FK_PebsClientId);
+            var fileName = project.Name + "-" + project.Id;
+            var modelString = FileUtitity.ReadFile(fileName, user.UserName);
+            return modelString;
+
+        }
+
+
 
         public ActionResult NewIFC() => View();
 

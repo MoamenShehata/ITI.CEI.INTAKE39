@@ -38,8 +38,35 @@
             <td>
                 <button type="button" class="btn btn-primary" onclick="ViewModel(@pId)">View Model</button>
             </td>
+
+
             <td>
-                <button type="button" class="btn btn-primary" onclick="ViewModel(@pId)">View Details</button>
+                @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target="exampleModal" onclick="ViewDetails(@pId)">View Details</button>*@
+                @*<div class=" project_item" data-toggle="modal" data-target="#exampleModalCenter">
+                    View Details
+                </div>*@
+                <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter-@project.Id"  onclick="ViewDetails(@project.Id)">  View Details</button>
+
+                <div class="modal fade" id="exampleModalCenter-@project.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Project Report</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body-@project.Id">   
+                               <div></div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </td>
             <td>
                 <button type="button" class="btn btn-primary" onclick="ViewModel(@pId)">Download IFC</button>
@@ -47,7 +74,7 @@
             <td>
                 <button type="button" id="Savebutton-@project.Id" class="btn btn-primary" pj="@project.Id" data-toggle="modal" data-target="#exampleModal-@project.Id">SendReport</button>
             </td>
-            <td fuck="@project.Id">
+            <td >
                 <div class="modal fade" id="exampleModal-@project.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -117,8 +144,75 @@
             }
         });
     }
+    var y = [];
+    //let {  JsnArrSw:singleWinArr, rowWinArr: JsnArrRw, singleDoorArr: JsnArrSd, secDoorArr: JsnArrScd, frontWallArr: JsnArrFw, doubleCladArr: JsnArrCl, roofArr: JsnArrRf } = y;
+    let singleWinArr = [];
+    let rowWinArr = [];
+    let singleDoorArr = [];
+    let secDoorArr = [];
+    let frontWallArr = [];
+    let doubleCladArr = [];
+    let roofArr = [];
+    let baysArr = [];
+ 
+    ViewDetails = function (id) {
 
 
+        $.ajax({
+            type: "POST",
+            url: "/Account/ViewDetails",
+            //dataType: "string",
+            // contentType: "application/json; charset=utf-8",
+            data: { id: id },
+
+            success: function (result) {
+               // var x = JSON.parse(result);
+             //   console.log(result)
+                //console.log(x)
+                y = JSON.parse(result);
+                console.log(y)
+                singleWinArr = y[0];
+                rowWinArr =      y[1];
+                singleDoorArr =  y[2];
+                secDoorArr =     y[3];
+                frontWallArr =   y[4];
+                doubleCladArr =  y[5];
+                roofArr = y[6];
+                baysArr = y[7];
+                console.log(singleWinArr);
+               
+                for (var i = 0; i < rowWinArr.length; i++) {
+                    var x = rowWinArr[i]; //x
+                    var label1 = "<label>" + x.PWidth + "</label>"
+                     $(`.modal-body-${id}`).append(label1);
+                    var label2 = "<label>" + x.TotalWidth + "</label>"
+                     $(`.modal-body-${id}`).append(label2);
+                    var label3 = "<label>" + x.Height + "</label>"
+                     $(`.modal-body-${id}`).append(label3);
+                    var label4 = "<label>" + x.FrameColor + "</label>"
+                     $(`.modal-body-${id}`).append(label4);
+                    var label5 = "<label>" + x.Number + "</label>"
+                     $(`.modal-body-${id}`).append(label5);
+
+                }       console.log(x);
+                var y = x.PWidth;
+                console.log(y);
+         
+              //  console.log(singleDoor1.Height);
+                  var label = "<label>" + y+ "</label>"
+              
+
+
+
+            },
+            error: function (result) {
+                console.log(result);
+                console.log("Error");
+            }
+        });
+
+    }
+  
 
     SendReport = function (id) {
         debugger;

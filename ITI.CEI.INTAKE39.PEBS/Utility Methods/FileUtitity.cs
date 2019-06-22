@@ -38,7 +38,7 @@ namespace ITI.CEI.INTAKE39.PEBS.Utility_Methods
 
             string pathString = System.IO.Path.Combine(folderName, userName);
 
-            pathString = System.IO.Path.Combine(pathString, fileName);
+            pathString = System.IO.Path.Combine(pathString, fileName) + ".txt";
             return System.IO.File.ReadAllText(pathString);
         }
         public static string ReadFile(string path)

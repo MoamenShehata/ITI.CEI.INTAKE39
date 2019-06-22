@@ -95,12 +95,13 @@ class CladdingDoubleSide {
 
 
 
-toJson(array) {
+    toJson(array) {
+        debugger;
     var MyCladdingDoubleSide = {
+       
         "Span": this.Span,
         "Height": this.Height,
-       // "RightCladding": this.RightCladding,
-       // "LeftCladding": this.LeftCladding,
+        "Length": this.Length
 
     }
     array.push(MyCladdingDoubleSide);
@@ -316,10 +317,11 @@ class RoofDouble extends THREE.Mesh {
 
 
     toJson(array) {
+        debugger;
         var MyRoofDouble =
         {
             "Span": this.Span,
-            "Length": this.length,
+            "Length": this.Length,
             "Slope": this.Slope,
             "ZPosition": this.ZPosition,
            // "RightPivot": this.RightPivot,

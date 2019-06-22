@@ -1101,6 +1101,7 @@
         for (let i = 0; i < bays.length; i++) {
             bays[i].toJson(jsonBays);
         }
+        //Factory.push(jsonBays);
 
         console.log(jsonBays)
         var JsonData = { "h2":h2,"h1":h1,"span":span,"Mybays":jsonBays}
@@ -1147,10 +1148,11 @@
     var JsnArrRf = [];
     var JsnArrFw = [];
     var JsnArrCl = [];
+    var JsnArr
 
     var Factory = [];
 
-
+    console.log(Factory);
      panelHandle8.onclick = function () {
        // single window to json
           for (let i = 0; i < Mysinglewindows.length; i++) {
@@ -1187,15 +1189,29 @@
             Mycladdingdoubleside[i].toJson(JsnArrCl);
          }
          Factory.push(JsnArrCl);
+
+           // My double roof to json
+
+         for (let i = 0; i < Myroofdouble.length; i++) {
+            Myroofdouble[i].toJson(JsnArrRf);
+         }
+       
+         Factory.push(JsnArrRf);
+
+         for (let i = 0; i < bays.length; i++) {
+            bays[i].toJson(jsonBays);
+         }
+        Factory.push(jsonBays);
+
          console.log(Factory);
          let x = JSON.stringify(Factory);
          console.log(x);
          $.ajax({
              type: "POST",
              url: "/Account/SaveModel",
-             //dataType: "json",
+             dataType: "json",
 
-             data: { projName: project_name },
+             data: { jsonData : x, projName: project_name },
 
             success: function (result) {
                 $("#WorkSpace_Content").replaceWith(result);
